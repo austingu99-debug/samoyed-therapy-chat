@@ -496,10 +496,29 @@ st.markdown("""
     color: var(--text-main);
 }
 
-#stMainMenu { visibility: hidden; }
-footer { visibility: hidden; }
-header[data-testid="stHeader"] { background: transparent; border-bottom: none; }
-section[data-testid="stSidebar"] { display: none; }
+#stMainMenu, footer, header[data-testid="stHeader"], div[data-testid="stDecoration"], div[data-testid="stStatusWidget"], div[data-testid="stToolbar"], .viewerBadge_container__1QSob, [data-testid="manage-app-button"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+section[data-testid="stSidebar"] { display: none !important; }
+
+@media (max-width: 768px) {
+    .main .block-container {
+        padding: 0.8rem 0.5rem 2rem !important;
+    }
+    .brand-header {
+        padding: 0.5rem 0.8rem !important;
+        border-radius: 16px !important;
+    }
+    .brand-logo-title {
+        font-size: 1.1rem !important;
+    }
+    .status-pill {
+        font-size: 0.72rem !important;
+        padding: 2px 8px !important;
+    }
+}
 
 /* 頂部 Header */
 .brand-header {
