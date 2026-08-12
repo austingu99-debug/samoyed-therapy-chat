@@ -57,7 +57,16 @@ DEFAULT_DECOR_ITEMS = [
     }
 ]
 
-# 動物親密度升級明信片庫 (Postcards from Companions)
+# 動物喜愛的心靈零食庫 (Snacks)
+SNACK_ITEMS = {
+    "bone": {"name": "🍖 能量小肉骨", "desc": "小薩最愛！補充元氣滿滿活力", "cost": 15, "exp": 25, "favorite": "samoyed"},
+    "fish": {"name": "🐟 香脆小魚乾", "desc": "芝麻最愛！發出舒服呼嚕聲", "cost": 15, "exp": 25, "favorite": "cat"},
+    "honey": {"name": "🍯 森林野蜂蜜", "desc": "大熊最愛！帶來厚實甜甜安全感", "cost": 15, "exp": 25, "favorite": "bear"},
+    "berry": {"name": "🍓 靈動野草莓", "desc": "小狐最愛！激發靈性與智慧", "cost": 15, "exp": 25, "favorite": "fox"},
+    "carrot": {"name": "🥕 水嫩小紅蘿蔔", "desc": "波波最愛！滿滿溫柔自我慈悲", "cost": 15, "exp": 25, "favorite": "rabbit"}
+}
+
+# 動物親密度升級明信片庫
 COMPANION_POSTCARDS = {
     "samoyed": {
         2: {"title": "☀️ 小薩的晨曦明信片", "content": "「只要你願意轉過身，小薩隨時都在這裡等你！今天也要對自己溫柔一點喔！」", "bg": "#FFF9EE"},
@@ -96,6 +105,8 @@ def init_database():
         soul_energy INTEGER DEFAULT 80,
         star_coins INTEGER DEFAULT 150,
         is_vip INTEGER DEFAULT 0,
+        daily_chat_count INTEGER DEFAULT 0,
+        last_chat_date TEXT,
         created_at TEXT
     )
     """)
@@ -107,6 +118,8 @@ def init_database():
         companion_id TEXT,
         level INTEGER DEFAULT 1,
         exp INTEGER DEFAULT 0,
+        happiness INTEGER DEFAULT 80,
+        pet_count INTEGER DEFAULT 0,
         PRIMARY KEY (user_id, companion_id)
     )
     """)
@@ -183,11 +196,10 @@ def get_or_create_user(user_id="default_user"):
     
     if not row:
         cursor.execute("""
-        INSERT INTO users (id, nickname, streak_days, last_active_date, soul_energy, star_coins, is_vip, created_at)
-        VALUES (?, '小夥伴', 1, ?, 85, 150, 0, ?)
-        """, (user_id, today_str, now_str))
+        INSERT INTO users (id, nickname, streak_days, last_active_date, soul_energy, star_coins, is_vip, daily_chat_count, last_chat_date, created_at)
+        VALUES (?, '小夥伴', 1, ?, 85, 150, 0, 0, ?, ?)
+        """, (user_id, today_str, today_str, now_str))
         
-        # 贈送一件初始壁爐家具
         cursor.execute("INSERT OR REPLACE INTO sanctuary_decor (user_id, item_id, is_equipped) VALUES (?, 'decor_fireplace', 1)", (user_id,))
         cursor.execute("INSERT OR REPLACE INTO sanctuary_decor (user_id, item_id, is_equipped) VALUES (?, 'decor_plant', 1)", (user_id,))
         
@@ -195,12 +207,14 @@ def get_or_create_user(user_id="default_user"):
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
         row = cursor.fetchone()
     else:
-        # 檢查連續登入天數
+        # 檢查連續登入天數與每日對話次數重置
         last_date = row["last_active_date"]
         if last_date != today_str:
-            # 昨天或更早登入
             streak = row["streak_days"] + 1
-            cursor.execute("UPDATE users SET streak_days = ?, last_active_date = ?, soul_energy = MIN(100, soul_energy + 10) WHERE id = ?", (streak, today_str, user_id))
+            cursor.execute("""
+            UPDATE users SET streak_days = ?, last_active_date = ?, soul_energy = MIN(100, soul_energy + 10), daily_chat_count = 0, last_chat_date = ?
+            WHERE id = ?
+            """, (streak, today_str, today_str, user_id))
             conn.commit()
             cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
             row = cursor.fetchone()
@@ -208,6 +222,25 @@ def get_or_create_user(user_id="default_user"):
     user_dict = dict(row)
     conn.close()
     return user_dict
+
+# 檢查與增加每日對話計數 (Free Quota Check)
+def check_and_increment_chat_quota(user_id):
+    user = get_or_create_user(user_id)
+    if user["is_vip"]:
+        return True, 999 # VIP 無限額度
+    
+    today_str = time.strftime("%Y-%m-%d")
+    cur_count = user["daily_chat_count"]
+    
+    if cur_count >= 10:
+        return False, 0 # 免費每日 10 次已滿
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE users SET daily_chat_count = daily_chat_count + 1 WHERE id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+    return True, 10 - (cur_count + 1)
 
 # 增加星光幣
 def add_star_coins(user_id, amount):
@@ -224,15 +257,80 @@ def get_companion_affinity(user_id, companion_id):
     cursor.execute("SELECT * FROM companion_affinity WHERE user_id = ? AND companion_id = ?", (user_id, companion_id))
     row = cursor.fetchone()
     if not row:
-        cursor.execute("INSERT INTO companion_affinity (user_id, companion_id, level, exp) VALUES (?, ?, 1, 0)", (user_id, companion_id))
+        cursor.execute("INSERT INTO companion_affinity (user_id, companion_id, level, exp, happiness, pet_count) VALUES (?, ?, 1, 0, 85, 0)", (user_id, companion_id))
         conn.commit()
         conn.close()
-        return {"level": 1, "exp": 0, "next_level_exp": 100}
+        return {"level": 1, "exp": 0, "next_level_exp": 100, "happiness": 85, "pet_count": 0}
     
     level = row["level"]
     exp = row["exp"]
+    happiness = row["happiness"] if "happiness" in row.keys() else 85
+    pet_count = row["pet_count"] if "pet_count" in row.keys() else 0
     conn.close()
-    return {"level": level, "exp": exp, "next_level_exp": level * 100}
+    return {"level": level, "exp": exp, "next_level_exp": level * 100, "happiness": happiness, "pet_count": pet_count}
+
+# 撫摸動物 (Petting)
+def pet_companion(user_id, companion_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM companion_affinity WHERE user_id = ? AND companion_id = ?", (user_id, companion_id))
+    row = cursor.fetchone()
+    
+    cur_exp = (row["exp"] if row else 0) + 5
+    cur_level = row["level"] if row else 1
+    pet_count = (row["pet_count"] if row and "pet_count" in row.keys() else 0) + 1
+    happiness = min(100, (row["happiness"] if row and "happiness" in row.keys() else 80) + 5)
+    
+    needed_exp = cur_level * 100
+    leveled_up = False
+    if cur_exp >= needed_exp and cur_level < 5:
+        cur_exp -= needed_exp
+        cur_level += 1
+        leveled_up = True
+        
+    cursor.execute("INSERT OR REPLACE INTO companion_affinity (user_id, companion_id, level, exp, happiness, pet_count) VALUES (?, ?, ?, ?, ?, ?)",
+                   (user_id, companion_id, cur_level, cur_exp, happiness, pet_count))
+    conn.commit()
+    conn.close()
+    return {"level": cur_level, "exp": cur_exp, "happiness": happiness, "pet_count": pet_count, "leveled_up": leveled_up}
+
+# 餵食動物 (Feed Snack)
+def feed_companion(user_id, companion_id, snack_key):
+    if snack_key not in SNACK_ITEMS:
+        return False, "無效的零食種類"
+    
+    snack = SNACK_ITEMS[snack_key]
+    user = get_or_create_user(user_id)
+    if user["star_coins"] < snack["cost"]:
+        return False, f"星光幣不足！需要 {snack['cost']} 🌟，快去完成每日任務賺取吧！"
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE users SET star_coins = star_coins - ? WHERE id = ?", (snack["cost"], user_id))
+    
+    cursor.execute("SELECT * FROM companion_affinity WHERE user_id = ? AND companion_id = ?", (user_id, companion_id))
+    row = cursor.fetchone()
+    
+    bonus_exp = snack["exp"] * (1.5 if snack["favorite"] == companion_id else 1.0)
+    cur_exp = int((row["exp"] if row else 0) + bonus_exp)
+    cur_level = row["level"] if row else 1
+    happiness = min(100, (row["happiness"] if row and "happiness" in row.keys() else 80) + 15)
+    pet_count = row["pet_count"] if row and "pet_count" in row.keys() else 0
+    
+    needed_exp = cur_level * 100
+    leveled_up = False
+    if cur_exp >= needed_exp and cur_level < 5:
+        cur_exp -= needed_exp
+        cur_level += 1
+        leveled_up = True
+        
+    cursor.execute("INSERT OR REPLACE INTO companion_affinity (user_id, companion_id, level, exp, happiness, pet_count) VALUES (?, ?, ?, ?, ?, ?)",
+                   (user_id, companion_id, cur_level, cur_exp, happiness, pet_count))
+    conn.commit()
+    conn.close()
+    
+    fav_text = "（最喜愛的美食！💖 親密度大增）" if snack["favorite"] == companion_id else ""
+    return True, f"餵食了 {snack['name']}！{fav_text} 獲得 +{int(bonus_exp)} 親密度經驗值！"
 
 # 增加親密度經驗值 (並自動升級)
 def add_affinity_exp(user_id, companion_id, exp_amount):
@@ -243,6 +341,9 @@ def add_affinity_exp(user_id, companion_id, exp_amount):
     
     cur_level = row["level"] if row else 1
     cur_exp = (row["exp"] if row else 0) + exp_amount
+    happiness = row["happiness"] if row and "happiness" in row.keys() else 85
+    pet_count = row["pet_count"] if row and "pet_count" in row.keys() else 0
+    
     needed_exp = cur_level * 100
     leveled_up = False
     
@@ -252,8 +353,8 @@ def add_affinity_exp(user_id, companion_id, exp_amount):
         needed_exp = cur_level * 100
         leveled_up = True
         
-    cursor.execute("INSERT OR REPLACE INTO companion_affinity (user_id, companion_id, level, exp) VALUES (?, ?, ?, ?)",
-                   (user_id, companion_id, cur_level, cur_exp))
+    cursor.execute("INSERT OR REPLACE INTO companion_affinity (user_id, companion_id, level, exp, happiness, pet_count) VALUES (?, ?, ?, ?, ?, ?)",
+                   (user_id, companion_id, cur_level, cur_exp, happiness, pet_count))
     conn.commit()
     conn.close()
     return {"level": cur_level, "exp": cur_exp, "leveled_up": leveled_up}
@@ -322,6 +423,7 @@ def get_daily_quest_status(user_id):
     
     quests = [
         {"key": "chat_companion", "title": "🌅 向動物夥伴傾訴一次心事", "reward_coins": 20, "reward_exp": 25, "done": status_map.get("chat_companion", False)},
+        {"key": "pet_companion", "title": "💖 溫柔撫摸摸摸動物 3 次", "reward_coins": 15, "reward_exp": 20, "done": status_map.get("pet_companion", False)},
         {"key": "do_breathing", "title": "🌬️ 進行 2 分鐘正念盒式呼吸", "reward_coins": 20, "reward_exp": 20, "done": status_map.get("do_breathing", False)},
         {"key": "log_gratitude", "title": "🌱 記錄 1 條感恩花園日記", "reward_coins": 25, "reward_exp": 30, "done": status_map.get("log_gratitude", False)},
         {"key": "pop_bubbles", "title": "🫧 捏破 10 顆以上焦慮泡泡", "reward_coins": 15, "reward_exp": 15, "done": status_map.get("pop_bubbles", False)}
@@ -341,13 +443,13 @@ def complete_daily_quest(user_id, quest_key, companion_id="samoyed"):
         conn.close()
         return False, "今天已經領取過這項任務的獎勵囉！"
     
-    # 標記完成
     cursor.execute("INSERT OR REPLACE INTO daily_quests (user_id, quest_date, quest_key, is_completed) VALUES (?, ?, ?, 1)", (user_id, today_str, quest_key))
     conn.commit()
     conn.close()
     
     rewards = {
         "chat_companion": (20, 25),
+        "pet_companion": (15, 20),
         "do_breathing": (20, 20),
         "log_gratitude": (25, 30),
         "pop_bubbles": (15, 15)
