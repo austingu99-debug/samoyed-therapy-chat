@@ -825,99 +825,106 @@ live_pet_html = f"""
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;600;700&family=Quicksand:wght@600;700&display=swap');
 * {{ box-sizing: border-box; margin: 0; padding: 0; user-select: none; }}
 body {{
-background: transparent;
-font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
-color: #4A3B2C;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 2px;
+    background: transparent;
+    font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
+    color: #4A3B2C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
 }}
 .stage-card {{
-background: linear-gradient(180deg, #EFE7DC 0%, #DFD0BE 100%);
-border: 2px solid #C9B8A2;
-border-radius: 26px;
-padding: 1.1rem 1rem 0.9rem;
-box-shadow: 0 12px 36px rgba(83,62,45,0.12);
-max-width: 860px;
-width: 100%;
-text-align: center;
-position: relative;
-overflow: hidden;
+    background: linear-gradient(180deg, #F3ECE2 0%, #DFD1BE 100%);
+    border: 2.5px solid #C4B097;
+    border-radius: 28px;
+    padding: 1.1rem 1rem 0.9rem;
+    box-shadow: 0 16px 40px rgba(83,62,45,0.14), inset 0 2px 4px rgba(255,255,255,0.8);
+    max-width: 880px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }}
 .speech-bubble {{
-background: #FFFFFF;
-border: 1.5px solid #D8C6B0;
-border-radius: 20px;
-padding: 0.7rem 1.2rem;
-font-size: 0.92rem;
-color: #4B3726;
-line-height: 1.6;
-max-width: 540px;
-margin: 0 auto 0.6rem;
-box-shadow: 0 4px 16px rgba(83,62,45,0.08);
-position: relative;
-animation: bubble-fade 0.3s ease;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1.5px solid #D8C6B0;
+    border-radius: 20px;
+    padding: 0.75rem 1.3rem;
+    font-size: 0.92rem;
+    color: #4B3726;
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0 auto 0.6rem;
+    box-shadow: 0 6px 20px rgba(83,62,45,0.08);
+    position: relative;
+    animation: bubble-fade 0.3s ease;
 }}
 .speech-bubble::after {{
-content: '';
-position: absolute;
-bottom: -9px;
-left: 50%;
-transform: translateX(-50%);
-border-width: 9px 9px 0;
-border-style: solid;
-border-color: #FFFFFF transparent;
-display: block;
-width: 0;
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 9px 9px 0;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.96) transparent;
+    display: block;
+    width: 0;
 }}
 #three-canvas-container {{
-width: 100%;
-height: 380px;
-margin: 0 auto;
-position: relative;
-cursor: grab;
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
+    position: relative;
+    cursor: grab;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.06);
 }}
 #three-canvas-container:active {{
-cursor: grabbing;
+    cursor: grabbing;
 }}
 .interaction-bar {{
-display: flex;
-gap: 12px;
-justify-content: center;
-align-items: center;
-margin-top: 0.5rem;
-flex-wrap: wrap;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
 }}
 .pet-touch-btn {{
-background: #B68648;
-color: white;
-border: none;
-padding: 8px 24px;
-border-radius: 20px;
-font-weight: 700;
-font-size: 0.88rem;
-cursor: pointer;
-box-shadow: 0 4px 14px rgba(182,134,72,0.3);
-transition: all 0.2s ease;
+    background: #B68648;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(182,134,72,0.28);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }}
 .pet-touch-btn:hover {{
-background: #9D7037;
-transform: translateY(-2px);
+    background: #9D7037;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(182,134,72,0.38);
 }}
 .hint-text {{
-font-size: 0.8rem;
-color: #725C47;
-font-weight: 600;
-margin-top: 0.35rem;
+    font-size: 0.78rem;
+    color: #725C47;
+    font-weight: 600;
+    margin-top: 0.4rem;
 }}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 <div class="stage-card">
-<div style="font-size:0.84rem; color:#725C47; font-weight:700; margin-bottom:0.35rem;">
-    🏡 {current_user.get('nickname', '小夥伴')} 與 {active_comp['name']} 的北歐森林漫步心靈小屋
+<div style="font-size:0.86rem; color:#6B533E; font-weight:700; margin-bottom:0.35rem; display:flex; align-items:center; justify-content:center; gap:6px;">
+    <span>🏡</span> {current_user.get('nickname', '小夥伴')} 與 {active_comp['name']} 的 3D 北歐森林心靈小屋
 </div>
 <div class="speech-bubble" id="pet-speech">
     「{active_comp['motto']}」
@@ -925,12 +932,13 @@ margin-top: 0.35rem;
 <div id="three-canvas-container"></div>
 <div class="interaction-bar">
     <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸撫慰</button>
-    <button class="pet-touch-btn" style="background:#6F8F72;" onclick="triggerPetWalk()">🐾 走動巡邏</button>
+    <button class="pet-touch-btn" style="background:#5F8A6B;" onclick="triggerPetWalk()">🐾 走動巡邏</button>
+    <button class="pet-touch-btn" style="background:#8D7358;" onclick="triggerPetSit()">🧘 原地坐下</button>
     <button class="pet-touch-btn" style="background:#C2995F;" onclick="triggerFeedingAnimation('milk', '溫暖熱牛奶')">🥛 餵牛奶</button>
-    <button class="pet-touch-btn" style="background:#A3634B;" onclick="triggerFeedingAnimation('jerky', '香脆肉乾')">🥩 餵肉乾</button>
+    <button class="pet-touch-btn" style="background:#A35843;" onclick="triggerFeedingAnimation('jerky', '香脆肉乾')">🥩 餵肉乾</button>
     <button class="pet-touch-btn" style="background:#8C6B53;" onclick="triggerFeedingAnimation('cookie', '心靈小餅乾')">🍪 餵餅乾</button>
 </div>
-<div class="hint-text">✨ 點擊地板可引導小薩走過去・具備四肢漫步動畫與高捲翹大尾巴・可 360° 拖曳旋轉小屋</div>
+<div class="hint-text">✨ 點擊地板引導小薩走過去・360° 拖曳旋轉小屋・真實光影與超萌吐舌漫步動畫</div>
 </div>
 
 <script>
@@ -940,706 +948,32 @@ const equippedDecor = {equipped_decor_js};
 let audioCtx = null;
 
 function getAudioCtx() {{
-if (!audioCtx) {{
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-}}
-if (audioCtx.state === 'suspended') {{
-    audioCtx.resume();
-}}
-return audioCtx;
+    if (!audioCtx) {{
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }}
+    if (audioCtx.state === 'suspended') {{
+        audioCtx.resume();
+    }}
+    return audioCtx;
 }}
 
 function playChimeSound() {{
-const ctx = getAudioCtx();
-const chord = [523.25, 659.25, 783.99, 1046.50];
-chord.forEach((freq, idx) => {{
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    const now = ctx.currentTime + idx * 0.08;
-
-    osc.type = 'sine';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.28, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.6);
-}});
-}}
-
-// ==========================================
-// 🎨 Three.js 3D Spacious Isometric Sanctuary Engine
-// ==========================================
-const container = document.getElementById('three-canvas-container');
-const width = container.clientWidth || 640;
-const height = 380;
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
-camera.position.set(4.2, 4.8, 7.8);
-camera.lookAt(0, 0.2, 0);
-
-const renderer = new THREE.WebGLRenderer({{ antialias: true, alpha: true }});
-renderer.setSize(width, height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-container.appendChild(renderer.domElement);
-
-// 柔和光影系統 (攝影棚三點光 + 溫暖朝陽)
-const ambientLight = new THREE.AmbientLight(0xFFF6EC, 0.85);
-scene.add(ambientLight);
-
-const sunLight = new THREE.DirectionalLight(0xFFE8CF, 1.15);
-sunLight.position.set(5.5, 9, 6.5);
-sunLight.castShadow = true;
-sunLight.shadow.mapSize.width = 1024;
-sunLight.shadow.mapSize.height = 1024;
-scene.add(sunLight);
-
-// 側面輪廓光（讓白色毛髮輪廓分明，不與背景同化）
-const rimLight = new THREE.DirectionalLight(0xD6E8FF, 0.65);
-rimLight.position.set(-5, 4, -4);
-scene.add(rimLight);
-
-const roomRoot = new THREE.Group();
-scene.add(roomRoot);
-
-// ==========================================
-// 🏡 1. 寬敞 3D 小屋結構（8x8 面積、溫潤鼠尾草綠牆面、胡桃木地板）
-// ==========================================
-const roomSize = 7.6;
-
-// 胡桃木條紋地板 (Rich Walnut Floor)
-const floorGeo = new THREE.BoxGeometry(roomSize, 0.22, roomSize);
-const floorMat = new THREE.MeshStandardMaterial({{ color: 0x986B49, roughness: 0.55 }});
-const roomFloor = new THREE.Mesh(floorGeo, floorMat);
-roomFloor.position.y = -0.76;
-roomFloor.receiveShadow = true;
-roomRoot.add(roomFloor);
-
-// 鼠尾草森林綠質感牆面 (Nordic Sage Green Walls - 提供絕佳對比度)
-const wallMat = new THREE.MeshStandardMaterial({{ color: 0x7E9A82, roughness: 0.85 }});
-const baseboardMat = new THREE.MeshStandardMaterial({{ color: 0x583E2C, roughness: 0.6 }});
-const wallHeight = 3.6;
-
-// 左牆
-const wallLeft = new THREE.Mesh(new THREE.BoxGeometry(0.2, wallHeight, roomSize), wallMat);
-wallLeft.position.set(-roomSize / 2, wallHeight / 2 - 0.76, 0);
-wallLeft.receiveShadow = true;
-roomRoot.add(wallLeft);
-
-const baseboardL = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.3, roomSize), baseboardMat);
-baseboardL.position.set(-roomSize / 2 + 0.03, -0.55, 0);
-roomRoot.add(baseboardL);
-
-// 背牆
-const wallBack = new THREE.Mesh(new THREE.BoxGeometry(roomSize, wallHeight, 0.2), wallMat);
-wallBack.position.set(0, wallHeight / 2 - 0.76, -roomSize / 2);
-wallBack.receiveShadow = true;
-roomRoot.add(wallBack);
-
-const baseboardB = new THREE.Mesh(new THREE.BoxGeometry(roomSize, 0.3, 0.26), baseboardMat);
-baseboardB.position.set(0, -0.55, -roomSize / 2 + 0.03);
-roomRoot.add(baseboardB);
-
-// 溫馨編織羊毛大地毯 (Large Braided Wool Rug)
-const rugGeo = new THREE.CylinderGeometry(2.3, 2.35, 0.04, 36);
-const rugMat = new THREE.MeshStandardMaterial({{ color: 0xF5EDE3, roughness: 0.95 }});
-const rug = new THREE.Mesh(rugGeo, rugMat);
-rug.position.set(0, -0.63, 0.2);
-rug.receiveShadow = true;
-roomRoot.add(rug);
-
-const rugRim = new THREE.Mesh(new THREE.TorusGeometry(2.32, 0.035, 12, 40), new THREE.MeshBasicMaterial({{ color: 0xD8C5B0 }}));
-rugRim.position.set(0, -0.62, 0.2);
-rugRim.rotation.x = Math.PI / 2;
-roomRoot.add(rugRim);
-
-// ==========================================
-// 🪑 2. 實體 3D 家具佈局（環繞牆邊，留出寬敞漫步中央區）
-// ==========================================
-let fireplaceFlame = null;
-let fireplaceLight = null;
-let vinylDisc = null;
-let candleFlame = null;
-
-// 1. 🔥 溫暖壁爐 (靠左牆)
-if (equippedDecor['decor_fireplace']) {{
-const fpGroup = new THREE.Group();
-fpGroup.position.set(-roomSize / 2 + 0.45, -0.05, -1.0);
-fpGroup.rotation.y = Math.PI / 2;
-
-const fpBody = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.4, 0.6), new THREE.MeshStandardMaterial({{ color: 0x8C7869, roughness: 0.8 }}));
-fpBody.castShadow = true;
-fpGroup.add(fpBody);
-
-const fpMantle = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.12, 0.75), new THREE.MeshStandardMaterial({{ color: 0x4D311E, roughness: 0.5 }}));
-fpMantle.position.y = 0.75;
-fpGroup.add(fpMantle);
-
-const fpHole = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.75, 0.45), new THREE.MeshStandardMaterial({{ color: 0x1E1713 }}));
-fpHole.position.set(0, -0.2, 0.12);
-fpGroup.add(fpHole);
-
-const log1 = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.75, 8), new THREE.MeshStandardMaterial({{ color: 0x3E2313 }}));
-log1.rotation.z = Math.PI / 2.6;
-log1.position.set(0, -0.42, 0.18);
-fpGroup.add(log1);
-
-fireplaceFlame = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.5, 12), new THREE.MeshBasicMaterial({{ color: 0xFF5500 }}));
-fireplaceFlame.position.set(0, -0.22, 0.18);
-fpGroup.add(fireplaceFlame);
-
-fireplaceLight = new THREE.PointLight(0xFF7A29, 1.2, 5.5);
-fireplaceLight.position.set(0, -0.1, 0.4);
-fpGroup.add(fireplaceLight);
-
-roomRoot.add(fpGroup);
-}}
-
-// 2. 🛋️ 雲朵羊毛懶骨頭 (靠右側)
-if (equippedDecor['decor_beanbag']) {{
-const bbGroup = new THREE.Group();
-bbGroup.position.set(2.4, -0.32, -1.8);
-
-const bbMesh = new THREE.Mesh(new THREE.SphereGeometry(0.75, 20, 20), new THREE.MeshStandardMaterial({{ color: 0x8FAEC4, roughness: 0.9 }}));
-bbMesh.scale.set(1.25, 0.72, 1.2);
-bbMesh.castShadow = true;
-bbGroup.add(bbMesh);
-
-const pillow = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.18), new THREE.MeshStandardMaterial({{ color: 0xF5CE67, roughness: 0.7 }}));
-pillow.position.set(0, 0.3, -0.18);
-pillow.rotation.x = -0.4;
-bbGroup.add(pillow);
-
-roomRoot.add(bbGroup);
-}}
-
-// 3. 🪴 療癒龜背芋盆栽 (左後角落)
-if (equippedDecor['decor_plant']) {{
-const plantGroup = new THREE.Group();
-plantGroup.position.set(-2.8, -0.28, -2.8);
-
-const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.65, 16), new THREE.MeshStandardMaterial({{ color: 0xD4724E, roughness: 0.8 }}));
-pot.castShadow = true;
-plantGroup.add(pot);
-
-const leafMat = new THREE.MeshStandardMaterial({{ color: 0x3E7D4A, roughness: 0.35, side: THREE.DoubleSide }});
-for (let l = 0; l < 6; l++) {{
-    const angle = (l / 6) * Math.PI * 2;
-    const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 12), leafMat);
-    leaf.scale.set(1.0, 0.08, 1.9);
-    leaf.position.set(Math.cos(angle) * 0.4, 0.5 + l * 0.09, Math.sin(angle) * 0.4);
-    leaf.rotation.set(0.65, angle, 0.25);
-    plantGroup.add(leaf);
-}}
-roomRoot.add(plantGroup);
-}}
-
-// 4. 🌌 璀璨星空觀景天窗 (背牆中上方)
-if (equippedDecor['decor_skylight']) {{
-const windowGroup = new THREE.Group();
-windowGroup.position.set(0.5, 1.45, -roomSize / 2 + 0.12);
-
-const frame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.6, 0.08), new THREE.MeshStandardMaterial({{ color: 0x583E2C, roughness: 0.6 }}));
-windowGroup.add(frame);
-
-const sky = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.4), new THREE.MeshBasicMaterial({{ color: 0x0E1326 }}));
-sky.position.z = 0.045;
-windowGroup.add(sky);
-
-const moon = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 16), new THREE.MeshBasicMaterial({{ color: 0xFEE49A }}));
-moon.position.set(-0.55, 0.42, 0.05);
-windowGroup.add(moon);
-
-const starMat = new THREE.MeshBasicMaterial({{ color: 0xFFFFFF }});
-for (let s = 0; s < 16; s++) {{
-    const star = new THREE.Mesh(new THREE.SphereGeometry(0.022, 6, 6), starMat);
-    star.position.set((Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.2, 0.05);
-    windowGroup.add(star);
-}}
-roomRoot.add(windowGroup);
-}}
-
-// 5. 📻 復古心靈留聲機 (右前木桌)
-if (equippedDecor['decor_gramophone']) {{
-const gmGroup = new THREE.Group();
-gmGroup.position.set(2.6, -0.05, 1.2);
-
-const table = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.7, 16), new THREE.MeshStandardMaterial({{ color: 0x6E472D, roughness: 0.6 }}));
-table.position.y = -0.35;
-gmGroup.add(table);
-
-const gmBox = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.16, 0.45), new THREE.MeshStandardMaterial({{ color: 0x472814 }}));
-gmGroup.add(gmBox);
-
-vinylDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.015, 24), new THREE.MeshStandardMaterial({{ color: 0x141414, roughness: 0.3 }}));
-vinylDisc.position.y = 0.09;
-gmGroup.add(vinylDisc);
-
-const horn = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.55, 16), new THREE.MeshStandardMaterial({{ color: 0xE6B800, metalness: 0.85, roughness: 0.2 }}));
-horn.position.set(-0.12, 0.38, 0);
-horn.rotation.z = -Math.PI / 3;
-gmGroup.add(horn);
-
-roomRoot.add(gmGroup);
-}}
-
-// 6. 🕯️ 薰衣草香氛蠟燭 (左前茶几)
-if (equippedDecor['decor_candle']) {{
-const cdGroup = new THREE.Group();
-cdGroup.position.set(-2.2, -0.35, 1.8);
-
-const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.45, 16), new THREE.MeshStandardMaterial({{ color: 0x7E5430, roughness: 0.7 }}));
-stool.position.y = -0.22;
-cdGroup.add(stool);
-
-const candle = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.25, 16), new THREE.MeshStandardMaterial({{ color: 0xC3B0E6, roughness: 0.4 }}));
-cdGroup.add(candle);
-
-candleFlame = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.1, 8), new THREE.MeshBasicMaterial({{ color: 0xFFAA00 }}));
-candleFlame.position.y = 0.17;
-cdGroup.add(candleFlame);
-
-roomRoot.add(cdGroup);
-}}
-
-// ==========================================
-// 🐶 3. 3D 萌寵神獸角色 Group（立體四肢、粉嫩肉墊、高捲翹蓬鬆大尾巴）
-// ==========================================
-const petRoot = new THREE.Group();
-petRoot.position.set(0, 0, 0.2);
-roomRoot.add(petRoot);
-
-// 角色材質
-let mainCol = 0xFFFFFF;       // 純白亮眼
-let secondaryCol = 0xFFFBF2;  // 柔和奶油胸毛
-let innerEarCol = 0xFFAEC0;
-let snoutCol = 0xFBF8F0;
-let earType = 'dog';
-
-if (compId === 'cat') {{ mainCol = 0x8E829D; secondaryCol = 0xF5EDF0; innerEarCol = 0xF0B0C0; snoutCol = 0xEDE4EB; earType = 'cat'; }}
-else if (compId === 'bear') {{ mainCol = 0xA87C58; secondaryCol = 0xEBD8C3; innerEarCol = 0xDFC3A6; snoutCol = 0xEBD8C3; earType = 'bear'; }}
-else if (compId === 'fox') {{ mainCol = 0xE6682E; secondaryCol = 0xFFFFFF; innerEarCol = 0x422518; snoutCol = 0xFFFFFF; earType = 'fox'; }}
-else if (compId === 'rabbit') {{ mainCol = 0xFCF8FA; secondaryCol = 0xF6EDF2; innerEarCol = 0xF4CAD3; snoutCol = 0xFFFFFF; earType = 'rabbit'; }}
-else if (compId === 'sloth') {{ mainCol = 0xD3C7B5; secondaryCol = 0xF0E8DC; innerEarCol = 0x8C7A65; snoutCol = 0xF0E8DC; earType = 'bear'; }}
-else if (compId === 'penguin') {{ mainCol = 0x384955; secondaryCol = 0xFFFFFF; innerEarCol = 0xFFFFFF; snoutCol = 0xF39C12; earType = 'bear'; }}
-else if (compId === 'owl') {{ mainCol = 0x8492A6; secondaryCol = 0xFBFDFF; innerEarCol = 0xE6A23C; snoutCol = 0xE6A23C; earType = 'cat'; }}
-else if (compId === 'dolphin') {{ mainCol = 0x48A9A6; secondaryCol = 0xE8F8F7; innerEarCol = 0x71C7C4; snoutCol = 0xE8F8F7; earType = 'cat'; }}
-else if (compId === 'hedgehog') {{ mainCol = 0x8C674F; secondaryCol = 0xF4EAE1; innerEarCol = 0xF4EAE1; snoutCol = 0xF4EAE1; earType = 'bear'; }}
-
-const petMat = new THREE.MeshStandardMaterial({{ color: mainCol, roughness: 0.45, metalness: 0.05 }});
-const secMat = new THREE.MeshStandardMaterial({{ color: secondaryCol, roughness: 0.55 }});
-const innerEarMat = new THREE.MeshStandardMaterial({{ color: innerEarCol, roughness: 0.6 }});
-const darkMat = new THREE.MeshStandardMaterial({{ color: 0x1F1612, roughness: 0.25, metalness: 0.2 }});
-const eyeMat = new THREE.MeshStandardMaterial({{ color: 0x120E0D, roughness: 0.1, metalness: 0.1 }});
-const sparkleMat = new THREE.MeshBasicMaterial({{ color: 0xFFFFFF }});
-const blushMat = new THREE.MeshBasicMaterial({{ color: 0xFF9EBA, transparent: true, opacity: 0.75 }});
-const tongueMat = new THREE.MeshStandardMaterial({{ color: 0xFF708B, roughness: 0.35 }});
-const collarMat = new THREE.MeshStandardMaterial({{ color: 0xC44945, roughness: 0.35 }});
-const bellMat = new THREE.MeshStandardMaterial({{ color: 0xF7C93E, metalness: 0.9, roughness: 0.15 }});
-const padMat = new THREE.MeshStandardMaterial({{ color: 0xFFAEC0, roughness: 0.4 }});
-
-// 1. 身體 (Body)
-const bodyGeo = new THREE.SphereGeometry(0.7, 28, 28);
-bodyGeo.scale(1.0, 1.08, 0.95);
-const body = new THREE.Mesh(bodyGeo, petMat);
-body.position.y = -0.15;
-body.castShadow = true;
-petRoot.add(body);
-
-// 胸前蓬鬆白毛
-const chestFluff = new THREE.Mesh(new THREE.SphereGeometry(0.5, 20, 20), secMat);
-chestFluff.scale.set(0.85, 1.05, 0.52);
-chestFluff.position.set(0, -0.08, 0.44);
-body.add(chestFluff);
-
-// 項圈與金色小鈴鐺
-const collar = new THREE.Mesh(new THREE.TorusGeometry(0.52, 0.055, 12, 32), collarMat);
-collar.position.set(0, 0.38, 0.05);
-collar.rotation.x = Math.PI / 2.3;
-body.add(collar);
-
-const bell = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), bellMat);
-bell.position.set(0, 0.3, 0.55);
-body.add(bell);
-
-// 2. 🐾 獨立四肢關節（前後左右四隻腳 + 腳底粉紅肉墊）
-// 左前腳
-const legFLGroup = new THREE.Group();
-legFLGroup.position.set(-0.35, -0.28, 0.28);
-petRoot.add(legFLGroup);
-
-const legFL = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 0.45, 16), petMat);
-legFL.position.y = -0.2;
-legFL.castShadow = true;
-legFLGroup.add(legFL);
-
-const pawFL = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), petMat);
-pawFL.scale.set(1.0, 0.6, 1.25);
-pawFL.position.set(0, -0.4, 0.06);
-legFLGroup.add(pawFL);
-const padFL = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), padMat);
-padFL.position.set(0, -0.46, 0.08);
-legFLGroup.add(padFL);
-
-// 右前腳
-const legFRGroup = new THREE.Group();
-legFRGroup.position.set(0.35, -0.28, 0.28);
-petRoot.add(legFRGroup);
-
-const legFR = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 0.45, 16), petMat);
-legFR.position.y = -0.2;
-legFR.castShadow = true;
-legFRGroup.add(legFR);
-
-const pawFR = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), petMat);
-pawFR.scale.set(1.0, 0.6, 1.25);
-pawFR.position.set(0, -0.4, 0.06);
-legFRGroup.add(pawFR);
-const padFR = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), padMat);
-padFR.position.set(0, -0.46, 0.08);
-legFRGroup.add(padFR);
-
-// 左後腳
-const legBLGroup = new THREE.Group();
-legBLGroup.position.set(-0.4, -0.32, -0.25);
-petRoot.add(legBLGroup);
-
-const thighBL = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 16), petMat);
-thighBL.scale.set(1.0, 1.2, 0.9);
-legBLGroup.add(thighBL);
-
-const pawBL = new THREE.Mesh(new THREE.SphereGeometry(0.17, 16, 16), petMat);
-pawBL.scale.set(1.0, 0.6, 1.2);
-pawBL.position.set(0, -0.32, 0.08);
-legBLGroup.add(pawBL);
-
-// 右後腳
-const legBRGroup = new THREE.Group();
-legBRGroup.position.set(0.4, -0.32, -0.25);
-petRoot.add(legBRGroup);
-
-const thighBR = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 16), petMat);
-thighBR.scale.set(1.0, 1.2, 0.9);
-legBRGroup.add(thighBR);
-
-const pawBR = new THREE.Mesh(new THREE.SphereGeometry(0.17, 16, 16), petMat);
-pawBR.scale.set(1.0, 0.6, 1.2);
-pawBR.position.set(0, -0.32, 0.08);
-legBRGroup.add(pawBR);
-
-// 3. 🐶 頭部與臉部細節
-const headGroup = new THREE.Group();
-headGroup.position.set(0, 0.64, 0.1);
-petRoot.add(headGroup);
-
-const headGeo = new THREE.SphereGeometry(0.66, 28, 28);
-headGeo.scale(1.08, 0.98, 1.0);
-const head = new THREE.Mesh(headGeo, petMat);
-head.castShadow = true;
-headGroup.add(head);
-
-// 嘟嘟臉頰 (Chubby Cheeks)
-const cheekL = new THREE.Mesh(new THREE.SphereGeometry(0.29, 16, 16), petMat);
-cheekL.position.set(-0.38, -0.16, 0.26);
-headGroup.add(cheekL);
-
-const cheekR = new THREE.Mesh(new THREE.SphereGeometry(0.29, 16, 16), petMat);
-cheekR.position.set(0.38, -0.16, 0.26);
-headGroup.add(cheekR);
-
-// 腮紅
-const blushL = new THREE.Mesh(new THREE.CircleGeometry(0.13, 16), blushMat);
-blushL.position.set(-0.45, -0.14, 0.45);
-blushL.rotation.y = -0.4;
-headGroup.add(blushL);
-
-const blushR = new THREE.Mesh(new THREE.CircleGeometry(0.13, 16), blushMat);
-blushR.position.set(0.45, -0.14, 0.45);
-blushR.rotation.y = 0.4;
-headGroup.add(blushR);
-
-// 吻部、鼻子與俏皮舌頭
-const snoutMesh = new THREE.Mesh(new THREE.SphereGeometry(0.23, 20, 20), new THREE.MeshStandardMaterial({{ color: snoutCol, roughness: 0.5 }}));
-snoutMesh.scale.set(1.15, 0.85, 1.05);
-snoutMesh.position.set(0, -0.14, 0.54);
-headGroup.add(snoutMesh);
-
-const noseMesh = new THREE.Mesh(new THREE.SphereGeometry(0.09, 14, 14), darkMat);
-noseMesh.scale.set(1.2, 0.9, 1.0);
-noseMesh.position.set(0, -0.05, 0.73);
-headGroup.add(noseMesh);
-
-const tongueMesh = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), tongueMat);
-tongueMesh.scale.set(1.0, 0.35, 1.3);
-tongueMesh.position.set(0, -0.24, 0.63);
-tongueMesh.rotation.x = 0.3;
-headGroup.add(tongueMesh);
-
-// 雙重大高光大眼
-const eyeMeshGeo = new THREE.SphereGeometry(0.115, 20, 20);
-const eyeL = new THREE.Mesh(eyeMeshGeo, eyeMat);
-eyeL.position.set(-0.25, 0.06, 0.56);
-headGroup.add(eyeL);
-
-const eyeR = new THREE.Mesh(eyeMeshGeo, eyeMat);
-eyeR.position.set(0.25, 0.06, 0.56);
-headGroup.add(eyeR);
-
-const hiL1 = new THREE.Mesh(new THREE.SphereGeometry(0.04, 10, 10), sparkleMat);
-hiL1.position.set(-0.22, 0.1, 0.65);
-headGroup.add(hiL1);
-const hiL2 = new THREE.Mesh(new THREE.SphereGeometry(0.02, 8, 8), sparkleMat);
-hiL2.position.set(-0.27, 0.03, 0.65);
-headGroup.add(hiL2);
-
-const hiR1 = new THREE.Mesh(new THREE.SphereGeometry(0.04, 10, 10), sparkleMat);
-hiR1.position.set(0.28, 0.1, 0.65);
-headGroup.add(hiR1);
-const hiR2 = new THREE.Mesh(new THREE.SphereGeometry(0.02, 8, 8), sparkleMat);
-hiR2.position.set(0.23, 0.03, 0.65);
-headGroup.add(hiR2);
-
-// 動態眼瞼
-const eyelidL = new THREE.Mesh(new THREE.SphereGeometry(0.125, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.5), petMat);
-eyelidL.position.set(-0.25, 0.07, 0.56);
-eyelidL.rotation.x = -Math.PI / 2;
-eyelidL.scale.set(1, 0.01, 1);
-headGroup.add(eyelidL);
-
-const eyelidR = new THREE.Mesh(new THREE.SphereGeometry(0.125, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.5), petMat);
-eyelidR.position.set(0.25, 0.07, 0.56);
-eyelidR.rotation.x = -Math.PI / 2;
-eyelidR.scale.set(1, 0.01, 1);
-headGroup.add(eyelidR);
-
-// 耳朵
-const earGroupL = new THREE.Group();
-const earGroupR = new THREE.Group();
-headGroup.add(earGroupL);
-headGroup.add(earGroupR);
-
-if (earType === 'rabbit') {{
-const rabbitEarGeo = new THREE.CylinderGeometry(0.09, 0.16, 0.95, 16);
-rabbitEarGeo.scale(1.2, 1.0, 0.6);
-const leftEar = new THREE.Mesh(rabbitEarGeo, petMat);
-leftEar.position.set(0, -0.4, 0);
-earGroupL.position.set(-0.55, 0.42, 0.05);
-earGroupL.rotation.z = 0.35;
-earGroupL.add(leftEar);
-
-const rightEar = new THREE.Mesh(rabbitEarGeo, petMat);
-rightEar.position.set(0, -0.4, 0);
-earGroupR.position.set(0.55, 0.42, 0.05);
-earGroupR.rotation.z = -0.35;
-earGroupR.add(rightEar);
-}} else if (earType === 'bear') {{
-const leftEar = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), petMat);
-leftEar.position.set(-0.48, 0.56, -0.05);
-earGroupL.add(leftEar);
-const innerL = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 14), innerEarMat);
-innerL.position.set(-0.48, 0.56, 0.05);
-earGroupL.add(innerL);
-
-const rightEar = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), petMat);
-rightEar.position.set(0.48, 0.56, -0.05);
-earGroupR.add(rightEar);
-const innerR = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 14), innerEarMat);
-innerR.position.set(0.48, 0.56, 0.05);
-earGroupR.add(innerR);
-}} else {{
-const coneEarGeo = new THREE.ConeGeometry(0.28, 0.52, 16);
-coneEarGeo.scale(1.1, 1.0, 0.65);
-
-const leftEar = new THREE.Mesh(coneEarGeo, petMat);
-leftEar.position.set(-0.38, 0.68, -0.05);
-leftEar.rotation.z = 0.28;
-leftEar.rotation.x = -0.15;
-earGroupL.add(leftEar);
-const innerL = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 14), innerEarMat);
-innerL.position.set(-0.38, 0.66, 0.03);
-innerL.rotation.z = 0.28;
-innerL.rotation.x = -0.15;
-earGroupL.add(innerL);
-
-const rightEar = new THREE.Mesh(coneEarGeo, petMat);
-rightEar.position.set(0.38, 0.68, -0.05);
-rightEar.rotation.z = -0.28;
-rightEar.rotation.x = -0.15;
-earGroupR.add(rightEar);
-const innerR = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 14), innerEarMat);
-innerR.position.set(0.38, 0.66, 0.03);
-innerR.rotation.z = -0.28;
-innerR.rotation.x = -0.15;
-earGroupR.add(innerR);
-}}
-
-// 4. 🦮 高捲翹蓬鬆大尾巴 (High-Curled Fluffy Sickle Tail)
-const tailGroup = new THREE.Group();
-tailGroup.position.set(0, 0.05, -0.55);
-petRoot.add(tailGroup);
-
-// 根部
-const tailBase = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), petMat);
-tailBase.scale.set(0.9, 1.3, 0.9);
-tailBase.rotation.x = -0.6;
-tailGroup.add(tailBase);
-
-// 捲翹中段 (彎向背部上方)
-const tailMid = new THREE.Mesh(new THREE.SphereGeometry(0.26, 16, 16), petMat);
-tailMid.scale.set(1.0, 1.4, 1.0);
-tailMid.position.set(0, 0.35, -0.1);
-tailMid.rotation.x = 0.8;
-tailGroup.add(tailMid);
-
-// 尾尖蓬鬆大毛球 (在後上方清晰可見)
-const tailTip = new THREE.Mesh(new THREE.SphereGeometry(0.28, 18, 18), secMat);
-tailTip.position.set(0, 0.65, 0.05);
-tailGroup.add(tailTip);
-
-// 3D 浮動愛心與金星粒子
-const particles = [];
-const heartShape = new THREE.Shape();
-heartShape.moveTo(0, 0);
-heartShape.bezierCurveTo(0, 0.1, -0.1, 0.2, -0.2, 0.2);
-heartShape.bezierCurveTo(-0.35, 0.2, -0.35, 0, -0.35, 0);
-heartShape.bezierCurveTo(-0.35, -0.15, -0.15, -0.3, 0, -0.45);
-heartShape.bezierCurveTo(0.15, -0.3, 0.35, -0.15, 0.35, 0);
-heartShape.bezierCurveTo(0.35, 0, 0.35, 0.2, 0.2, 0.2);
-heartShape.bezierCurveTo(0.1, 0.2, 0, 0.1, 0, 0);
-
-const heartExtrudeGeo = new THREE.ExtrudeGeometry(heartShape, {{ depth: 0.05, bevelEnabled: false }});
-heartExtrudeGeo.scale(0.35, 0.35, 0.35);
-const heartParticleMat = new THREE.MeshStandardMaterial({{ color: 0xFF5B7E, roughness: 0.3 }});
-const starParticleMat = new THREE.MeshStandardMaterial({{ color: 0xFFD700, roughness: 0.2, metalness: 0.5 }});
-
-function spawn3DParticle(isStar = false) {{
-const p = new THREE.Mesh(heartExtrudeGeo, isStar ? starParticleMat : heartParticleMat);
-p.position.set(petRoot.position.x + (Math.random() - 0.5) * 0.8, petRoot.position.y + 0.8 + Math.random() * 0.3, petRoot.position.z + (Math.random() - 0.5) * 0.8);
-p.rotation.z = Math.PI;
-p.userData = {{
-    vx: (Math.random() - 0.5) * 0.03,
-    vy: 0.035 + Math.random() * 0.025,
-    vz: (Math.random() - 0.5) * 0.03,
-    rotSpd: (Math.random() - 0.5) * 0.1,
-    life: 1.0
-}};
-scene.add(p);
-particles.push(p);
-}}
-
-// ==========================================
-// 🐾 4. 智能巡邏與走動 AI 系統 (Walking & Roaming Navigation Engine)
-// ==========================================
-let petState = 'IDLE'; // IDLE, WALKING, PETTED
-let petTargetPos = new THREE.Vector3(0, 0, 0.2);
-let walkSpeed = 0.038;
-let walkPhase = 0;
-let nextRoamTimer = 3.5;
-
-function pickRandomRoamTarget() {{
-// 隨機漫步目標（壁爐旁、窗邊、地毯中央、沙發邊）
-const spots = [
-    new THREE.Vector3(-1.4, 0, -0.6), // 壁爐旁暖身
-    new THREE.Vector3(1.2, 0, -1.0),  // 懶骨頭沙發邊
-    new THREE.Vector3(0.2, 0, -1.5),  // 窗前仰望星空
-    new THREE.Vector3(0, 0, 0.5),     // 正前方看著主人
-    new THREE.Vector3(-0.8, 0, 0.8),  // 左前小步
-    new THREE.Vector3(1.0, 0, 0.6)    // 右前探索
-];
-return spots[Math.floor(Math.random() * spots.length)];
-}}
-
-function triggerPetWalk() {{
-petTargetPos = pickRandomRoamTarget();
-petState = 'WALKING';
-}}
-
-function handlePetDirect() {{
-playChimeSound();
-const randQuote = quotes[Math.floor(Math.random() * quotes.length)];
-document.getElementById('pet-speech').innerText = randQuote;
-
-petState = 'PETTED';
-bounceScale.x = 1.35;
-bounceScale.y = 0.65;
-bounceScale.z = 1.35;
-petRoot.position.y = 0.35;
-
-for (let i = 0; i < 7; i++) {{
-    spawn3DParticle(i % 2 === 0);
-}}
-
-setTimeout(() => {{
-    if (petState === 'PETTED') petState = 'IDLE';
-}}, 1200);
-}}
-
-// ==========================================
-// 🍪 3D 零食模型與餵食進食動畫系統 (3D Snack & Munch Engine)
-// ==========================================
-let currentSnack = null;
-let eatingTimer = 0;
-
-function createSnackMesh(type) {{
-    const group = new THREE.Group();
-    if (type === 'milk') {{
-        const bowlGeo = new THREE.CylinderGeometry(0.32, 0.18, 0.2, 16);
-        const bowlMat = new THREE.MeshStandardMaterial({{ color: 0x5DADE2, roughness: 0.3 }});
-        const bowl = new THREE.Mesh(bowlGeo, bowlMat);
-        group.add(bowl);
-        const milkGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.04, 16);
-        const milkMat = new THREE.MeshStandardMaterial({{ color: 0xFFFFFF, roughness: 0.1 }});
-        const milk = new THREE.Mesh(milkGeo, milkMat);
-        milk.position.y = 0.08;
-        group.add(milk);
-    }} else if (type === 'jerky' || type === 'meat') {{
-        const meatGeo = new THREE.BoxGeometry(0.48, 0.12, 0.32);
-        const meatMat = new THREE.MeshStandardMaterial({{ color: 0x8B3A2B, roughness: 0.6 }});
-        const meat = new THREE.Mesh(meatGeo, meatMat);
-        group.add(meat);
-        const boneGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.58, 8);
-        const boneMat = new THREE.MeshStandardMaterial({{ color: 0xFDFEFE, roughness: 0.3 }});
-        const bone = new THREE.Mesh(boneGeo, boneMat);
-        bone.rotation.z = Math.PI / 2;
-        group.add(bone);
-    }} else if (type === 'honey') {{
-        const potGeo = new THREE.CylinderGeometry(0.24, 0.28, 0.38, 16);
-        const potMat = new THREE.MeshStandardMaterial({{ color: 0xD4AC0D, roughness: 0.3 }});
-        const pot = new THREE.Mesh(potGeo, potMat);
-        group.add(pot);
-        const capGeo = new THREE.SphereGeometry(0.2, 16, 16);
-        const capMat = new THREE.MeshStandardMaterial({{ color: 0xF39C12, roughness: 0.1 }});
-        const cap = new THREE.Mesh(capGeo, capMat);
-        cap.position.y = 0.19;
-        group.add(cap);
-    }} else if (type === 'berry') {{
-        for (let i = 0; i < 5; i++) {{
-            const bGeo = new THREE.SphereGeometry(0.1, 10, 10);
-            const bMat = new THREE.MeshStandardMaterial({{ color: 0xC0392B, roughness: 0.2 }});
-            const b = new THREE.Mesh(bGeo, bMat);
-            b.position.set((i%2 - 0.5)*0.16, 0.08, (Math.floor(i/2) - 0.5)*0.16);
-            group.add(b);
-        }}
-    }} else {{
-        const cGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.1, 16);
-        const cMat = new THREE.MeshStandardMaterial({{ color: 0xC68B59, roughness: 0.6 }});
-        const cookie = new THREE.Mesh(cGeo, cMat);
-        group.add(cookie);
-        for (let i = 0; i < 4; i++) {{
-            const chipGeo = new THREE.BoxGeometry(0.06, 0.03, 0.06);
-            const chipMat = new THREE.MeshStandardMaterial({{ color: 0x3E2723, roughness: 0.8 }});
-            const chip = new THREE.Mesh(chipGeo, chipMat);
-            chip.position.set((Math.random()-0.5)*0.3, 0.06, (Math.random()-0.5)*0.3);
-            group.add(chip);
-        }}
-    }}
-    return group;
+    try {{
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {{
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+            gain.gain.setValueAtTime(0.2, now + idx * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + idx * 0.08);
+            osc.stop(now + idx * 0.08 + 0.35);
+        }});
+    }} catch(e) {{}}
 }}
 
 function playEatingSound() {{
@@ -1648,6 +982,7 @@ function playEatingSound() {{
         const now = ctx.currentTime;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
+        osc.type = 'sine';
         osc.frequency.setValueAtTime(450 + Math.random()*200, now);
         osc.frequency.exponentialRampToValueAtTime(140, now + 0.07);
         gain.gain.setValueAtTime(0.35, now);
@@ -1659,6 +994,655 @@ function playEatingSound() {{
     }} catch(e) {{}}
 }}
 
+// ==========================================
+// 🌟 1. Three.js 電影級光影場景初始化 (Three.js Soft Lighting Setup)
+// ==========================================
+const container = document.getElementById('three-canvas-container');
+const width = container.clientWidth || 700;
+const height = 400;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xEFE6D8);
+
+const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+camera.position.set(4.5, 4.6, 7.8);
+camera.lookAt(0, 0.7, 0);
+
+const renderer = new THREE.WebGLRenderer({{ antialias: true, alpha: true }});
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+container.appendChild(renderer.domElement);
+
+// 主太陽斜射光 (Sunbeam Key Light with Soft Shadows)
+const sunLight = new THREE.DirectionalLight(0xFFF4E0, 1.4);
+sunLight.position.set(5.5, 9.0, 5.0);
+sunLight.castShadow = true;
+sunLight.shadow.mapSize.width = 1024;
+sunLight.shadow.mapSize.height = 1024;
+sunLight.shadow.camera.near = 0.5;
+sunLight.shadow.camera.far = 25;
+sunLight.shadow.camera.left = -5;
+sunLight.shadow.camera.right = 5;
+sunLight.shadow.camera.top = 5;
+sunLight.shadow.camera.bottom = -5;
+sunLight.shadow.bias = -0.001;
+scene.add(sunLight);
+
+// 半球天空環境光 (Sky / Ground Fill Light)
+const hemiLight = new THREE.HemisphereLight(0xF4F9FC, 0xDAC4AE, 0.85);
+hemiLight.position.set(0, 10, 0);
+scene.add(hemiLight);
+
+// 柔和前側補光 (Soft Front Fill)
+const fillLight = new THREE.DirectionalLight(0xFFE8D1, 0.45);
+fillLight.position.set(-4, 3, 5);
+scene.add(fillLight);
+
+const roomRoot = new THREE.Group();
+scene.add(roomRoot);
+
+// ==========================================
+// 🏡 2. 精緻北歐風溫馨微縮心靈小屋 (Handcrafted Nordic Sanctuary Room)
+// ==========================================
+const roomSize = 7.6;
+const wallHeight = 4.2;
+
+// 胡桃木拼接木質地板
+const floorGeo = new THREE.BoxGeometry(roomSize, 0.25, roomSize);
+const floorMat = new THREE.MeshStandardMaterial({{
+    color: 0x8C5E3B,
+    roughness: 0.55,
+    metalness: 0.05
+}});
+const roomFloor = new THREE.Mesh(floorGeo, floorMat);
+roomFloor.position.y = -0.125;
+roomFloor.receiveShadow = true;
+roomRoot.add(roomFloor);
+
+// 森林綠優雅背牆 (Back Wall)
+const wallMat = new THREE.MeshStandardMaterial({{
+    color: 0x6E8A73, // 質感鼠尾草森林綠
+    roughness: 0.85,
+    metalness: 0.02
+}});
+const backWall = new THREE.Mesh(new THREE.BoxGeometry(roomSize, wallHeight, 0.25), wallMat);
+backWall.position.set(0, wallHeight / 2, -roomSize / 2 - 0.125);
+backWall.receiveShadow = true;
+roomRoot.add(backWall);
+
+// 左側牆 (Left Wall)
+const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.25, wallHeight, roomSize), wallMat);
+leftWall.position.set(-roomSize / 2 - 0.125, wallHeight / 2, 0);
+leftWall.receiveShadow = true;
+roomRoot.add(leftWall);
+
+// 踢腳線 (Wood Baseboard Trimming)
+const trimMat = new THREE.MeshStandardMaterial({{ color: 0x483526, roughness: 0.6 }});
+const trimBack = new THREE.Mesh(new THREE.BoxGeometry(roomSize, 0.2, 0.1), trimMat);
+trimBack.position.set(0, 0.1, -roomSize / 2 + 0.05);
+roomRoot.add(trimBack);
+const trimLeft = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.2, roomSize), trimMat);
+trimLeft.position.set(-roomSize / 2 + 0.05, 0.1, 0);
+roomRoot.add(trimLeft);
+
+// 圓形波西米亞流蘇絨毛地毯 (Fluffy Bohemian Rug)
+const rugGeo = new THREE.CylinderGeometry(2.3, 2.3, 0.04, 32);
+const rugMat = new THREE.MeshStandardMaterial({{
+    color: 0xF7EFE5,
+    roughness: 0.95
+}});
+const rug = new THREE.Mesh(rugGeo, rugMat);
+rug.position.set(0, 0.02, 0.2);
+rug.receiveShadow = true;
+roomRoot.add(rug);
+
+// 地毯內圈溫暖印花
+const innerRugGeo = new THREE.CylinderGeometry(1.7, 1.7, 0.045, 32);
+const innerRugMat = new THREE.MeshStandardMaterial({{ color: 0xE8D5C2, roughness: 0.9 }});
+const innerRug = new THREE.Mesh(innerRugGeo, innerRugMat);
+innerRug.position.set(0, 0.025, 0.2);
+innerRug.receiveShadow = true;
+roomRoot.add(innerRug);
+
+// 🪟 景觀落地窗與戶外藍天青山 (Panoramic Window with Scenic View)
+const windowFrameGeo = new THREE.BoxGeometry(2.6, 2.6, 0.15);
+const windowFrameMat = new THREE.MeshStandardMaterial({{ color: 0xFAF6EE, roughness: 0.4 }});
+const windowFrame = new THREE.Mesh(windowFrameGeo, windowFrameMat);
+windowFrame.position.set(0.6, 2.4, -roomSize / 2 + 0.02);
+roomRoot.add(windowFrame);
+
+// 窗外藍天遠山
+const skyCanvas = new THREE.Mesh(new THREE.PlaneGeometry(2.35, 2.35), new THREE.MeshBasicMaterial({{ color: 0x9BD0EC }}));
+skyCanvas.position.set(0.6, 2.4, -roomSize / 2 + 0.08);
+roomRoot.add(skyCanvas);
+
+// 遠處山丘
+const hillGeo = new THREE.CircleGeometry(1.2, 20);
+const hillMat = new THREE.MeshBasicMaterial({{ color: 0x6DAA7A }});
+const hill = new THREE.Mesh(hillGeo, hillMat);
+hill.position.set(0.2, 1.8, -roomSize / 2 + 0.09);
+roomRoot.add(hill);
+
+// 窗框十字分隔
+const crossV = new THREE.Mesh(new THREE.BoxGeometry(0.08, 2.4, 0.08), windowFrameMat);
+crossV.position.set(0.6, 2.4, -roomSize / 2 + 0.1);
+roomRoot.add(crossV);
+const crossH = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.08), windowFrameMat);
+crossH.position.set(0.6, 2.4, -roomSize / 2 + 0.1);
+roomRoot.add(crossH);
+
+// ☀️ 窗戶傾瀉光斑
+const windowLight = new THREE.SpotLight(0xFFF3D6, 0.9, 12, Math.PI / 4, 0.4);
+windowLight.position.set(0.6, 3.5, -roomSize / 2 + 0.2);
+windowLight.target.position.set(0.6, 0, 1.0);
+scene.add(windowLight);
+scene.add(windowLight.target);
+
+// ==========================================
+// 🛋️ 3. 精緻 3D 家具交互佈置 (Interactive 3D Furniture Items)
+// ==========================================
+let fireplaceFlame = null;
+let fireplaceLight = null;
+let vinylDisc = null;
+let candleFlame = null;
+
+// (1) 歐式暖冬壁爐 (Fireplace)
+if (equippedDecor["fireplace"]) {{
+    const fpGroup = new THREE.Group();
+    fpGroup.position.set(-roomSize / 2 + 0.7, 0, -1.8);
+    fpGroup.rotation.y = Math.PI / 2;
+
+    const fpBase = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.5, 0.8), new THREE.MeshStandardMaterial({{ color: 0xD8C8B6, roughness: 0.8 }}));
+    fpBase.position.y = 0.75;
+    fpBase.castShadow = true;
+    fpBase.receiveShadow = true;
+    fpGroup.add(fpBase);
+
+    const hearth = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.8, 0.5), new THREE.MeshStandardMaterial({{ color: 0x221B15, roughness: 0.9 }}));
+    hearth.position.set(0, 0.5, 0.2);
+    fpGroup.add(hearth);
+
+    // 燃燒柴火
+    for(let i=0; i<3; i++) {{
+        const log = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.6, 8), new THREE.MeshStandardMaterial({{ color: 0x4A2E1B, roughness: 0.9 }}));
+        log.rotation.z = Math.PI/3 * (i - 1);
+        log.rotation.x = Math.PI/2;
+        log.position.set((i-1)*0.12, 0.2, 0.2);
+        fpGroup.add(log);
+    }}
+
+    // 跳動火焰
+    const flameGeo = new THREE.ConeGeometry(0.24, 0.55, 8);
+    const flameMat = new THREE.MeshBasicMaterial({{ color: 0xFF5722 }});
+    fireplaceFlame = new THREE.Mesh(flameGeo, flameMat);
+    fireplaceFlame.position.set(0, 0.45, 0.2);
+    fpGroup.add(fireplaceFlame);
+
+    fireplaceLight = new THREE.PointLight(0xFF8D36, 1.3, 5);
+    fireplaceLight.position.set(0, 0.5, 0.3);
+    fpGroup.add(fireplaceLight);
+
+    roomRoot.add(fpGroup);
+}}
+
+// (2) 雲朵懶骨頭沙發與愛心抱枕 (Cloud Sofa & Heart Pillow)
+if (equippedDecor["cushion"]) {{
+    const sofaGroup = new THREE.Group();
+    sofaGroup.position.set(1.9, 0, -1.9);
+    sofaGroup.rotation.y = -Math.PI / 5;
+
+    const sofaMat = new THREE.MeshStandardMaterial({{ color: 0xEAD9C8, roughness: 0.85 }});
+    const seat = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.45, 0.9), sofaMat);
+    seat.position.y = 0.25;
+    seat.castShadow = true;
+    sofaGroup.add(seat);
+
+    const backrest = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.7, 0.35), sofaMat);
+    backrest.position.set(0, 0.65, -0.32);
+    backrest.castShadow = true;
+    sofaGroup.add(backrest);
+
+    // 粉紅愛心抱枕
+    const pillow = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.18), new THREE.MeshStandardMaterial({{ color: 0xE4AFBD, roughness: 0.6 }}));
+    pillow.position.set(0.45, 0.55, -0.15);
+    pillow.rotation.z = -0.2;
+    pillow.rotation.y = 0.15;
+    sofaGroup.add(pillow);
+
+    roomRoot.add(sofaGroup);
+}}
+
+// (3) 淨化心靈龜背芋盆栽 (Monstera Plant)
+if (equippedDecor["plant"]) {{
+    const plantGroup = new THREE.Group();
+    plantGroup.position.set(-roomSize / 2 + 0.8, 0, 1.8);
+
+    const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.7, 16), new THREE.MeshStandardMaterial({{ color: 0xFDFBF7, roughness: 0.3 }}));
+    pot.position.y = 0.35;
+    pot.castShadow = true;
+    plantGroup.add(pot);
+
+    // 綠葉
+    const leafMat = new THREE.MeshStandardMaterial({{ color: 0x3E7D50, roughness: 0.5, side: THREE.DoubleSide }});
+    for (let i = 0; i < 5; i++) {{
+        const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.35, 8, 8), leafMat);
+        leaf.scale.set(1.0, 0.08, 1.6);
+        const ang = (i / 5) * Math.PI * 2;
+        leaf.position.set(Math.cos(ang) * 0.35, 0.8 + (i % 2) * 0.18, Math.sin(ang) * 0.35);
+        leaf.rotation.x = Math.sin(ang) * 0.45;
+        leaf.rotation.z = -Math.cos(ang) * 0.45;
+        leaf.castShadow = true;
+        plantGroup.add(leaf);
+    }}
+    roomRoot.add(plantGroup);
+}}
+
+// (4) 復古留聲機 (Vintage Gramophone)
+if (equippedDecor["gramophone"]) {{
+    const gramoGroup = new THREE.Group();
+    gramoGroup.position.set(2.4, 0, 1.2);
+    gramoGroup.rotation.y = -Math.PI / 1.5;
+
+    const table = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, 0.65, 16), new THREE.MeshStandardMaterial({{ color: 0x543A26, roughness: 0.7 }}));
+    table.position.y = 0.325;
+    table.castShadow = true;
+    gramoGroup.add(table);
+
+    const box = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.14, 0.45), new THREE.MeshStandardMaterial({{ color: 0x8C5832, roughness: 0.6 }}));
+    box.position.y = 0.72;
+    gramoGroup.add(box);
+
+    const discGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.02, 16);
+    const discMat = new THREE.MeshStandardMaterial({{ color: 0x1A1A1A, roughness: 0.2, metalness: 0.8 }});
+    vinylDisc = new THREE.Mesh(discGeo, discMat);
+    vinylDisc.position.set(0, 0.8, 0);
+    gramoGroup.add(vinylDisc);
+
+    const hornGeo = new THREE.ConeGeometry(0.24, 0.5, 16, 1, true);
+    const hornMat = new THREE.MeshStandardMaterial({{ color: 0xD4AF37, roughness: 0.2, metalness: 0.85, side: THREE.DoubleSide }});
+    const horn = new THREE.Mesh(hornGeo, hornMat);
+    horn.rotation.x = Math.PI / 2.6;
+    horn.position.set(0, 1.05, 0.15);
+    gramoGroup.add(horn);
+
+    roomRoot.add(gramoGroup);
+}}
+
+// (5) 香氛蠟燭 (Aromatherapy Candle)
+if (equippedDecor["candle"]) {{
+    const candleGroup = new THREE.Group();
+    candleGroup.position.set(-1.8, 0, 2.0);
+
+    const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.32, 0.45, 16), new THREE.MeshStandardMaterial({{ color: 0x6E4D34, roughness: 0.8 }}));
+    stool.position.y = 0.225;
+    stool.castShadow = true;
+    candleGroup.add(stool);
+
+    const cBody = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.22, 16), new THREE.MeshStandardMaterial({{ color: 0xF7F0E6, roughness: 0.4 }}));
+    cBody.position.y = 0.56;
+    candleGroup.add(cBody);
+
+    const cFlame = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.1, 8), new THREE.MeshBasicMaterial({{ color: 0xFFA726 }}));
+    cFlame.position.y = 0.72;
+    candleFlame = cFlame;
+    candleGroup.add(cFlame);
+
+    const candleLight = new THREE.PointLight(0xFFA726, 0.6, 2.5);
+    candleLight.position.set(0, 0.75, 0);
+    candleGroup.add(candleLight);
+
+    roomRoot.add(candleGroup);
+}}
+
+// ==========================================
+// 🐕 4. 超萌 3D 薩摩耶與神獸精緻建模 (High-Detail Ultra-Cute Pet Mesh)
+// ==========================================
+const petRoot = new THREE.Group();
+roomRoot.add(petRoot);
+petRoot.position.set(0, 0, 0.2);
+
+// 主體毛色與材質 (Fluffy Cream Shaders)
+let petPrimaryColor = 0xFFFFFF; // 薩摩耶雪白
+let petSecondaryColor = 0xFCE8D5; // 臉頰與肚皮粉白
+let isBear = (compId === 'bear');
+let isFox = (compId === 'fox');
+let isCat = (compId === 'cat');
+let isBunny = (compId === 'bunny');
+
+if (isBear) {{
+    petPrimaryColor = 0x8B5A33;
+    petSecondaryColor = 0xD9B48F;
+}} else if (isFox) {{
+    petPrimaryColor = 0xD35400;
+    petSecondaryColor = 0xFAF0E6;
+}} else if (isCat) {{
+    petPrimaryColor = 0x95A5A6;
+    petSecondaryColor = 0xFAFAFA;
+}} else if (isBunny) {{
+    petPrimaryColor = 0xFADBD8;
+    petSecondaryColor = 0xFFFFFF;
+}}
+
+const petFurMat = new THREE.MeshStandardMaterial({{
+    color: petPrimaryColor,
+    roughness: 0.88,
+    metalness: 0.02
+}});
+
+const petBellyMat = new THREE.MeshStandardMaterial({{
+    color: petSecondaryColor,
+    roughness: 0.9
+}});
+
+const pinkInnerMat = new THREE.MeshStandardMaterial({{
+    color: 0xF4AAB9, // 粉嫩內耳與肉球
+    roughness: 0.6
+}});
+
+// 身體 (Chubby Fluffy Pear Body)
+const bodyGeo = new THREE.SphereGeometry(0.58, 20, 20);
+bodyGeo.scale(1.0, 0.95, 1.25);
+const body = new THREE.Mesh(bodyGeo, petFurMat);
+body.position.y = 0.55;
+body.castShadow = true;
+body.receiveShadow = true;
+petRoot.add(body);
+
+// 蓬鬆胸前毛領圍脖 (Fluffy Mane Ruff)
+const maneGeo = new THREE.SphereGeometry(0.48, 16, 16);
+maneGeo.scale(1.2, 0.9, 0.9);
+const mane = new THREE.Mesh(maneGeo, petFurMat);
+mane.position.set(0, 0.72, 0.35);
+mane.castShadow = true;
+petRoot.add(mane);
+
+// 圓肚皮粉嫩點綴
+const bellyGeo = new THREE.SphereGeometry(0.48, 16, 16);
+bellyGeo.scale(0.85, 0.75, 0.9);
+const belly = new THREE.Mesh(bellyGeo, petBellyMat);
+belly.position.set(0, 0.45, 0.15);
+petRoot.add(belly);
+
+// 頭部骨架群組 (Head Group with Fluffy Cheeks & Smile)
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 0.98, 0.58);
+petRoot.add(headGroup);
+
+// 圓圓頭顱
+const headGeo = new THREE.SphereGeometry(0.52, 20, 20);
+headGeo.scale(1.05, 0.95, 1.0);
+const head = new THREE.Mesh(headGeo, petFurMat);
+head.castShadow = true;
+head.receiveShadow = true;
+headGroup.add(head);
+
+// 兩側毛茸茸臉頰 (Fluffy Cheek Tufts)
+const cheekL = new THREE.Mesh(new THREE.SphereGeometry(0.24, 12, 12), petFurMat);
+cheekL.scale.set(1.1, 0.8, 0.8);
+cheekL.position.set(-0.38, -0.08, 0.12);
+headGroup.add(cheekL);
+
+const cheekR = new THREE.Mesh(new THREE.SphereGeometry(0.24, 12, 12), petFurMat);
+cheekR.scale.set(1.1, 0.8, 0.8);
+cheekR.position.set(0.38, -0.08, 0.12);
+headGroup.add(cheekR);
+
+// 口鼻部 (Muzzle & Samoyed Smile)
+const muzzleGeo = new THREE.SphereGeometry(0.28, 16, 16);
+muzzleGeo.scale(0.95, 0.75, 1.15);
+const muzzle = new THREE.Mesh(muzzleGeo, petBellyMat);
+muzzle.position.set(0, -0.1, 0.36);
+muzzle.castShadow = true;
+headGroup.add(muzzle);
+
+// 濕潤黑鼻頭 (Glossy Black Nose)
+const noseGeo = new THREE.SphereGeometry(0.075, 12, 12);
+noseGeo.scale(1.2, 0.9, 0.9);
+const noseMat = new THREE.MeshStandardMaterial({{ color: 0x1A1412, roughness: 0.2, metalness: 0.3 }});
+const nose = new THREE.Mesh(noseGeo, noseMat);
+nose.position.set(0, 0.02, 0.65);
+headGroup.add(nose);
+
+// 招牌微笑粉紅小舌頭 (Panting Pink Tongue)
+const tongueGeo = new THREE.BoxGeometry(0.12, 0.04, 0.18);
+const tongueMat = new THREE.MeshStandardMaterial({{ color: 0xFF6B8B, roughness: 0.4 }});
+const tongue = new THREE.Mesh(tongueGeo, tongueMat);
+tongue.position.set(0, -0.18, 0.52);
+tongue.rotation.x = 0.25;
+headGroup.add(tongue);
+
+// 靈動大黑眼珠 (Glossy Eyes with Double Sparkles)
+const eyeMat = new THREE.MeshStandardMaterial({{ color: 0x1A1412, roughness: 0.1 }});
+const eyeWhiteMat = new THREE.MeshBasicMaterial({{ color: 0xFFFFFF }});
+
+function createEye(isLeft) {{
+    const eyeGrp = new THREE.Group();
+    const eyeball = new THREE.Mesh(new THREE.SphereGeometry(0.085, 14, 14), eyeMat);
+    eyeball.scale.set(1.0, 1.1, 0.6);
+    eyeGrp.add(eyeball);
+
+    // 主高光點
+    const sparkle1 = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 8), eyeWhiteMat);
+    sparkle1.position.set(0.02, 0.03, 0.06);
+    eyeGrp.add(sparkle1);
+
+    // 次高光點
+    const sparkle2 = new THREE.Mesh(new THREE.SphereGeometry(0.015, 6, 6), eyeWhiteMat);
+    sparkle2.position.set(-0.025, -0.02, 0.06);
+    eyeGrp.add(sparkle2);
+
+    eyeGrp.position.set(isLeft ? -0.22 : 0.22, 0.08, 0.44);
+    eyeGrp.rotation.y = isLeft ? -0.12 : 0.12;
+    return eyeGrp;
+}}
+
+const eyeL = createEye(true);
+const eyeR = createEye(false);
+headGroup.add(eyeL);
+headGroup.add(eyeR);
+
+// 眨眼眼瞼 (Eyelids for Blinking & Squinting Smile)
+const eyelidGeo = new THREE.SphereGeometry(0.09, 12, 12, 0, Math.PI * 2, 0, Math.PI / 2);
+const eyelidL = new THREE.Mesh(eyelidGeo, petFurMat);
+eyelidL.position.set(-0.22, 0.08, 0.44);
+eyelidL.rotation.x = -Math.PI / 2;
+eyelidL.scale.set(1.05, 1.05, 0.01);
+headGroup.add(eyelidL);
+
+const eyelidR = new THREE.Mesh(eyelidGeo, petFurMat);
+eyelidR.position.set(0.22, 0.08, 0.44);
+eyelidR.rotation.x = -Math.PI / 2;
+eyelidR.scale.set(1.05, 1.05, 0.01);
+headGroup.add(eyelidR);
+
+// 絨毛耳朵 (Fluffy Ears with Twitching Animation)
+const earGroupL = new THREE.Group();
+earGroupL.position.set(-0.32, 0.38, 0.05);
+headGroup.add(earGroupL);
+
+const earL = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 12), petFurMat);
+earL.rotation.z = 0.35;
+earL.rotation.x = -0.1;
+earL.scale.set(1.0, 1.0, 0.55);
+earGroupL.add(earL);
+
+const innerEarL = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.28, 10), pinkInnerMat);
+innerEarL.rotation.z = 0.35;
+innerEarL.rotation.x = -0.1;
+innerEarL.position.set(0.02, -0.02, 0.04);
+innerEarL.scale.set(0.9, 0.9, 0.5);
+earGroupL.add(innerEarL);
+
+const earGroupR = new THREE.Group();
+earGroupR.position.set(0.32, 0.38, 0.05);
+headGroup.add(earGroupR);
+
+const earR = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 12), petFurMat);
+earR.rotation.z = -0.35;
+earR.rotation.x = -0.1;
+earR.scale.set(1.0, 1.0, 0.55);
+earGroupR.add(earR);
+
+const innerEarR = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.28, 10), pinkInnerMat);
+innerEarR.rotation.z = -0.35;
+innerEarR.rotation.x = -0.1;
+innerEarR.position.set(-0.02, -0.02, 0.04);
+innerEarR.scale.set(0.9, 0.9, 0.5);
+earGroupR.add(innerEarR);
+
+// 項圈與金鈴鐺 (Red Collar & Golden Bell)
+const collarGeo = new THREE.TorusGeometry(0.44, 0.05, 12, 24);
+const collarMat = new THREE.MeshStandardMaterial({{ color: 0xD32F2F, roughness: 0.4 }});
+const collar = new THREE.Mesh(collarGeo, collarMat);
+collar.rotation.x = Math.PI / 2;
+collar.position.set(0, 0.72, 0.32);
+petRoot.add(collar);
+
+const bellGeo = new THREE.SphereGeometry(0.08, 12, 12);
+const bellMat = new THREE.MeshStandardMaterial({{ color: 0xFFD700, roughness: 0.2, metalness: 0.85 }});
+const bell = new THREE.Mesh(bellGeo, bellMat);
+bell.position.set(0, 0.62, 0.68);
+petRoot.add(bell);
+
+// 4 隻胖萌四肢與粉紅肉球 (Chubby Legs with Pink Paw Pads)
+function createLeg(x, z) {{
+    const legGroup = new THREE.Group();
+    legGroup.position.set(x, 0.42, z);
+
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.16, 0.44, 12), petFurMat);
+    leg.position.y = -0.22;
+    leg.castShadow = true;
+    legGroup.add(leg);
+
+    const paw = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 12), petFurMat);
+    paw.scale.set(1.0, 0.6, 1.25);
+    paw.position.set(0, -0.38, 0.06);
+    paw.castShadow = true;
+    legGroup.add(paw);
+
+    // 腳底肉球
+    const pad = new THREE.Mesh(new THREE.CircleGeometry(0.08, 10), pinkInnerMat);
+    pad.rotation.x = Math.PI / 2;
+    pad.position.set(0, -0.44, 0.06);
+    legGroup.add(pad);
+
+    petRoot.add(legGroup);
+    return legGroup;
+}}
+
+const legFLGroup = createLeg(-0.32, 0.42);
+const legFRGroup = createLeg(0.32, 0.42);
+const legBLGroup = createLeg(-0.32, -0.42);
+const legBRGroup = createLeg(0.32, -0.42);
+
+// 大羽狀高捲翹鐮刀尾巴 (Fluffy Curled Plume Tail)
+const tailGroup = new THREE.Group();
+tailGroup.position.set(0, 0.68, -0.58);
+petRoot.add(tailGroup);
+
+for (let i = 0; i < 4; i++) {{
+    const tailSeg = new THREE.Mesh(new THREE.SphereGeometry(0.24 - i * 0.035, 12, 12), petFurMat);
+    tailSeg.position.set(0, i * 0.18, -i * 0.08 + Math.sin(i * 0.8) * 0.12);
+    tailSeg.castShadow = true;
+    tailGroup.add(tailSeg);
+}}
+tailGroup.rotation.x = 0.6; // 自然向上高捲在背上
+
+// 陰影底盤 (Soft Pet Drop Shadow)
+const shadowGeo = new THREE.CircleGeometry(0.68, 24);
+const shadowMat = new THREE.MeshBasicMaterial({{ color: 0x000000, transparent: true, opacity: 0.25 }});
+const petShadow = new THREE.Mesh(shadowGeo, shadowMat);
+petShadow.rotation.x = -Math.PI / 2;
+petShadow.position.y = 0.02;
+petRoot.add(petShadow);
+
+// ==========================================
+// 💖 5. 愛心與星光 3D 粒子系統 (Bursting 3D Particle System)
+// ==========================================
+const particles = [];
+const heartShape = new THREE.Shape();
+heartShape.moveTo(0, 0);
+heartShape.bezierCurveTo(0, 0.1, -0.1, 0.2, -0.2, 0.2);
+heartShape.bezierCurveTo(-0.35, 0.2, -0.35, 0, -0.35, 0);
+heartShape.bezierCurveTo(-0.35, -0.15, -0.15, -0.3, 0, -0.45);
+heartShape.bezierCurveTo(0.15, -0.3, 0.35, -0.15, 0.35, 0);
+heartShape.bezierCurveTo(0.35, 0, 0.35, 0.2, 0.2, 0.2);
+heartShape.bezierCurveTo(0.1, 0.2, 0, 0.1, 0, 0);
+
+const heartExtrudeGeo = new THREE.ExtrudeGeometry(heartShape, {{ depth: 0.05, bevelEnabled: false }});
+heartExtrudeGeo.scale(0.38, 0.38, 0.38);
+const heartParticleMat = new THREE.MeshStandardMaterial({{ color: 0xFF4D79, roughness: 0.3 }});
+const starParticleMat = new THREE.MeshStandardMaterial({{ color: 0xFFD700, roughness: 0.2, metalness: 0.6 }});
+
+function spawn3DParticle(isStar = false) {{
+    const p = new THREE.Mesh(heartExtrudeGeo, isStar ? starParticleMat : heartParticleMat);
+    p.position.set(petRoot.position.x + (Math.random() - 0.5) * 0.8, petRoot.position.y + 0.8 + Math.random() * 0.4, petRoot.position.z + (Math.random() - 0.5) * 0.8);
+    p.rotation.z = Math.PI;
+    p.userData = {{
+        vx: (Math.random() - 0.5) * 0.035,
+        vy: 0.04 + Math.random() * 0.03,
+        vz: (Math.random() - 0.5) * 0.035,
+        rotSpd: (Math.random() - 0.5) * 0.12,
+        life: 1.0
+    }};
+    scene.add(p);
+    particles.push(p);
+}}
+
+// ==========================================
+// 🍪 6. 3D 零食空投與進食大嚼系統 (3D Snack Drop & Munch Engine)
+// ==========================================
+let currentSnack = null;
+let eatingTimer = 0;
+
+function createSnackMesh(type) {{
+    const group = new THREE.Group();
+    if (type === 'milk') {{
+        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.2, 0.22, 16), new THREE.MeshStandardMaterial({{ color: 0x4A90E2, roughness: 0.3 }}));
+        bowl.castShadow = true;
+        group.add(bowl);
+        const milk = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.04, 16), new THREE.MeshStandardMaterial({{ color: 0xFFFFFF, roughness: 0.1 }}));
+        milk.position.y = 0.09;
+        group.add(milk);
+    }} else if (type === 'jerky' || type === 'meat') {{
+        const meat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.14, 0.35), new THREE.MeshStandardMaterial({{ color: 0x8E3A2B, roughness: 0.6 }}));
+        meat.castShadow = true;
+        group.add(meat);
+        const bone = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.65, 8), new THREE.MeshStandardMaterial({{ color: 0xFAFAFA, roughness: 0.3 }}));
+        bone.rotation.z = Math.PI / 2;
+        group.add(bone);
+    }} else if (type === 'honey') {{
+        const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.3, 0.4, 16), new THREE.MeshStandardMaterial({{ color: 0xD4AC0D, roughness: 0.3 }}));
+        pot.castShadow = true;
+        group.add(pot);
+        const cap = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), new THREE.MeshStandardMaterial({{ color: 0xF39C12, roughness: 0.1 }}));
+        cap.position.y = 0.2;
+        group.add(cap);
+    }} else if (type === 'berry') {{
+        for (let i = 0; i < 5; i++) {{
+            const b = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 10), new THREE.MeshStandardMaterial({{ color: 0xC0392B, roughness: 0.2 }}));
+            b.position.set((i%2 - 0.5)*0.18, 0.1, (Math.floor(i/2) - 0.5)*0.18);
+            b.castShadow = true;
+            group.add(b);
+        }}
+    }} else {{
+        // 餅乾 (Cookie)
+        const cookie = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.1, 16), new THREE.MeshStandardMaterial({{ color: 0xC68B59, roughness: 0.6 }}));
+        cookie.castShadow = true;
+        group.add(cookie);
+        for (let i = 0; i < 5; i++) {{
+            const chip = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.04, 0.06), new THREE.MeshStandardMaterial({{ color: 0x3E2723, roughness: 0.8 }}));
+            chip.position.set((Math.random()-0.5)*0.35, 0.06, (Math.random()-0.5)*0.35);
+            group.add(chip);
+        }}
+    }}
+    return group;
+}}
+
 function triggerFeedingAnimation(snackType, snackName) {{
     if (currentSnack) {{
         scene.remove(currentSnack);
@@ -1666,13 +1650,13 @@ function triggerFeedingAnimation(snackType, snackName) {{
     }}
     
     // 在寵物前方 0.9 單位處生成零食並空投
-    const forwardX = Math.sin(petRoot.rotation.y) * 0.9;
-    const forwardZ = Math.cos(petRoot.rotation.y) * 0.9;
+    const forwardX = Math.sin(petRoot.rotation.y) * 0.95;
+    const forwardZ = Math.cos(petRoot.rotation.y) * 0.95;
     const targetX = petRoot.position.x + forwardX;
     const targetZ = petRoot.position.z + forwardZ;
     
     currentSnack = createSnackMesh(snackType);
-    currentSnack.position.set(targetX, 3.2, targetZ);
+    currentSnack.position.set(targetX, 3.4, targetZ);
     currentSnack.userData = {{
         targetY: 0.15,
         vy: -0.14,
@@ -1682,13 +1666,66 @@ function triggerFeedingAnimation(snackType, snackName) {{
     scene.add(currentSnack);
     
     petState = 'EATING';
-    eatingTimer = 3.2;
+    eatingTimer = 3.4;
     
     document.getElementById('pet-speech').innerHTML = '「哇！是好香好香的 <strong>' + (snackName || '美味點心') + '</strong>！嗷嗚大口開動囉～💖」';
 }}
 
+// ==========================================
+// 🐾 7. 生動多狀態寵物 AI 行為系統 (Living Multi-Behavior Engine)
+// ==========================================
+let petState = 'IDLE'; // IDLE, WALKING, PETTED, EATING, SITTING
+let petTargetPos = new THREE.Vector3(0, 0, 0.2);
+let walkSpeed = 0.042;
+let walkPhase = 0;
+let nextRoamTimer = 4.0;
+let earTwitchTimer = 2.0;
 
-// 觸控 / 滑鼠互動
+function pickRandomRoamTarget() {{
+    const spots = [
+        new THREE.Vector3(-1.5, 0, -0.6), // 壁爐旁
+        new THREE.Vector3(1.3, 0, -0.8),  // 沙發邊
+        new THREE.Vector3(0.4, 0, -1.6),  // 窗前
+        new THREE.Vector3(0, 0, 0.6),     // 正前方近距離
+        new THREE.Vector3(-0.9, 0, 0.9),  // 左前探索
+        new THREE.Vector3(1.1, 0, 0.7)    // 右前探索
+    ];
+    return spots[Math.floor(Math.random() * spots.length)];
+}}
+
+function triggerPetWalk() {{
+    petTargetPos = pickRandomRoamTarget();
+    petState = 'WALKING';
+}}
+
+function triggerPetSit() {{
+    petState = 'SITTING';
+    document.getElementById('pet-speech').innerText = '「呼～靜靜坐著陪在你身邊，感受心裡的這份平靜與安穩。」';
+    playChimeSound();
+    for (let i = 0; i < 4; i++) spawn3DParticle(true);
+}}
+
+function handlePetDirect() {{
+    playChimeSound();
+    const randQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('pet-speech').innerText = randQuote;
+
+    petState = 'PETTED';
+    bounceScale.x = 1.38;
+    bounceScale.y = 0.62;
+    bounceScale.z = 1.38;
+    petRoot.position.y = 0.42;
+
+    for (let i = 0; i < 8; i++) {{
+        spawn3DParticle(i % 2 === 0);
+    }}
+
+    setTimeout(() => {{
+        if (petState === 'PETTED') petState = 'IDLE';
+    }}, 1300);
+}}
+
+// 觸控與拖曳旋轉
 let mouseX = 0, mouseY = 0;
 let isDragging = false;
 let prevMouseX = 0;
@@ -1699,249 +1736,267 @@ const raycaster = new THREE.Raycaster();
 const mouseVec = new THREE.Vector2();
 
 container.addEventListener('click', (e) => {{
-const rect = container.getBoundingClientRect();
-mouseVec.x = ((e.clientX - rect.left) / width) * 2 - 1;
-mouseVec.y = -((e.clientY - rect.top) / height) * 2 + 1;
+    const rect = container.getBoundingClientRect();
+    mouseVec.x = ((e.clientX - rect.left) / width) * 2 - 1;
+    mouseVec.y = -((e.clientY - rect.top) / height) * 2 + 1;
 
-raycaster.setFromCamera(mouseVec, camera);
-const intersects = raycaster.intersectObjects([roomFloor, rug, head, body], true);
+    raycaster.setFromCamera(mouseVec, camera);
+    const intersects = raycaster.intersectObjects([roomFloor, rug, head, body, mane], true);
 
-if (intersects.length > 0) {{
-    const hit = intersects[0];
-    if (hit.object === head || hit.object === body || hit.object.parent === headGroup || hit.object.parent === petRoot) {{
-        handlePetDirect();
-    }} else {{
-        // 點擊地板 -> 引導走動到目標點
-        petTargetPos.set(
-            Math.max(-2.4, Math.min(2.4, hit.point.x)),
-            0,
-            Math.max(-2.4, Math.min(2.4, hit.point.z))
-        );
-        petState = 'WALKING';
+    if (intersects.length > 0) {{
+        const hit = intersects[0];
+        if (hit.object === head || hit.object === body || hit.object === mane || hit.object.parent === headGroup || hit.object.parent === petRoot) {{
+            handlePetDirect();
+        }} else {{
+            petTargetPos.set(
+                Math.max(-2.4, Math.min(2.4, hit.point.x)),
+                0,
+                Math.max(-2.4, Math.min(2.4, hit.point.z))
+            );
+            petState = 'WALKING';
+        }}
     }}
-}}
 }});
 
 window.addEventListener('mousemove', (e) => {{
-const rect = container.getBoundingClientRect();
-mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
-mouseY = -((e.clientY - rect.top) / height) * 2 + 1;
+    const rect = container.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
+    mouseY = -((e.clientY - rect.top) / height) * 2 + 1;
 
-if (isDragging) {{
-    const delta = e.clientX - prevMouseX;
-    targetRotY += delta * 0.012;
-    prevMouseX = e.clientX;
-}}
+    if (isDragging) {{
+        const delta = e.clientX - prevMouseX;
+        targetRotY += delta * 0.012;
+        prevMouseX = e.clientX;
+    }}
 }});
 
 container.addEventListener('mousedown', (e) => {{
-isDragging = true;
-prevMouseX = e.clientX;
+    isDragging = true;
+    prevMouseX = e.clientX;
 }});
 
 window.addEventListener('mouseup', () => {{
-isDragging = false;
+    isDragging = false;
 }});
 
 container.addEventListener('touchmove', (e) => {{
-if (e.touches.length > 0) {{
-    const touch = e.touches[0];
-    const rect = container.getBoundingClientRect();
-    mouseX = ((touch.clientX - rect.left) / width) * 2 - 1;
-    mouseY = -((touch.clientY - rect.top) / height) * 2 + 1;
-}}
+    if (e.touches.length > 0) {{
+        const touch = e.touches[0];
+        const rect = container.getBoundingClientRect();
+        mouseX = ((touch.clientX - rect.left) / width) * 2 - 1;
+        mouseY = -((touch.clientY - rect.top) / height) * 2 + 1;
+    }}
 }}, {{ passive: true }});
 
-// 主動畫渲染迴圈 (60 FPS)
+// ==========================================
+// 🎬 8. 60 FPS 流暢渲染與微動作動畫迴圈 (Living 60 FPS Animation Loop)
+// ==========================================
 let clock = new THREE.Clock();
 let blinkTimer = 0;
 let nextBlinkTime = 3.0;
 
 function animate() {{
-requestAnimationFrame(animate);
-const dt = clock.getDelta();
-const t = clock.getElapsedTime();
+    requestAnimationFrame(animate);
+    const dt = clock.getDelta();
+    const t = clock.getElapsedTime();
 
-// 1. 走動與漫步導航邏輯 (Walking AI Cycle)
-if (petState === 'WALKING') {{
-    const dx = petTargetPos.x - petRoot.position.x;
-    const dz = petTargetPos.z - petRoot.position.z;
-    const dist = Math.sqrt(dx * dx + dz * dz);
+    // 1. 寵物多狀態行為邏輯 (Pet Behavior State Machine)
+    if (petState === 'WALKING') {{
+        const dx = petTargetPos.x - petRoot.position.x;
+        const dz = petTargetPos.z - petRoot.position.z;
+        const dist = Math.sqrt(dx * dx + dz * dz);
 
-    if (dist > 0.1) {{
-        // 轉向目標
-        const targetAngle = Math.atan2(dx, dz);
-        let diffAngle = targetAngle - petRoot.rotation.y;
-        while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
-        while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
-        petRoot.rotation.y += diffAngle * 0.12;
+        if (dist > 0.1) {{
+            const targetAngle = Math.atan2(dx, dz);
+            let diffAngle = targetAngle - petRoot.rotation.y;
+            while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
+            while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
+            petRoot.rotation.y += diffAngle * 0.12;
 
-        // 向前移動
-        petRoot.position.x += Math.sin(petRoot.rotation.y) * walkSpeed;
-        petRoot.position.z += Math.cos(petRoot.rotation.y) * walkSpeed;
+            petRoot.position.x += Math.sin(petRoot.rotation.y) * walkSpeed;
+            petRoot.position.z += Math.cos(petRoot.rotation.y) * walkSpeed;
 
-        // 四肢交替擺動動畫 (Bouncy Walking Trot)
-        walkPhase += 0.22;
-        const legSwing = Math.sin(walkPhase) * 0.55;
-        legFLGroup.rotation.x = legSwing;
-        legFRGroup.rotation.x = -legSwing;
-        legBLGroup.rotation.x = -legSwing;
-        legBRGroup.rotation.x = legSwing;
+            // 四肢對角步態擺動 (Quadruped Trot Cycle)
+            walkPhase += 0.22;
+            const legSwing = Math.sin(walkPhase) * 0.55;
+            legFLGroup.rotation.x = legSwing;
+            legFRGroup.rotation.x = -legSwing;
+            legBLGroup.rotation.x = -legSwing;
+            legBRGroup.rotation.x = legSwing;
 
-        // 身體微上下起伏
-        petRoot.position.y = Math.abs(Math.sin(walkPhase)) * 0.08;
-        tailGroup.rotation.z = Math.sin(walkPhase * 2) * 0.6;
-    }} else {{
-        // 到達目的地
-        petState = 'IDLE';
-        nextRoamTimer = 4.0 + Math.random() * 4.0;
-        legFLGroup.rotation.x = 0;
-        legFRGroup.rotation.x = 0;
-        legBLGroup.rotation.x = 0;
-        legBRGroup.rotation.x = 0;
-    }}
-}} else if (petState === 'IDLE') {{
-    // 倒數自動隨機漫步
-    nextRoamTimer -= dt;
-    if (nextRoamTimer <= 0) {{
-        petTargetPos = pickRandomRoamTarget();
-        petState = 'WALKING';
-    }}
-
-    // 正念呼吸律動
-    const breathe = Math.sin(t * 3.14) * 0.035;
-    bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.12);
-    bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.12);
-    bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.12);
-    petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.1);
-
-    petRoot.scale.set(
-        bounceScale.x * (1 - breathe * 0.4),
-        bounceScale.y * (1 + breathe),
-        bounceScale.z * (1 - breathe * 0.4)
-    );
-
-    tailGroup.rotation.z = Math.sin(t * 6) * 0.35;
-    tailGroup.rotation.y = Math.cos(t * 6) * 0.2;
-}} else if (petState === 'EATING') {{
-    eatingTimer -= dt;
-    
-    // 零食物理掉落與進食縮小
-    if (currentSnack) {{
-        if (!currentSnack.userData.isLanded) {{
-            currentSnack.position.y += currentSnack.userData.vy;
-            if (currentSnack.position.y <= currentSnack.userData.targetY) {{
-                currentSnack.position.y = currentSnack.userData.targetY;
-                currentSnack.userData.isLanded = true;
-                playChimeSound();
-                for (let i = 0; i < 5; i++) spawn3DParticle(true);
-            }}
+            petRoot.position.y = Math.abs(Math.sin(walkPhase)) * 0.09;
+            tailGroup.rotation.z = Math.sin(walkPhase * 2) * 0.65;
+            tongue.position.y = -0.18 + Math.sin(walkPhase * 2) * 0.03;
         }} else {{
-            const progress = Math.max(0.01, eatingTimer / 3.2);
-            currentSnack.scale.setScalar(progress);
-            currentSnack.rotation.y += 0.02;
+            petState = 'IDLE';
+            nextRoamTimer = 4.0 + Math.random() * 4.0;
+            legFLGroup.rotation.x = 0;
+            legFRGroup.rotation.x = 0;
+            legBLGroup.rotation.x = 0;
+            legBRGroup.rotation.x = 0;
         }}
-    }}
-    
-    // 寵物低頭咀嚼開心動畫 (Chewing & Munching Animation)
-    const chewCycle = Math.sin(t * 18);
-    headGroup.position.y = 0.38 + chewCycle * 0.06;
-    headGroup.rotation.x = 0.35 + chewCycle * 0.12;
-    tailGroup.rotation.z = Math.sin(t * 24) * 0.85; // 狂搖尾巴
-    
-    if (Math.random() < 0.14) {{
-        spawn3DParticle(Math.random() > 0.5);
-    }}
-    if (Math.random() < 0.08) {{
-        playEatingSound();
-    }}
-    
-    if (eatingTimer <= 0) {{
-        if (currentSnack) {{
-            scene.remove(currentSnack);
-            currentSnack = null;
+    }} else if (petState === 'IDLE') {{
+        nextRoamTimer -= dt;
+        if (nextRoamTimer <= 0) {{
+            petTargetPos = pickRandomRoamTarget();
+            petState = 'WALKING';
         }}
-        petState = 'IDLE';
-        headGroup.position.y = 0.55;
-        headGroup.rotation.x = 0;
-        bounceScale.x = 1.35;
-        bounceScale.y = 0.65;
-        bounceScale.z = 1.35;
-        petRoot.position.y = 0.45;
+
+        // 開心吐舌呼吸律動 (Panting & Breathing)
+        const breathe = Math.sin(t * 3.2) * 0.035;
+        bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.12);
+        bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.12);
+        bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.12);
+        petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.1);
+
+        petRoot.scale.set(
+            bounceScale.x * (1 - breathe * 0.4),
+            bounceScale.y * (1 + breathe),
+            bounceScale.z * (1 - breathe * 0.4)
+        );
+
+        tailGroup.rotation.z = Math.sin(t * 7) * 0.4;
+        tailGroup.rotation.y = Math.cos(t * 7) * 0.25;
+        tongue.position.y = -0.18 + Math.sin(t * 14) * 0.02; // 吐舌上下喘氣
+
+    }} else if (petState === 'SITTING') {{
+        petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, -0.12, 0.1);
+        legBLGroup.rotation.x = -Math.PI / 3;
+        legBRGroup.rotation.x = -Math.PI / 3;
+        tailGroup.rotation.z = Math.sin(t * 3) * 0.2;
+
+    }} else if (petState === 'PETTED') {{
+        bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.1);
+        bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.1);
+        bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.1);
+        petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.08);
+        tailGroup.rotation.z = Math.sin(t * 16) * 0.8; // 興奮搖尾巴
+        eyelidL.scale.y = 0.9; // 瞇眼微笑
+        eyelidR.scale.y = 0.9;
+
+    }} else if (petState === 'EATING') {{
+        eatingTimer -= dt;
         
-        playChimeSound();
-        for (let i = 0; i < 10; i++) spawn3DParticle(i % 2 === 0);
-        document.getElementById('pet-speech').innerHTML = '「呼～吃得好飽好幸福！謝謝主人的愛心投餵✨💖 (+EXP)」';
+        if (currentSnack) {{
+            if (!currentSnack.userData.isLanded) {{
+                currentSnack.position.y += currentSnack.userData.vy;
+                if (currentSnack.position.y <= currentSnack.userData.targetY) {{
+                    currentSnack.position.y = currentSnack.userData.targetY;
+                    currentSnack.userData.isLanded = true;
+                    playChimeSound();
+                    for (let i = 0; i < 5; i++) spawn3DParticle(true);
+                }}
+            }} else {{
+                const progress = Math.max(0.01, eatingTimer / 3.4);
+                currentSnack.scale.setScalar(progress);
+                currentSnack.rotation.y += 0.02;
+            }}
+        }}
+
+        // 低頭大嚼咀嚼動畫 (Munching & Chewing Animation)
+        const chewCycle = Math.sin(t * 18);
+        headGroup.position.y = 0.4 + chewCycle * 0.06;
+        headGroup.rotation.x = 0.36 + chewCycle * 0.12;
+        tailGroup.rotation.z = Math.sin(t * 24) * 0.85;
+
+        if (Math.random() < 0.15) {{
+            spawn3DParticle(Math.random() > 0.5);
+        }}
+        if (Math.random() < 0.07) {{
+            playEatingSound();
+        }}
+
+        if (eatingTimer <= 0) {{
+            if (currentSnack) {{
+                scene.remove(currentSnack);
+                currentSnack = null;
+            }}
+            petState = 'IDLE';
+            headGroup.position.y = 0.98;
+            headGroup.rotation.x = 0;
+            bounceScale.x = 1.35;
+            bounceScale.y = 0.65;
+            bounceScale.z = 1.35;
+            petRoot.position.y = 0.45;
+
+            playChimeSound();
+            for (let i = 0; i < 10; i++) spawn3DParticle(i % 2 === 0);
+            document.getElementById('pet-speech').innerHTML = '「呼～吃得好飽好幸福！謝謝主人的愛心投餵✨💖 (+EXP)」';
+        }}
     }}
-}} else if (petState === 'PETTED') {{
-    bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.1);
-    bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.1);
-    bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.1);
-    petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.08);
-    tailGroup.rotation.z = Math.sin(t * 12) * 0.7;
-}}
 
-// 2. 鈴鐺晃動
-bell.rotation.z = Math.sin(t * 6) * 0.2;
+    // 2. 鈴鐺隨動
+    bell.rotation.z = Math.sin(t * 6) * 0.2;
 
-// 3. 家具動態
-if (fireplaceFlame) {{
-    fireplaceFlame.scale.y = 1.0 + Math.sin(t * 16) * 0.25;
-    fireplaceFlame.scale.x = 1.0 + Math.cos(t * 14) * 0.15;
-}}
-if (fireplaceLight) {{
-    fireplaceLight.intensity = 1.1 + Math.sin(t * 18) * 0.35;
-}}
-if (vinylDisc) {{
-    vinylDisc.rotation.y += 0.04;
-}}
-if (candleFlame) {{
-    candleFlame.scale.x = 1.0 + Math.sin(t * 20) * 0.2;
-    candleFlame.scale.y = 1.0 + Math.cos(t * 22) * 0.25;
-}}
-
-// 4. 頭部視線追蹤 (Look-At Mouse)
-const targetHeadRotY = Math.max(-0.4, Math.min(0.4, mouseX * 0.6));
-const targetHeadRotX = Math.max(-0.25, Math.min(0.25, -mouseY * 0.4));
-headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, targetHeadRotY, 0.08);
-headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, targetHeadRotX, 0.08);
-
-earGroupL.rotation.x = Math.sin(t * 4) * 0.06;
-earGroupR.rotation.x = Math.cos(t * 4) * 0.06;
-
-// 5. 自然眨眼
-blinkTimer += dt;
-if (blinkTimer > nextBlinkTime) {{
-    eyelidL.scale.y = THREE.MathUtils.lerp(eyelidL.scale.y, 1.0, 0.35);
-    eyelidR.scale.y = THREE.MathUtils.lerp(eyelidR.scale.y, 1.0, 0.35);
-    if (blinkTimer > nextBlinkTime + 0.16) {{
-        eyelidL.scale.y = 0.01;
-        eyelidR.scale.y = 0.01;
-        blinkTimer = 0;
-        nextBlinkTime = 2.5 + Math.random() * 3.0;
+    // 3. 家具微動態 (Fireplace, Vinyl, Candle)
+    if (fireplaceFlame) {{
+        fireplaceFlame.scale.y = 1.0 + Math.sin(t * 18) * 0.25;
+        fireplaceFlame.scale.x = 1.0 + Math.cos(t * 16) * 0.15;
     }}
-}}
-
-// 6. 整個小屋 360° 拖曳旋轉
-roomRoot.rotation.y = THREE.MathUtils.lerp(roomRoot.rotation.y, targetRotY, 0.1);
-
-// 7. 更新 3D 粒子
-for (let i = particles.length - 1; i >= 0; i--) {{
-    const p = particles[i];
-    p.position.x += p.userData.vx;
-    p.position.y += p.userData.vy;
-    p.position.z += p.userData.vz;
-    p.rotation.y += p.userData.rotSpd;
-    p.userData.life -= 0.02;
-    p.scale.setScalar(p.userData.life * 0.5);
-
-    if (p.userData.life <= 0) {{
-        scene.remove(p);
-        particles.splice(i, 1);
+    if (fireplaceLight) {{
+        fireplaceLight.intensity = 1.2 + Math.sin(t * 20) * 0.35;
     }}
-}}
+    if (vinylDisc) {{
+        vinylDisc.rotation.y += 0.04;
+    }}
+    if (candleFlame) {{
+        candleFlame.scale.x = 1.0 + Math.sin(t * 20) * 0.2;
+        candleFlame.scale.y = 1.0 + Math.cos(t * 22) * 0.25;
+    }}
 
-renderer.render(scene, camera);
+    // 4. 頭部視線追隨與隨機抽耳 (Look-At Mouse & Ear Twitch)
+    if (petState !== 'EATING') {{
+        const targetHeadRotY = Math.max(-0.45, Math.min(0.45, mouseX * 0.6));
+        const targetHeadRotX = Math.max(-0.25, Math.min(0.25, -mouseY * 0.4));
+        headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, targetHeadRotY, 0.08);
+        headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, targetHeadRotX, 0.08);
+    }}
+
+    // 耳朵抽動
+    earTwitchTimer -= dt;
+    if (earTwitchTimer <= 0) {{
+        earGroupL.rotation.x = Math.sin(t * 40) * 0.25;
+        if (earTwitchTimer < -0.2) {{
+            earGroupL.rotation.x = 0;
+            earTwitchTimer = 2.5 + Math.random() * 3.5;
+        }}
+    }}
+
+    // 5. 自然眨眼 (Natural Blinking)
+    if (petState !== 'PETTED') {{
+        blinkTimer += dt;
+        if (blinkTimer > nextBlinkTime) {{
+            eyelidL.scale.y = THREE.MathUtils.lerp(eyelidL.scale.y, 1.0, 0.4);
+            eyelidR.scale.y = THREE.MathUtils.lerp(eyelidR.scale.y, 1.0, 0.4);
+            if (blinkTimer > nextBlinkTime + 0.16) {{
+                eyelidL.scale.y = 0.01;
+                eyelidR.scale.y = 0.01;
+                blinkTimer = 0;
+                nextBlinkTime = 2.5 + Math.random() * 3.5;
+            }}
+        }}
+    }}
+
+    // 6. 小屋 360° 拖曳旋轉
+    roomRoot.rotation.y = THREE.MathUtils.lerp(roomRoot.rotation.y, targetRotY, 0.1);
+
+    // 7. 更新 3D 粒子
+    for (let i = particles.length - 1; i >= 0; i--) {{
+        const p = particles[i];
+        p.position.x += p.userData.vx;
+        p.position.y += p.userData.vy;
+        p.position.z += p.userData.vz;
+        p.rotation.y += p.userData.rotSpd;
+        p.userData.life -= 0.02;
+        p.scale.setScalar(p.userData.life * 0.5);
+
+        if (p.userData.life <= 0) {{
+            scene.remove(p);
+            particles.splice(i, 1);
+        }}
+    }}
+
+    renderer.render(scene, camera);
 }}
 
 animate();
@@ -1953,19 +2008,19 @@ if (autoFeed && autoFeed.snack) {{
     }}, 400);
 }}
 
-
 window.addEventListener('resize', () => {{
-const newW = container.clientWidth || 640;
-camera.aspect = newW / height;
-camera.updateProjectionMatrix();
-renderer.setSize(newW, height);
+    const newW = container.clientWidth || 700;
+    camera.aspect = newW / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(newW, height);
 }});
 </script>
 </body>
 </html>
 """
+
 import streamlit.components.v1 as components
-components.html(live_pet_html, height=560, scrolling=False)
+components.html(live_pet_html, height=580, scrolling=False)
 
 # 裝飾徽章列
 st.markdown(f'<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem;">{decor_html}</div>', unsafe_allow_html=True)
