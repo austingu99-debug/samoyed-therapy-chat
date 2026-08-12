@@ -408,6 +408,8 @@ if "zen_stones" not in st.session_state:
     st.session_state.zen_stones = []
 if "inner_child_reflection" not in st.session_state:
     st.session_state.inner_child_reflection = None
+if "mobile_preview_mode" not in st.session_state:
+    st.session_state.mobile_preview_mode = False
 
 # 載入當前動物歷史對話
 if "messages" not in st.session_state:
@@ -437,7 +439,41 @@ def get_api_config():
 
 api_key, api_base_url, api_model = get_api_config()
 
-# 5. 全域現代化奢華暖調 CSS
+# 5. PWA 原生 App 標籤與全域現代化奢華暖調 CSS
+st.markdown("""
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="動物心靈小屋">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="動物心靈小屋">
+<meta name="theme-color" content="#F8F4ED">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+""", unsafe_allow_html=True)
+
+if st.session_state.mobile_preview_mode:
+    st.markdown("""
+<style>
+.main .block-container {
+    max-width: 440px !important;
+    margin: 20px auto !important;
+    padding: 20px 14px 40px !important;
+    border-radius: 46px !important;
+    border: 10px solid #2B2520 !important;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35), 0 0 0 2px rgba(255,255,255,0.15) inset !important;
+    background: #F8F4ED !important;
+}
+</style>
+""", unsafe_allow_html=True)
+else:
+    st.markdown("""
+<style>
+.main .block-container {
+    max-width: 960px !important;
+    padding-top: 1.5rem !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap');
@@ -696,6 +732,34 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# 7. 手機 App 測試安裝指南 & 手機視窗模擬控制列
+col_top_app1, col_top_app2 = st.columns([3, 1])
+with col_top_app1:
+    with st.expander("📲 點此查看【手機 App 測試安裝指南 (iOS / Android 零下載一鍵變 App)】", expanded=False):
+        st.markdown("""
+<div style="background:#FAF6F0; border-radius:14px; padding:1rem; border:1px solid #EADECE; font-size:0.85rem; color:#5C4A38; line-height:1.7;">
+    <h4 style="color:#533E2D; margin:0 0 0.5rem;">🍎 iPhone / iPad 使用者（Safari 原生 PWA 全螢幕）：</h4>
+    <ol style="margin-bottom:0.8rem; padding-left:1.2rem;">
+        <li>使用 Safari 瀏覽器打開本頁網址。</li>
+        <li>點擊底部中央的「<strong>分享</strong>」按鈕（帶往上箭頭的方框圖示）。</li>
+        <li>滑動找到並點擊「<strong>加入主畫面 (Add to Home Screen)</strong>」。</li>
+        <li>點擊右上角「新增」—— 手機桌面上立刻生成「🐾 動物心靈小屋」App！點開即可享受 <strong>無網址列、無瀏覽器外框的 100% 全螢幕手遊沉浸體驗</strong>！</li>
+    </ol>
+    <h4 style="color:#533E2D; margin:0 0 0.5rem;">🤖 Android 安卓使用者（Chrome / Edge）：</h4>
+    <ol style="margin:0; padding-left:1.2rem;">
+        <li>使用 Chrome 瀏覽器打開本頁網址。</li>
+        <li>點擊右上角「<strong>三個點選單</strong>」。</li>
+        <li>點擊「<strong>安裝應用程式 (Install App)</strong>」或「<strong>加到主螢幕</strong>」。</li>
+        <li>桌面生成專屬 App 圖示，即刻享受手遊般的無縫操作！</li>
+    </ol>
+</div>
+""", unsafe_allow_html=True)
+
+with col_top_app2:
+    btn_preview_label = "🖥️ 切換電腦寬屏" if st.session_state.mobile_preview_mode else "📱 模擬手機視窗"
+    if st.button(btn_preview_label, key="toggle_mobile_preview", use_container_width=True):
+        st.session_state.mobile_preview_mode = not st.session_state.mobile_preview_mode
+        st.rerun()
 
 # 8. API Key 檢查
 if not api_key:
