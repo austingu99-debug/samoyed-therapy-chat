@@ -696,39 +696,6 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# 7. 六大核心專區頂部導航
-col_m1, col_m2, col_m3, col_m4, col_m5, col_m6 = st.columns(6)
-
-with col_m1:
-    if st.button("🏠 3D 心靈小屋", key="main_nav_cozy", use_container_width=True):
-        st.session_state.main_section = "cozy_room"
-        st.rerun()
-
-with col_m2:
-    if st.button("🐾 夥伴神獸大廳", key="main_nav_hall", use_container_width=True):
-        st.session_state.main_section = "hall"
-        st.rerun()
-
-with col_m3:
-    chat_btn_text = f"💬 {active_comp['emoji']} 心靈諮商室"
-    if st.button(chat_btn_text, key="main_nav_chat", use_container_width=True):
-        st.session_state.main_section = "chat"
-        st.rerun()
-
-with col_m4:
-    if st.button("🎮 心靈遊樂園", key="main_nav_arcade", use_container_width=True):
-        st.session_state.main_section = "arcade"
-        st.rerun()
-
-with col_m5:
-    if st.button("🌿 身心療癒花園", key="main_nav_garden", use_container_width=True):
-        st.session_state.main_section = "garden"
-        st.rerun()
-
-with col_m6:
-    if st.button("📊 體檢週報與VIP", key="main_nav_vip", use_container_width=True):
-        st.session_state.main_section = "vip"
-        st.rerun()
 
 # 8. API Key 檢查
 if not api_key:
@@ -743,28 +710,25 @@ if not api_key:
             else:
                 st.warning("請先輸入有效的 API Key 喔！")
 
-# ==============================================================================
-# SECTION 1: 🏠 Live 2D 動態心靈小屋養成 (Interactive Virtual Pet Studio)
-# ==============================================================================
-if st.session_state.main_section == "cozy_room":
-    owned_decor = db.get_user_decor_items(CURRENT_USER_ID)
-    
-    # 裝飾徽章列
-    equipped_badges = []
-    for item in db.DEFAULT_DECOR_ITEMS:
-        if owned_decor.get(item["id"], False):
-            equipped_badges.append(f"{item['icon']} {item['name'].split(' ')[1]}")
-    
-    decor_html = "".join([f'<div style="background:rgba(255,255,255,0.9); border:1px solid #E0CEBB; padding:4px 12px; border-radius:16px; font-size:0.8rem; color:#5C4A38; font-weight:600;">{b}</div>' for b in equipped_badges])
-    if not decor_html:
-        decor_html = '<div style="background:rgba(255,255,255,0.8); padding:4px 12px; border-radius:16px; font-size:0.8rem; color:#8C735A;">🪹 小屋剛建立，快去星光小舖挑選家具吧！</div>'
 
-    # 3D 擬真寬敞微縮心靈小屋與漫步巡邏神獸引擎 (Three.js 3D Spacious Sanctuary Roaming Engine)
-    pet_quotes_js = json.dumps(active_comp["pet_quotes"], ensure_ascii=False)
-    comp_id_val = active_comp["id"]
-    equipped_decor_js = json.dumps(owned_decor, ensure_ascii=False)
-    
-    live_pet_html = f"""
+owned_decor = db.get_user_decor_items(CURRENT_USER_ID)
+
+# 裝飾徽章列
+equipped_badges = []
+for item in db.DEFAULT_DECOR_ITEMS:
+    if owned_decor.get(item["id"], False):
+        equipped_badges.append(f"{item['icon']} {item['name'].split(' ')[1]}")
+
+decor_html = "".join([f'<div style="background:rgba(255,255,255,0.9); border:1px solid #E0CEBB; padding:4px 12px; border-radius:16px; font-size:0.8rem; color:#5C4A38; font-weight:600;">{b}</div>' for b in equipped_badges])
+if not decor_html:
+    decor_html = '<div style="background:rgba(255,255,255,0.8); padding:4px 12px; border-radius:16px; font-size:0.8rem; color:#8C735A;">🪹 小屋剛建立，快去星光小舖挑選家具吧！</div>'
+
+# 3D 擬真寬敞微縮心靈小屋與漫步巡邏神獸引擎 (Three.js 3D Spacious Sanctuary Roaming Engine)
+pet_quotes_js = json.dumps(active_comp["pet_quotes"], ensure_ascii=False)
+comp_id_val = active_comp["id"]
+equipped_decor_js = json.dumps(owned_decor, ensure_ascii=False)
+
+live_pet_html = f"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -773,109 +737,109 @@ if st.session_state.main_section == "cozy_room":
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;600;700&family=Quicksand:wght@600;700&display=swap');
 * {{ box-sizing: border-box; margin: 0; padding: 0; user-select: none; }}
 body {{
-    background: transparent;
-    font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
-    color: #4A3B2C;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2px;
+background: transparent;
+font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
+color: #4A3B2C;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 2px;
 }}
 .stage-card {{
-    background: linear-gradient(180deg, #EFE7DC 0%, #DFD0BE 100%);
-    border: 2px solid #C9B8A2;
-    border-radius: 26px;
-    padding: 1.1rem 1rem 0.9rem;
-    box-shadow: 0 12px 36px rgba(83,62,45,0.12);
-    max-width: 860px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+background: linear-gradient(180deg, #EFE7DC 0%, #DFD0BE 100%);
+border: 2px solid #C9B8A2;
+border-radius: 26px;
+padding: 1.1rem 1rem 0.9rem;
+box-shadow: 0 12px 36px rgba(83,62,45,0.12);
+max-width: 860px;
+width: 100%;
+text-align: center;
+position: relative;
+overflow: hidden;
 }}
 .speech-bubble {{
-    background: #FFFFFF;
-    border: 1.5px solid #D8C6B0;
-    border-radius: 20px;
-    padding: 0.7rem 1.2rem;
-    font-size: 0.92rem;
-    color: #4B3726;
-    line-height: 1.6;
-    max-width: 540px;
-    margin: 0 auto 0.6rem;
-    box-shadow: 0 4px 16px rgba(83,62,45,0.08);
-    position: relative;
-    animation: bubble-fade 0.3s ease;
+background: #FFFFFF;
+border: 1.5px solid #D8C6B0;
+border-radius: 20px;
+padding: 0.7rem 1.2rem;
+font-size: 0.92rem;
+color: #4B3726;
+line-height: 1.6;
+max-width: 540px;
+margin: 0 auto 0.6rem;
+box-shadow: 0 4px 16px rgba(83,62,45,0.08);
+position: relative;
+animation: bubble-fade 0.3s ease;
 }}
 .speech-bubble::after {{
-    content: '';
-    position: absolute;
-    bottom: -9px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 9px 9px 0;
-    border-style: solid;
-    border-color: #FFFFFF transparent;
-    display: block;
-    width: 0;
+content: '';
+position: absolute;
+bottom: -9px;
+left: 50%;
+transform: translateX(-50%);
+border-width: 9px 9px 0;
+border-style: solid;
+border-color: #FFFFFF transparent;
+display: block;
+width: 0;
 }}
 #three-canvas-container {{
-    width: 100%;
-    height: 380px;
-    margin: 0 auto;
-    position: relative;
-    cursor: grab;
+width: 100%;
+height: 380px;
+margin: 0 auto;
+position: relative;
+cursor: grab;
 }}
 #three-canvas-container:active {{
-    cursor: grabbing;
+cursor: grabbing;
 }}
 .interaction-bar {{
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.5rem;
-    flex-wrap: wrap;
+display: flex;
+gap: 12px;
+justify-content: center;
+align-items: center;
+margin-top: 0.5rem;
+flex-wrap: wrap;
 }}
 .pet-touch-btn {{
-    background: #B68648;
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 0.88rem;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(182,134,72,0.3);
-    transition: all 0.2s ease;
+background: #B68648;
+color: white;
+border: none;
+padding: 8px 24px;
+border-radius: 20px;
+font-weight: 700;
+font-size: 0.88rem;
+cursor: pointer;
+box-shadow: 0 4px 14px rgba(182,134,72,0.3);
+transition: all 0.2s ease;
 }}
 .pet-touch-btn:hover {{
-    background: #9D7037;
-    transform: translateY(-2px);
+background: #9D7037;
+transform: translateY(-2px);
 }}
 .hint-text {{
-    font-size: 0.8rem;
-    color: #725C47;
-    font-weight: 600;
-    margin-top: 0.35rem;
+font-size: 0.8rem;
+color: #725C47;
+font-weight: 600;
+margin-top: 0.35rem;
 }}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 <div class="stage-card">
-    <div style="font-size:0.84rem; color:#725C47; font-weight:700; margin-bottom:0.35rem;">
-        🏡 {current_user.get('nickname', '小夥伴')} 與 {active_comp['name']} 的北歐森林漫步心靈小屋
-    </div>
-    <div class="speech-bubble" id="pet-speech">
-        「{active_comp['motto']}」
-    </div>
-    <div id="three-canvas-container"></div>
-    <div class="interaction-bar">
-        <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸頭撫慰 (互動開心彈跳)</button>
-        <button class="pet-touch-btn" style="background:#6F8F72;" onclick="triggerPetWalk()">🐾 呼喚走動巡邏</button>
-    </div>
-    <div class="hint-text">✨ 點擊地板可引導小薩走過去・具備四肢漫步動畫與高捲翹大尾巴・可 360° 拖曳旋轉小屋</div>
+<div style="font-size:0.84rem; color:#725C47; font-weight:700; margin-bottom:0.35rem;">
+    🏡 {current_user.get('nickname', '小夥伴')} 與 {active_comp['name']} 的北歐森林漫步心靈小屋
+</div>
+<div class="speech-bubble" id="pet-speech">
+    「{active_comp['motto']}」
+</div>
+<div id="three-canvas-container"></div>
+<div class="interaction-bar">
+    <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸頭撫慰 (互動開心彈跳)</button>
+    <button class="pet-touch-btn" style="background:#6F8F72;" onclick="triggerPetWalk()">🐾 呼喚走動巡邏</button>
+</div>
+<div class="hint-text">✨ 點擊地板可引導小薩走過去・具備四肢漫步動畫與高捲翹大尾巴・可 360° 拖曳旋轉小屋</div>
 </div>
 
 <script>
@@ -885,34 +849,34 @@ const equippedDecor = {equipped_decor_js};
 let audioCtx = null;
 
 function getAudioCtx() {{
-    if (!audioCtx) {{
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }}
-    if (audioCtx.state === 'suspended') {{
-        audioCtx.resume();
-    }}
-    return audioCtx;
+if (!audioCtx) {{
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}}
+if (audioCtx.state === 'suspended') {{
+    audioCtx.resume();
+}}
+return audioCtx;
 }}
 
 function playChimeSound() {{
-    const ctx = getAudioCtx();
-    const chord = [523.25, 659.25, 783.99, 1046.50];
-    chord.forEach((freq, idx) => {{
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const now = ctx.currentTime + idx * 0.08;
+const ctx = getAudioCtx();
+const chord = [523.25, 659.25, 783.99, 1046.50];
+chord.forEach((freq, idx) => {{
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const now = ctx.currentTime + idx * 0.08;
 
-        osc.type = 'sine';
-        osc.frequency.value = freq;
-        gain.gain.setValueAtTime(0.28, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.28, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
 
-        osc.start(now);
-        osc.stop(now + 0.6);
-    }});
+    osc.start(now);
+    osc.stop(now + 0.6);
+}});
 }}
 
 // ==========================================
@@ -1014,143 +978,143 @@ let candleFlame = null;
 
 // 1. 🔥 溫暖壁爐 (靠左牆)
 if (equippedDecor['decor_fireplace']) {{
-    const fpGroup = new THREE.Group();
-    fpGroup.position.set(-roomSize / 2 + 0.45, -0.05, -1.0);
-    fpGroup.rotation.y = Math.PI / 2;
+const fpGroup = new THREE.Group();
+fpGroup.position.set(-roomSize / 2 + 0.45, -0.05, -1.0);
+fpGroup.rotation.y = Math.PI / 2;
 
-    const fpBody = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.4, 0.6), new THREE.MeshStandardMaterial({{ color: 0x8C7869, roughness: 0.8 }}));
-    fpBody.castShadow = true;
-    fpGroup.add(fpBody);
+const fpBody = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.4, 0.6), new THREE.MeshStandardMaterial({{ color: 0x8C7869, roughness: 0.8 }}));
+fpBody.castShadow = true;
+fpGroup.add(fpBody);
 
-    const fpMantle = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.12, 0.75), new THREE.MeshStandardMaterial({{ color: 0x4D311E, roughness: 0.5 }}));
-    fpMantle.position.y = 0.75;
-    fpGroup.add(fpMantle);
+const fpMantle = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.12, 0.75), new THREE.MeshStandardMaterial({{ color: 0x4D311E, roughness: 0.5 }}));
+fpMantle.position.y = 0.75;
+fpGroup.add(fpMantle);
 
-    const fpHole = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.75, 0.45), new THREE.MeshStandardMaterial({{ color: 0x1E1713 }}));
-    fpHole.position.set(0, -0.2, 0.12);
-    fpGroup.add(fpHole);
+const fpHole = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.75, 0.45), new THREE.MeshStandardMaterial({{ color: 0x1E1713 }}));
+fpHole.position.set(0, -0.2, 0.12);
+fpGroup.add(fpHole);
 
-    const log1 = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.75, 8), new THREE.MeshStandardMaterial({{ color: 0x3E2313 }}));
-    log1.rotation.z = Math.PI / 2.6;
-    log1.position.set(0, -0.42, 0.18);
-    fpGroup.add(log1);
+const log1 = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.75, 8), new THREE.MeshStandardMaterial({{ color: 0x3E2313 }}));
+log1.rotation.z = Math.PI / 2.6;
+log1.position.set(0, -0.42, 0.18);
+fpGroup.add(log1);
 
-    fireplaceFlame = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.5, 12), new THREE.MeshBasicMaterial({{ color: 0xFF5500 }}));
-    fireplaceFlame.position.set(0, -0.22, 0.18);
-    fpGroup.add(fireplaceFlame);
+fireplaceFlame = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.5, 12), new THREE.MeshBasicMaterial({{ color: 0xFF5500 }}));
+fireplaceFlame.position.set(0, -0.22, 0.18);
+fpGroup.add(fireplaceFlame);
 
-    fireplaceLight = new THREE.PointLight(0xFF7A29, 1.2, 5.5);
-    fireplaceLight.position.set(0, -0.1, 0.4);
-    fpGroup.add(fireplaceLight);
+fireplaceLight = new THREE.PointLight(0xFF7A29, 1.2, 5.5);
+fireplaceLight.position.set(0, -0.1, 0.4);
+fpGroup.add(fireplaceLight);
 
-    roomRoot.add(fpGroup);
+roomRoot.add(fpGroup);
 }}
 
 // 2. 🛋️ 雲朵羊毛懶骨頭 (靠右側)
 if (equippedDecor['decor_beanbag']) {{
-    const bbGroup = new THREE.Group();
-    bbGroup.position.set(2.4, -0.32, -1.8);
+const bbGroup = new THREE.Group();
+bbGroup.position.set(2.4, -0.32, -1.8);
 
-    const bbMesh = new THREE.Mesh(new THREE.SphereGeometry(0.75, 20, 20), new THREE.MeshStandardMaterial({{ color: 0x8FAEC4, roughness: 0.9 }}));
-    bbMesh.scale.set(1.25, 0.72, 1.2);
-    bbMesh.castShadow = true;
-    bbGroup.add(bbMesh);
+const bbMesh = new THREE.Mesh(new THREE.SphereGeometry(0.75, 20, 20), new THREE.MeshStandardMaterial({{ color: 0x8FAEC4, roughness: 0.9 }}));
+bbMesh.scale.set(1.25, 0.72, 1.2);
+bbMesh.castShadow = true;
+bbGroup.add(bbMesh);
 
-    const pillow = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.18), new THREE.MeshStandardMaterial({{ color: 0xF5CE67, roughness: 0.7 }}));
-    pillow.position.set(0, 0.3, -0.18);
-    pillow.rotation.x = -0.4;
-    bbGroup.add(pillow);
+const pillow = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.18), new THREE.MeshStandardMaterial({{ color: 0xF5CE67, roughness: 0.7 }}));
+pillow.position.set(0, 0.3, -0.18);
+pillow.rotation.x = -0.4;
+bbGroup.add(pillow);
 
-    roomRoot.add(bbGroup);
+roomRoot.add(bbGroup);
 }}
 
 // 3. 🪴 療癒龜背芋盆栽 (左後角落)
 if (equippedDecor['decor_plant']) {{
-    const plantGroup = new THREE.Group();
-    plantGroup.position.set(-2.8, -0.28, -2.8);
+const plantGroup = new THREE.Group();
+plantGroup.position.set(-2.8, -0.28, -2.8);
 
-    const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.65, 16), new THREE.MeshStandardMaterial({{ color: 0xD4724E, roughness: 0.8 }}));
-    pot.castShadow = true;
-    plantGroup.add(pot);
+const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.65, 16), new THREE.MeshStandardMaterial({{ color: 0xD4724E, roughness: 0.8 }}));
+pot.castShadow = true;
+plantGroup.add(pot);
 
-    const leafMat = new THREE.MeshStandardMaterial({{ color: 0x3E7D4A, roughness: 0.35, side: THREE.DoubleSide }});
-    for (let l = 0; l < 6; l++) {{
-        const angle = (l / 6) * Math.PI * 2;
-        const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 12), leafMat);
-        leaf.scale.set(1.0, 0.08, 1.9);
-        leaf.position.set(Math.cos(angle) * 0.4, 0.5 + l * 0.09, Math.sin(angle) * 0.4);
-        leaf.rotation.set(0.65, angle, 0.25);
-        plantGroup.add(leaf);
-    }}
-    roomRoot.add(plantGroup);
+const leafMat = new THREE.MeshStandardMaterial({{ color: 0x3E7D4A, roughness: 0.35, side: THREE.DoubleSide }});
+for (let l = 0; l < 6; l++) {{
+    const angle = (l / 6) * Math.PI * 2;
+    const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 12), leafMat);
+    leaf.scale.set(1.0, 0.08, 1.9);
+    leaf.position.set(Math.cos(angle) * 0.4, 0.5 + l * 0.09, Math.sin(angle) * 0.4);
+    leaf.rotation.set(0.65, angle, 0.25);
+    plantGroup.add(leaf);
+}}
+roomRoot.add(plantGroup);
 }}
 
 // 4. 🌌 璀璨星空觀景天窗 (背牆中上方)
 if (equippedDecor['decor_skylight']) {{
-    const windowGroup = new THREE.Group();
-    windowGroup.position.set(0.5, 1.45, -roomSize / 2 + 0.12);
+const windowGroup = new THREE.Group();
+windowGroup.position.set(0.5, 1.45, -roomSize / 2 + 0.12);
 
-    const frame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.6, 0.08), new THREE.MeshStandardMaterial({{ color: 0x583E2C, roughness: 0.6 }}));
-    windowGroup.add(frame);
+const frame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.6, 0.08), new THREE.MeshStandardMaterial({{ color: 0x583E2C, roughness: 0.6 }}));
+windowGroup.add(frame);
 
-    const sky = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.4), new THREE.MeshBasicMaterial({{ color: 0x0E1326 }}));
-    sky.position.z = 0.045;
-    windowGroup.add(sky);
+const sky = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.4), new THREE.MeshBasicMaterial({{ color: 0x0E1326 }}));
+sky.position.z = 0.045;
+windowGroup.add(sky);
 
-    const moon = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 16), new THREE.MeshBasicMaterial({{ color: 0xFEE49A }}));
-    moon.position.set(-0.55, 0.42, 0.05);
-    windowGroup.add(moon);
+const moon = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 16), new THREE.MeshBasicMaterial({{ color: 0xFEE49A }}));
+moon.position.set(-0.55, 0.42, 0.05);
+windowGroup.add(moon);
 
-    const starMat = new THREE.MeshBasicMaterial({{ color: 0xFFFFFF }});
-    for (let s = 0; s < 16; s++) {{
-        const star = new THREE.Mesh(new THREE.SphereGeometry(0.022, 6, 6), starMat);
-        star.position.set((Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.2, 0.05);
-        windowGroup.add(star);
-    }}
-    roomRoot.add(windowGroup);
+const starMat = new THREE.MeshBasicMaterial({{ color: 0xFFFFFF }});
+for (let s = 0; s < 16; s++) {{
+    const star = new THREE.Mesh(new THREE.SphereGeometry(0.022, 6, 6), starMat);
+    star.position.set((Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.2, 0.05);
+    windowGroup.add(star);
+}}
+roomRoot.add(windowGroup);
 }}
 
 // 5. 📻 復古心靈留聲機 (右前木桌)
 if (equippedDecor['decor_gramophone']) {{
-    const gmGroup = new THREE.Group();
-    gmGroup.position.set(2.6, -0.05, 1.2);
+const gmGroup = new THREE.Group();
+gmGroup.position.set(2.6, -0.05, 1.2);
 
-    const table = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.7, 16), new THREE.MeshStandardMaterial({{ color: 0x6E472D, roughness: 0.6 }}));
-    table.position.y = -0.35;
-    gmGroup.add(table);
+const table = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.7, 16), new THREE.MeshStandardMaterial({{ color: 0x6E472D, roughness: 0.6 }}));
+table.position.y = -0.35;
+gmGroup.add(table);
 
-    const gmBox = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.16, 0.45), new THREE.MeshStandardMaterial({{ color: 0x472814 }}));
-    gmGroup.add(gmBox);
+const gmBox = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.16, 0.45), new THREE.MeshStandardMaterial({{ color: 0x472814 }}));
+gmGroup.add(gmBox);
 
-    vinylDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.015, 24), new THREE.MeshStandardMaterial({{ color: 0x141414, roughness: 0.3 }}));
-    vinylDisc.position.y = 0.09;
-    gmGroup.add(vinylDisc);
+vinylDisc = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.015, 24), new THREE.MeshStandardMaterial({{ color: 0x141414, roughness: 0.3 }}));
+vinylDisc.position.y = 0.09;
+gmGroup.add(vinylDisc);
 
-    const horn = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.55, 16), new THREE.MeshStandardMaterial({{ color: 0xE6B800, metalness: 0.85, roughness: 0.2 }}));
-    horn.position.set(-0.12, 0.38, 0);
-    horn.rotation.z = -Math.PI / 3;
-    gmGroup.add(horn);
+const horn = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.55, 16), new THREE.MeshStandardMaterial({{ color: 0xE6B800, metalness: 0.85, roughness: 0.2 }}));
+horn.position.set(-0.12, 0.38, 0);
+horn.rotation.z = -Math.PI / 3;
+gmGroup.add(horn);
 
-    roomRoot.add(gmGroup);
+roomRoot.add(gmGroup);
 }}
 
 // 6. 🕯️ 薰衣草香氛蠟燭 (左前茶几)
 if (equippedDecor['decor_candle']) {{
-    const cdGroup = new THREE.Group();
-    cdGroup.position.set(-2.2, -0.35, 1.8);
+const cdGroup = new THREE.Group();
+cdGroup.position.set(-2.2, -0.35, 1.8);
 
-    const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.45, 16), new THREE.MeshStandardMaterial({{ color: 0x7E5430, roughness: 0.7 }}));
-    stool.position.y = -0.22;
-    cdGroup.add(stool);
+const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.45, 16), new THREE.MeshStandardMaterial({{ color: 0x7E5430, roughness: 0.7 }}));
+stool.position.y = -0.22;
+cdGroup.add(stool);
 
-    const candle = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.25, 16), new THREE.MeshStandardMaterial({{ color: 0xC3B0E6, roughness: 0.4 }}));
-    cdGroup.add(candle);
+const candle = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.25, 16), new THREE.MeshStandardMaterial({{ color: 0xC3B0E6, roughness: 0.4 }}));
+cdGroup.add(candle);
 
-    candleFlame = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.1, 8), new THREE.MeshBasicMaterial({{ color: 0xFFAA00 }}));
-    candleFlame.position.y = 0.17;
-    cdGroup.add(candleFlame);
+candleFlame = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.1, 8), new THREE.MeshBasicMaterial({{ color: 0xFFAA00 }}));
+candleFlame.position.y = 0.17;
+cdGroup.add(candleFlame);
 
-    roomRoot.add(cdGroup);
+roomRoot.add(cdGroup);
 }}
 
 // ==========================================
@@ -1370,58 +1334,58 @@ headGroup.add(earGroupL);
 headGroup.add(earGroupR);
 
 if (earType === 'rabbit') {{
-    const rabbitEarGeo = new THREE.CylinderGeometry(0.09, 0.16, 0.95, 16);
-    rabbitEarGeo.scale(1.2, 1.0, 0.6);
-    const leftEar = new THREE.Mesh(rabbitEarGeo, petMat);
-    leftEar.position.set(0, -0.4, 0);
-    earGroupL.position.set(-0.55, 0.42, 0.05);
-    earGroupL.rotation.z = 0.35;
-    earGroupL.add(leftEar);
+const rabbitEarGeo = new THREE.CylinderGeometry(0.09, 0.16, 0.95, 16);
+rabbitEarGeo.scale(1.2, 1.0, 0.6);
+const leftEar = new THREE.Mesh(rabbitEarGeo, petMat);
+leftEar.position.set(0, -0.4, 0);
+earGroupL.position.set(-0.55, 0.42, 0.05);
+earGroupL.rotation.z = 0.35;
+earGroupL.add(leftEar);
 
-    const rightEar = new THREE.Mesh(rabbitEarGeo, petMat);
-    rightEar.position.set(0, -0.4, 0);
-    earGroupR.position.set(0.55, 0.42, 0.05);
-    earGroupR.rotation.z = -0.35;
-    earGroupR.add(rightEar);
+const rightEar = new THREE.Mesh(rabbitEarGeo, petMat);
+rightEar.position.set(0, -0.4, 0);
+earGroupR.position.set(0.55, 0.42, 0.05);
+earGroupR.rotation.z = -0.35;
+earGroupR.add(rightEar);
 }} else if (earType === 'bear') {{
-    const leftEar = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), petMat);
-    leftEar.position.set(-0.48, 0.56, -0.05);
-    earGroupL.add(leftEar);
-    const innerL = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 14), innerEarMat);
-    innerL.position.set(-0.48, 0.56, 0.05);
-    earGroupL.add(innerL);
+const leftEar = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), petMat);
+leftEar.position.set(-0.48, 0.56, -0.05);
+earGroupL.add(leftEar);
+const innerL = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 14), innerEarMat);
+innerL.position.set(-0.48, 0.56, 0.05);
+earGroupL.add(innerL);
 
-    const rightEar = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), petMat);
-    rightEar.position.set(0.48, 0.56, -0.05);
-    earGroupR.add(rightEar);
-    const innerR = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 14), innerEarMat);
-    innerR.position.set(0.48, 0.56, 0.05);
-    earGroupR.add(innerR);
+const rightEar = new THREE.Mesh(new THREE.SphereGeometry(0.24, 18, 18), petMat);
+rightEar.position.set(0.48, 0.56, -0.05);
+earGroupR.add(rightEar);
+const innerR = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 14), innerEarMat);
+innerR.position.set(0.48, 0.56, 0.05);
+earGroupR.add(innerR);
 }} else {{
-    const coneEarGeo = new THREE.ConeGeometry(0.28, 0.52, 16);
-    coneEarGeo.scale(1.1, 1.0, 0.65);
+const coneEarGeo = new THREE.ConeGeometry(0.28, 0.52, 16);
+coneEarGeo.scale(1.1, 1.0, 0.65);
 
-    const leftEar = new THREE.Mesh(coneEarGeo, petMat);
-    leftEar.position.set(-0.38, 0.68, -0.05);
-    leftEar.rotation.z = 0.28;
-    leftEar.rotation.x = -0.15;
-    earGroupL.add(leftEar);
-    const innerL = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 14), innerEarMat);
-    innerL.position.set(-0.38, 0.66, 0.03);
-    innerL.rotation.z = 0.28;
-    innerL.rotation.x = -0.15;
-    earGroupL.add(innerL);
+const leftEar = new THREE.Mesh(coneEarGeo, petMat);
+leftEar.position.set(-0.38, 0.68, -0.05);
+leftEar.rotation.z = 0.28;
+leftEar.rotation.x = -0.15;
+earGroupL.add(leftEar);
+const innerL = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 14), innerEarMat);
+innerL.position.set(-0.38, 0.66, 0.03);
+innerL.rotation.z = 0.28;
+innerL.rotation.x = -0.15;
+earGroupL.add(innerL);
 
-    const rightEar = new THREE.Mesh(coneEarGeo, petMat);
-    rightEar.position.set(0.38, 0.68, -0.05);
-    rightEar.rotation.z = -0.28;
-    rightEar.rotation.x = -0.15;
-    earGroupR.add(rightEar);
-    const innerR = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 14), innerEarMat);
-    innerR.position.set(0.38, 0.66, 0.03);
-    innerR.rotation.z = -0.28;
-    innerR.rotation.x = -0.15;
-    earGroupR.add(innerR);
+const rightEar = new THREE.Mesh(coneEarGeo, petMat);
+rightEar.position.set(0.38, 0.68, -0.05);
+rightEar.rotation.z = -0.28;
+rightEar.rotation.x = -0.15;
+earGroupR.add(rightEar);
+const innerR = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.38, 14), innerEarMat);
+innerR.position.set(0.38, 0.66, 0.03);
+innerR.rotation.z = -0.28;
+innerR.rotation.x = -0.15;
+earGroupR.add(innerR);
 }}
 
 // 4. 🦮 高捲翹蓬鬆大尾巴 (High-Curled Fluffy Sickle Tail)
@@ -1464,18 +1428,18 @@ const heartParticleMat = new THREE.MeshStandardMaterial({{ color: 0xFF5B7E, roug
 const starParticleMat = new THREE.MeshStandardMaterial({{ color: 0xFFD700, roughness: 0.2, metalness: 0.5 }});
 
 function spawn3DParticle(isStar = false) {{
-    const p = new THREE.Mesh(heartExtrudeGeo, isStar ? starParticleMat : heartParticleMat);
-    p.position.set(petRoot.position.x + (Math.random() - 0.5) * 0.8, petRoot.position.y + 0.8 + Math.random() * 0.3, petRoot.position.z + (Math.random() - 0.5) * 0.8);
-    p.rotation.z = Math.PI;
-    p.userData = {{
-        vx: (Math.random() - 0.5) * 0.03,
-        vy: 0.035 + Math.random() * 0.025,
-        vz: (Math.random() - 0.5) * 0.03,
-        rotSpd: (Math.random() - 0.5) * 0.1,
-        life: 1.0
-    }};
-    scene.add(p);
-    particles.push(p);
+const p = new THREE.Mesh(heartExtrudeGeo, isStar ? starParticleMat : heartParticleMat);
+p.position.set(petRoot.position.x + (Math.random() - 0.5) * 0.8, petRoot.position.y + 0.8 + Math.random() * 0.3, petRoot.position.z + (Math.random() - 0.5) * 0.8);
+p.rotation.z = Math.PI;
+p.userData = {{
+    vx: (Math.random() - 0.5) * 0.03,
+    vy: 0.035 + Math.random() * 0.025,
+    vz: (Math.random() - 0.5) * 0.03,
+    rotSpd: (Math.random() - 0.5) * 0.1,
+    life: 1.0
+}};
+scene.add(p);
+particles.push(p);
 }}
 
 // ==========================================
@@ -1488,41 +1452,41 @@ let walkPhase = 0;
 let nextRoamTimer = 3.5;
 
 function pickRandomRoamTarget() {{
-    // 隨機漫步目標（壁爐旁、窗邊、地毯中央、沙發邊）
-    const spots = [
-        new THREE.Vector3(-1.4, 0, -0.6), // 壁爐旁暖身
-        new THREE.Vector3(1.2, 0, -1.0),  // 懶骨頭沙發邊
-        new THREE.Vector3(0.2, 0, -1.5),  // 窗前仰望星空
-        new THREE.Vector3(0, 0, 0.5),     // 正前方看著主人
-        new THREE.Vector3(-0.8, 0, 0.8),  // 左前小步
-        new THREE.Vector3(1.0, 0, 0.6)    // 右前探索
-    ];
-    return spots[Math.floor(Math.random() * spots.length)];
+// 隨機漫步目標（壁爐旁、窗邊、地毯中央、沙發邊）
+const spots = [
+    new THREE.Vector3(-1.4, 0, -0.6), // 壁爐旁暖身
+    new THREE.Vector3(1.2, 0, -1.0),  // 懶骨頭沙發邊
+    new THREE.Vector3(0.2, 0, -1.5),  // 窗前仰望星空
+    new THREE.Vector3(0, 0, 0.5),     // 正前方看著主人
+    new THREE.Vector3(-0.8, 0, 0.8),  // 左前小步
+    new THREE.Vector3(1.0, 0, 0.6)    // 右前探索
+];
+return spots[Math.floor(Math.random() * spots.length)];
 }}
 
 function triggerPetWalk() {{
-    petTargetPos = pickRandomRoamTarget();
-    petState = 'WALKING';
+petTargetPos = pickRandomRoamTarget();
+petState = 'WALKING';
 }}
 
 function handlePetDirect() {{
-    playChimeSound();
-    const randQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    document.getElementById('pet-speech').innerText = randQuote;
+playChimeSound();
+const randQuote = quotes[Math.floor(Math.random() * quotes.length)];
+document.getElementById('pet-speech').innerText = randQuote;
 
-    petState = 'PETTED';
-    bounceScale.x = 1.35;
-    bounceScale.y = 0.65;
-    bounceScale.z = 1.35;
-    petRoot.position.y = 0.35;
+petState = 'PETTED';
+bounceScale.x = 1.35;
+bounceScale.y = 0.65;
+bounceScale.z = 1.35;
+petRoot.position.y = 0.35;
 
-    for (let i = 0; i < 7; i++) {{
-        spawn3DParticle(i % 2 === 0);
-    }}
+for (let i = 0; i < 7; i++) {{
+    spawn3DParticle(i % 2 === 0);
+}}
 
-    setTimeout(() => {{
-        if (petState === 'PETTED') petState = 'IDLE';
-    }}, 1200);
+setTimeout(() => {{
+    if (petState === 'PETTED') petState = 'IDLE';
+}}, 1200);
 }}
 
 // 觸控 / 滑鼠互動
@@ -1536,57 +1500,57 @@ const raycaster = new THREE.Raycaster();
 const mouseVec = new THREE.Vector2();
 
 container.addEventListener('click', (e) => {{
-    const rect = container.getBoundingClientRect();
-    mouseVec.x = ((e.clientX - rect.left) / width) * 2 - 1;
-    mouseVec.y = -((e.clientY - rect.top) / height) * 2 + 1;
+const rect = container.getBoundingClientRect();
+mouseVec.x = ((e.clientX - rect.left) / width) * 2 - 1;
+mouseVec.y = -((e.clientY - rect.top) / height) * 2 + 1;
 
-    raycaster.setFromCamera(mouseVec, camera);
-    const intersects = raycaster.intersectObjects([roomFloor, rug, head, body], true);
+raycaster.setFromCamera(mouseVec, camera);
+const intersects = raycaster.intersectObjects([roomFloor, rug, head, body], true);
 
-    if (intersects.length > 0) {{
-        const hit = intersects[0];
-        if (hit.object === head || hit.object === body || hit.object.parent === headGroup || hit.object.parent === petRoot) {{
-            handlePetDirect();
-        }} else {{
-            // 點擊地板 -> 引導走動到目標點
-            petTargetPos.set(
-                Math.max(-2.4, Math.min(2.4, hit.point.x)),
-                0,
-                Math.max(-2.4, Math.min(2.4, hit.point.z))
-            );
-            petState = 'WALKING';
-        }}
+if (intersects.length > 0) {{
+    const hit = intersects[0];
+    if (hit.object === head || hit.object === body || hit.object.parent === headGroup || hit.object.parent === petRoot) {{
+        handlePetDirect();
+    }} else {{
+        // 點擊地板 -> 引導走動到目標點
+        petTargetPos.set(
+            Math.max(-2.4, Math.min(2.4, hit.point.x)),
+            0,
+            Math.max(-2.4, Math.min(2.4, hit.point.z))
+        );
+        petState = 'WALKING';
     }}
+}}
 }});
 
 window.addEventListener('mousemove', (e) => {{
-    const rect = container.getBoundingClientRect();
-    mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
-    mouseY = -((e.clientY - rect.top) / height) * 2 + 1;
+const rect = container.getBoundingClientRect();
+mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
+mouseY = -((e.clientY - rect.top) / height) * 2 + 1;
 
-    if (isDragging) {{
-        const delta = e.clientX - prevMouseX;
-        targetRotY += delta * 0.012;
-        prevMouseX = e.clientX;
-    }}
+if (isDragging) {{
+    const delta = e.clientX - prevMouseX;
+    targetRotY += delta * 0.012;
+    prevMouseX = e.clientX;
+}}
 }});
 
 container.addEventListener('mousedown', (e) => {{
-    isDragging = true;
-    prevMouseX = e.clientX;
+isDragging = true;
+prevMouseX = e.clientX;
 }});
 
 window.addEventListener('mouseup', () => {{
-    isDragging = false;
+isDragging = false;
 }});
 
 container.addEventListener('touchmove', (e) => {{
-    if (e.touches.length > 0) {{
-        const touch = e.touches[0];
-        const rect = container.getBoundingClientRect();
-        mouseX = ((touch.clientX - rect.left) / width) * 2 - 1;
-        mouseY = -((touch.clientY - rect.top) / height) * 2 + 1;
-    }}
+if (e.touches.length > 0) {{
+    const touch = e.touches[0];
+    const rect = container.getBoundingClientRect();
+    mouseX = ((touch.clientX - rect.left) / width) * 2 - 1;
+    mouseY = -((touch.clientY - rect.top) / height) * 2 + 1;
+}}
 }}, {{ passive: true }});
 
 // 主動畫渲染迴圈 (60 FPS)
@@ -1595,160 +1559,175 @@ let blinkTimer = 0;
 let nextBlinkTime = 3.0;
 
 function animate() {{
-    requestAnimationFrame(animate);
-    const dt = clock.getDelta();
-    const t = clock.getElapsedTime();
+requestAnimationFrame(animate);
+const dt = clock.getDelta();
+const t = clock.getElapsedTime();
 
-    // 1. 走動與漫步導航邏輯 (Walking AI Cycle)
-    if (petState === 'WALKING') {{
-        const dx = petTargetPos.x - petRoot.position.x;
-        const dz = petTargetPos.z - petRoot.position.z;
-        const dist = Math.sqrt(dx * dx + dz * dz);
+// 1. 走動與漫步導航邏輯 (Walking AI Cycle)
+if (petState === 'WALKING') {{
+    const dx = petTargetPos.x - petRoot.position.x;
+    const dz = petTargetPos.z - petRoot.position.z;
+    const dist = Math.sqrt(dx * dx + dz * dz);
 
-        if (dist > 0.1) {{
-            // 轉向目標
-            const targetAngle = Math.atan2(dx, dz);
-            let diffAngle = targetAngle - petRoot.rotation.y;
-            while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
-            while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
-            petRoot.rotation.y += diffAngle * 0.12;
+    if (dist > 0.1) {{
+        // 轉向目標
+        const targetAngle = Math.atan2(dx, dz);
+        let diffAngle = targetAngle - petRoot.rotation.y;
+        while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
+        while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
+        petRoot.rotation.y += diffAngle * 0.12;
 
-            // 向前移動
-            petRoot.position.x += Math.sin(petRoot.rotation.y) * walkSpeed;
-            petRoot.position.z += Math.cos(petRoot.rotation.y) * walkSpeed;
+        // 向前移動
+        petRoot.position.x += Math.sin(petRoot.rotation.y) * walkSpeed;
+        petRoot.position.z += Math.cos(petRoot.rotation.y) * walkSpeed;
 
-            // 四肢交替擺動動畫 (Bouncy Walking Trot)
-            walkPhase += 0.22;
-            const legSwing = Math.sin(walkPhase) * 0.55;
-            legFLGroup.rotation.x = legSwing;
-            legFRGroup.rotation.x = -legSwing;
-            legBLGroup.rotation.x = -legSwing;
-            legBRGroup.rotation.x = legSwing;
+        // 四肢交替擺動動畫 (Bouncy Walking Trot)
+        walkPhase += 0.22;
+        const legSwing = Math.sin(walkPhase) * 0.55;
+        legFLGroup.rotation.x = legSwing;
+        legFRGroup.rotation.x = -legSwing;
+        legBLGroup.rotation.x = -legSwing;
+        legBRGroup.rotation.x = legSwing;
 
-            // 身體微上下起伏
-            petRoot.position.y = Math.abs(Math.sin(walkPhase)) * 0.08;
-            tailGroup.rotation.z = Math.sin(walkPhase * 2) * 0.6;
-        }} else {{
-            // 到達目的地
-            petState = 'IDLE';
-            nextRoamTimer = 4.0 + Math.random() * 4.0;
-            legFLGroup.rotation.x = 0;
-            legFRGroup.rotation.x = 0;
-            legBLGroup.rotation.x = 0;
-            legBRGroup.rotation.x = 0;
-        }}
-    }} else if (petState === 'IDLE') {{
-        // 倒數自動隨機漫步
-        nextRoamTimer -= dt;
-        if (nextRoamTimer <= 0) {{
-            petTargetPos = pickRandomRoamTarget();
-            petState = 'WALKING';
-        }}
-
-        // 正念呼吸律動
-        const breathe = Math.sin(t * 3.14) * 0.035;
-        bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.12);
-        bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.12);
-        bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.12);
-        petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.1);
-
-        petRoot.scale.set(
-            bounceScale.x * (1 - breathe * 0.4),
-            bounceScale.y * (1 + breathe),
-            bounceScale.z * (1 - breathe * 0.4)
-        );
-
-        tailGroup.rotation.z = Math.sin(t * 6) * 0.35;
-        tailGroup.rotation.y = Math.cos(t * 6) * 0.2;
-    }} else if (petState === 'PETTED') {{
-        bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.1);
-        bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.1);
-        bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.1);
-        petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.08);
-        tailGroup.rotation.z = Math.sin(t * 12) * 0.7;
+        // 身體微上下起伏
+        petRoot.position.y = Math.abs(Math.sin(walkPhase)) * 0.08;
+        tailGroup.rotation.z = Math.sin(walkPhase * 2) * 0.6;
+    }} else {{
+        // 到達目的地
+        petState = 'IDLE';
+        nextRoamTimer = 4.0 + Math.random() * 4.0;
+        legFLGroup.rotation.x = 0;
+        legFRGroup.rotation.x = 0;
+        legBLGroup.rotation.x = 0;
+        legBRGroup.rotation.x = 0;
+    }}
+}} else if (petState === 'IDLE') {{
+    // 倒數自動隨機漫步
+    nextRoamTimer -= dt;
+    if (nextRoamTimer <= 0) {{
+        petTargetPos = pickRandomRoamTarget();
+        petState = 'WALKING';
     }}
 
-    // 2. 鈴鐺晃動
-    bell.rotation.z = Math.sin(t * 6) * 0.2;
+    // 正念呼吸律動
+    const breathe = Math.sin(t * 3.14) * 0.035;
+    bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.12);
+    bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.12);
+    bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.12);
+    petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.1);
 
-    // 3. 家具動態
-    if (fireplaceFlame) {{
-        fireplaceFlame.scale.y = 1.0 + Math.sin(t * 16) * 0.25;
-        fireplaceFlame.scale.x = 1.0 + Math.cos(t * 14) * 0.15;
+    petRoot.scale.set(
+        bounceScale.x * (1 - breathe * 0.4),
+        bounceScale.y * (1 + breathe),
+        bounceScale.z * (1 - breathe * 0.4)
+    );
+
+    tailGroup.rotation.z = Math.sin(t * 6) * 0.35;
+    tailGroup.rotation.y = Math.cos(t * 6) * 0.2;
+}} else if (petState === 'PETTED') {{
+    bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.1);
+    bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.1);
+    bounceScale.z = THREE.MathUtils.lerp(bounceScale.z, 1.0, 0.1);
+    petRoot.position.y = THREE.MathUtils.lerp(petRoot.position.y, 0.0, 0.08);
+    tailGroup.rotation.z = Math.sin(t * 12) * 0.7;
+}}
+
+// 2. 鈴鐺晃動
+bell.rotation.z = Math.sin(t * 6) * 0.2;
+
+// 3. 家具動態
+if (fireplaceFlame) {{
+    fireplaceFlame.scale.y = 1.0 + Math.sin(t * 16) * 0.25;
+    fireplaceFlame.scale.x = 1.0 + Math.cos(t * 14) * 0.15;
+}}
+if (fireplaceLight) {{
+    fireplaceLight.intensity = 1.1 + Math.sin(t * 18) * 0.35;
+}}
+if (vinylDisc) {{
+    vinylDisc.rotation.y += 0.04;
+}}
+if (candleFlame) {{
+    candleFlame.scale.x = 1.0 + Math.sin(t * 20) * 0.2;
+    candleFlame.scale.y = 1.0 + Math.cos(t * 22) * 0.25;
+}}
+
+// 4. 頭部視線追蹤 (Look-At Mouse)
+const targetHeadRotY = Math.max(-0.4, Math.min(0.4, mouseX * 0.6));
+const targetHeadRotX = Math.max(-0.25, Math.min(0.25, -mouseY * 0.4));
+headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, targetHeadRotY, 0.08);
+headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, targetHeadRotX, 0.08);
+
+earGroupL.rotation.x = Math.sin(t * 4) * 0.06;
+earGroupR.rotation.x = Math.cos(t * 4) * 0.06;
+
+// 5. 自然眨眼
+blinkTimer += dt;
+if (blinkTimer > nextBlinkTime) {{
+    eyelidL.scale.y = THREE.MathUtils.lerp(eyelidL.scale.y, 1.0, 0.35);
+    eyelidR.scale.y = THREE.MathUtils.lerp(eyelidR.scale.y, 1.0, 0.35);
+    if (blinkTimer > nextBlinkTime + 0.16) {{
+        eyelidL.scale.y = 0.01;
+        eyelidR.scale.y = 0.01;
+        blinkTimer = 0;
+        nextBlinkTime = 2.5 + Math.random() * 3.0;
     }}
-    if (fireplaceLight) {{
-        fireplaceLight.intensity = 1.1 + Math.sin(t * 18) * 0.35;
+}}
+
+// 6. 整個小屋 360° 拖曳旋轉
+roomRoot.rotation.y = THREE.MathUtils.lerp(roomRoot.rotation.y, targetRotY, 0.1);
+
+// 7. 更新 3D 粒子
+for (let i = particles.length - 1; i >= 0; i--) {{
+    const p = particles[i];
+    p.position.x += p.userData.vx;
+    p.position.y += p.userData.vy;
+    p.position.z += p.userData.vz;
+    p.rotation.y += p.userData.rotSpd;
+    p.userData.life -= 0.02;
+    p.scale.setScalar(p.userData.life * 0.5);
+
+    if (p.userData.life <= 0) {{
+        scene.remove(p);
+        particles.splice(i, 1);
     }}
-    if (vinylDisc) {{
-        vinylDisc.rotation.y += 0.04;
-    }}
-    if (candleFlame) {{
-        candleFlame.scale.x = 1.0 + Math.sin(t * 20) * 0.2;
-        candleFlame.scale.y = 1.0 + Math.cos(t * 22) * 0.25;
-    }}
+}}
 
-    // 4. 頭部視線追蹤 (Look-At Mouse)
-    const targetHeadRotY = Math.max(-0.4, Math.min(0.4, mouseX * 0.6));
-    const targetHeadRotX = Math.max(-0.25, Math.min(0.25, -mouseY * 0.4));
-    headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, targetHeadRotY, 0.08);
-    headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, targetHeadRotX, 0.08);
-
-    earGroupL.rotation.x = Math.sin(t * 4) * 0.06;
-    earGroupR.rotation.x = Math.cos(t * 4) * 0.06;
-
-    // 5. 自然眨眼
-    blinkTimer += dt;
-    if (blinkTimer > nextBlinkTime) {{
-        eyelidL.scale.y = THREE.MathUtils.lerp(eyelidL.scale.y, 1.0, 0.35);
-        eyelidR.scale.y = THREE.MathUtils.lerp(eyelidR.scale.y, 1.0, 0.35);
-        if (blinkTimer > nextBlinkTime + 0.16) {{
-            eyelidL.scale.y = 0.01;
-            eyelidR.scale.y = 0.01;
-            blinkTimer = 0;
-            nextBlinkTime = 2.5 + Math.random() * 3.0;
-        }}
-    }}
-
-    // 6. 整個小屋 360° 拖曳旋轉
-    roomRoot.rotation.y = THREE.MathUtils.lerp(roomRoot.rotation.y, targetRotY, 0.1);
-
-    // 7. 更新 3D 粒子
-    for (let i = particles.length - 1; i >= 0; i--) {{
-        const p = particles[i];
-        p.position.x += p.userData.vx;
-        p.position.y += p.userData.vy;
-        p.position.z += p.userData.vz;
-        p.rotation.y += p.userData.rotSpd;
-        p.userData.life -= 0.02;
-        p.scale.setScalar(p.userData.life * 0.5);
-
-        if (p.userData.life <= 0) {{
-            scene.remove(p);
-            particles.splice(i, 1);
-        }}
-    }}
-
-    renderer.render(scene, camera);
+renderer.render(scene, camera);
 }}
 
 animate();
 
 window.addEventListener('resize', () => {{
-    const newW = container.clientWidth || 640;
-    camera.aspect = newW / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(newW, height);
+const newW = container.clientWidth || 640;
+camera.aspect = newW / height;
+camera.updateProjectionMatrix();
+renderer.setSize(newW, height);
 }});
 </script>
 </body>
 </html>
 """
-    import streamlit.components.v1 as components
-    components.html(live_pet_html, height=560, scrolling=False)
+import streamlit.components.v1 as components
+components.html(live_pet_html, height=560, scrolling=False)
 
-    # 裝飾徽章列
-    st.markdown(f'<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem;">{decor_html}</div>', unsafe_allow_html=True)
+# 裝飾徽章列
+st.markdown(f'<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem;">{decor_html}</div>', unsafe_allow_html=True)
 
+
+# ==============================================================================
+# 🎮 手遊一體化功能抽屜面板 (Integrated Mobile Game HUD Tabs)
+# ==============================================================================
+tab_feed_quest, tab_decor, tab_chat, tab_hall, tab_arcade, tab_garden, tab_vip = st.tabs([
+    "🍪 餵食與任務",
+    "🛍️ 家具小舖",
+    f"💬 {active_comp['emoji']} 心靈諮商",
+    "🐾 神獸大廳",
+    "🎮 心靈遊樂園",
+    "🌿 身心花園",
+    "📊 週報與VIP"
+])
+
+with tab_feed_quest:
     col_q1, col_q2 = st.columns([1, 1])
 
     # 餵食小點心專區 (Snack Feeding)
@@ -1799,8 +1778,8 @@ window.addEventListener('resize', () => {{
                         st.session_state.user_data = db.get_or_create_user(CURRENT_USER_ID)
                         st.rerun()
 
-    # 星光家具小舖
-    st.markdown("<hr style='border:none; border-top:1.5px solid #EADECE; margin:1.5rem 0;'>", unsafe_allow_html=True)
+
+with tab_decor:
     st.markdown(f"<h4 style='color:#533E2D;'>🛍️ 心靈星光家具小舖（裝扮你的心靈避風港）：</h4>", unsafe_allow_html=True)
     
     d_cols = st.columns(3)
@@ -1830,93 +1809,8 @@ window.addEventListener('resize', () => {{
                     db.toggle_decor_equip(CURRENT_USER_ID, item["id"], not is_eq)
                     st.rerun()
 
-# ==============================================================================
-# SECTION 2: 🐾 夥伴神獸大廳 (Sanctuary Hall - 免費領養 vs VIP 守護獸)
-# ==============================================================================
-elif st.session_state.main_section == "hall":
-    st.markdown("""
-<div style="text-align:center; margin-bottom:1.5rem;">
-    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin:0 0 0.3rem;">🌿 挑選專屬於你此時此刻的心靈導師</h2>
-    <p style="color:#8C735A; font-size:0.92rem; margin:0;">🐶 薩摩耶・小薩為<strong>永久免費領養伴侶</strong>；其餘 9 隻為 <strong>👑 VIP 專屬動態神獸</strong>。</p>
-</div>
-""", unsafe_allow_html=True)
 
-    comp_list = list(ANIMAL_COMPANIONS.values())
-    
-    r1_cols = st.columns(3)
-    for idx, comp in enumerate(comp_list[:3]):
-        with r1_cols[idx]:
-            is_selected = (st.session_state.selected_companion == comp["id"])
-            border_style = f"border: 2.5px solid {comp['theme_color']};" if is_selected else ""
-            tag_text = "目前陪伴中" if is_selected else ("💚 免費伴侶" if comp["is_free"] else "👑 VIP神獸")
-            tag_bg = "#C2995F" if is_selected else ("#768B6E" if comp["is_free"] else "#9B7E5C")
-            selected_tag = f'<div style="position:absolute; top:8px; right:8px; background:{tag_bg}; color:white; font-size:0.7rem; padding:2px 8px; border-radius:10px;">{tag_text}</div>'
-            
-            card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
-            st.markdown(card_html, unsafe_allow_html=True)
-            
-            if comp["is_free"] or current_user.get("is_vip", 1):
-                if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]} 傾訴", key=f"select_{comp['id']}", use_container_width=True):
-                    st.session_state.selected_companion = comp["id"]
-                    st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
-                    st.session_state.main_section = "chat"
-                    st.rerun()
-            else:
-                if st.button(f"👑 解鎖 {comp['emoji']} {comp['name'].split('・')[0]} (VIP)", key=f"lock_{comp['id']}", use_container_width=True):
-                    st.session_state.main_section = "vip"
-                    st.rerun()
-
-    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
-
-    r2_cols = st.columns(3)
-    for idx, comp in enumerate(comp_list[3:6]):
-        with r2_cols[idx]:
-            is_selected = (st.session_state.selected_companion == comp["id"])
-            border_style = f"border: 2.5px solid {comp['theme_color']};" if is_selected else ""
-            tag_text = "目前陪伴中" if is_selected else "👑 VIP神獸"
-            selected_tag = f'<div style="position:absolute; top:8px; right:8px; background:#9B7E5C; color:white; font-size:0.7rem; padding:2px 8px; border-radius:10px;">{tag_text}</div>'
-            
-            card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
-            st.markdown(card_html, unsafe_allow_html=True)
-            
-            if current_user.get("is_vip", 1):
-                if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]} 傾訴", key=f"select_{comp['id']}", use_container_width=True):
-                    st.session_state.selected_companion = comp["id"]
-                    st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
-                    st.session_state.main_section = "chat"
-                    st.rerun()
-            else:
-                if st.button(f"👑 解鎖 {comp['emoji']} {comp['name'].split('・')[0]} (VIP)", key=f"lock_{comp['id']}", use_container_width=True):
-                    st.session_state.main_section = "vip"
-                    st.rerun()
-
-    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
-
-    r3_cols = st.columns(4)
-    for idx, comp in enumerate(comp_list[6:]):
-        with r3_cols[idx]:
-            is_selected = (st.session_state.selected_companion == comp["id"])
-            border_style = f"border: 2.5px solid {comp['theme_color']};" if is_selected else ""
-            selected_tag = '<div style="position:absolute; top:8px; right:8px; background:#9B7E5C; color:white; font-size:0.7rem; padding:2px 8px; border-radius:10px;">👑 VIP神獸</div>'
-            
-            card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
-            st.markdown(card_html, unsafe_allow_html=True)
-            
-            if current_user.get("is_vip", 1):
-                if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]}", key=f"select_{comp['id']}", use_container_width=True):
-                    st.session_state.selected_companion = comp["id"]
-                    st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
-                    st.session_state.main_section = "chat"
-                    st.rerun()
-            else:
-                if st.button(f"👑 解鎖 (VIP)", key=f"lock_{comp['id']}", use_container_width=True):
-                    st.session_state.main_section = "vip"
-                    st.rerun()
-
-# ==============================================================================
-# SECTION 3: 💬 專屬心靈諮商室 (每日額度與對話)
-# ==============================================================================
-elif st.session_state.main_section == "chat":
+with tab_chat:
     current_companion = ANIMAL_COMPANIONS[st.session_state.selected_companion]
     comp_id = current_companion["id"]
 
@@ -2055,9 +1949,90 @@ elif st.session_state.main_section == "chat":
             st.rerun()
 
 # ==============================================================================
-# SECTION 4: 🎮 心靈遊樂園 (ASMR 3D 泡泡紙 / 疊石頭 / 粉碎機)
+
+with tab_hall:
+    st.markdown("""
+<div style="text-align:center; margin-bottom:1.5rem;">
+    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin:0 0 0.3rem;">🌿 挑選專屬於你此時此刻的心靈導師</h2>
+    <p style="color:#8C735A; font-size:0.92rem; margin:0;">🐶 薩摩耶・小薩為<strong>永久免費領養伴侶</strong>；其餘 9 隻為 <strong>👑 VIP 專屬動態神獸</strong>。</p>
+</div>
+""", unsafe_allow_html=True)
+
+    comp_list = list(ANIMAL_COMPANIONS.values())
+    
+    r1_cols = st.columns(3)
+    for idx, comp in enumerate(comp_list[:3]):
+        with r1_cols[idx]:
+            is_selected = (st.session_state.selected_companion == comp["id"])
+            border_style = f"border: 2.5px solid {comp['theme_color']};" if is_selected else ""
+            tag_text = "目前陪伴中" if is_selected else ("💚 免費伴侶" if comp["is_free"] else "👑 VIP神獸")
+            tag_bg = "#C2995F" if is_selected else ("#768B6E" if comp["is_free"] else "#9B7E5C")
+            selected_tag = f'<div style="position:absolute; top:8px; right:8px; background:{tag_bg}; color:white; font-size:0.7rem; padding:2px 8px; border-radius:10px;">{tag_text}</div>'
+            
+            card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
+            st.markdown(card_html, unsafe_allow_html=True)
+            
+            if comp["is_free"] or current_user.get("is_vip", 1):
+                if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]} 傾訴", key=f"select_{comp['id']}", use_container_width=True):
+                    st.session_state.selected_companion = comp["id"]
+                    st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
+                    st.session_state.main_section = "chat"
+                    st.rerun()
+            else:
+                if st.button(f"👑 解鎖 {comp['emoji']} {comp['name'].split('・')[0]} (VIP)", key=f"lock_{comp['id']}", use_container_width=True):
+                    st.session_state.main_section = "vip"
+                    st.rerun()
+
+    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
+
+    r2_cols = st.columns(3)
+    for idx, comp in enumerate(comp_list[3:6]):
+        with r2_cols[idx]:
+            is_selected = (st.session_state.selected_companion == comp["id"])
+            border_style = f"border: 2.5px solid {comp['theme_color']};" if is_selected else ""
+            tag_text = "目前陪伴中" if is_selected else "👑 VIP神獸"
+            selected_tag = f'<div style="position:absolute; top:8px; right:8px; background:#9B7E5C; color:white; font-size:0.7rem; padding:2px 8px; border-radius:10px;">{tag_text}</div>'
+            
+            card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
+            st.markdown(card_html, unsafe_allow_html=True)
+            
+            if current_user.get("is_vip", 1):
+                if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]} 傾訴", key=f"select_{comp['id']}", use_container_width=True):
+                    st.session_state.selected_companion = comp["id"]
+                    st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
+                    st.session_state.main_section = "chat"
+                    st.rerun()
+            else:
+                if st.button(f"👑 解鎖 {comp['emoji']} {comp['name'].split('・')[0]} (VIP)", key=f"lock_{comp['id']}", use_container_width=True):
+                    st.session_state.main_section = "vip"
+                    st.rerun()
+
+    st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
+
+    r3_cols = st.columns(4)
+    for idx, comp in enumerate(comp_list[6:]):
+        with r3_cols[idx]:
+            is_selected = (st.session_state.selected_companion == comp["id"])
+            border_style = f"border: 2.5px solid {comp['theme_color']};" if is_selected else ""
+            selected_tag = '<div style="position:absolute; top:8px; right:8px; background:#9B7E5C; color:white; font-size:0.7rem; padding:2px 8px; border-radius:10px;">👑 VIP神獸</div>'
+            
+            card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
+            st.markdown(card_html, unsafe_allow_html=True)
+            
+            if current_user.get("is_vip", 1):
+                if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]}", key=f"select_{comp['id']}", use_container_width=True):
+                    st.session_state.selected_companion = comp["id"]
+                    st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
+                    st.session_state.main_section = "chat"
+                    st.rerun()
+            else:
+                if st.button(f"👑 解鎖 (VIP)", key=f"lock_{comp['id']}", use_container_width=True):
+                    st.session_state.main_section = "vip"
+                    st.rerun()
+
 # ==============================================================================
-elif st.session_state.main_section == "arcade":
+
+with tab_arcade:
     st.markdown("""
 <div style="text-align:center; max-width:680px; margin:0 auto 1.2rem;">
     <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.3rem;">🎮 心靈遊樂園・互動減壓專區</h2>
@@ -2303,9 +2278,8 @@ renderGrid();
                 st.success(f"{current_companion['emoji']} {current_companion['name']} 給你一個大大的掌聲！你做得非常棒！")
 
 # ==============================================================================
-# SECTION 5: 🌿 身心療癒花園 (Web Audio 混音館/感恩花園)
-# ==============================================================================
-elif st.session_state.main_section == "garden":
+
+with tab_garden:
     st.markdown("""
 <div style="text-align:center; max-width:680px; margin:0 auto 1.2rem;">
     <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.3rem;">🌿 身心療癒花園・深層修復專區</h2>
@@ -2550,9 +2524,8 @@ function setSleepTimer(mins) { if (sleepTimerId) clearTimeout(sleepTimerId); con
         st.markdown(polaroid_html, unsafe_allow_html=True)
 
 # ==============================================================================
-# SECTION 6: 📊 每週 AI 深度心理報告 & VIP 商業會員體系
-# ==============================================================================
-elif st.session_state.main_section == "vip":
+
+with tab_vip:
     st.markdown("""
 <div style="text-align:center; max-width:680px; margin:0 auto 1.5rem;">
     <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.4rem;">📊 每週 AI 心靈體檢週報 & VIP 尊榮守護</h2>
