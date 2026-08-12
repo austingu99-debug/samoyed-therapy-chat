@@ -410,6 +410,8 @@ if "inner_child_reflection" not in st.session_state:
     st.session_state.inner_child_reflection = None
 if "mobile_preview_mode" not in st.session_state:
     st.session_state.mobile_preview_mode = False
+if "feeding_event" not in st.session_state:
+    st.session_state.feeding_event = None
 
 # 載入當前動物歷史對話
 if "messages" not in st.session_state:
@@ -811,6 +813,8 @@ if not decor_html:
 pet_quotes_js = json.dumps(active_comp["pet_quotes"], ensure_ascii=False)
 comp_id_val = active_comp["id"]
 equipped_decor_js = json.dumps(owned_decor, ensure_ascii=False)
+feeding_event_js = json.dumps(st.session_state.feeding_event, ensure_ascii=False)
+st.session_state.feeding_event = None
 
 live_pet_html = f"""
 <!DOCTYPE html>
@@ -920,8 +924,11 @@ margin-top: 0.35rem;
 </div>
 <div id="three-canvas-container"></div>
 <div class="interaction-bar">
-    <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸頭撫慰 (互動開心彈跳)</button>
-    <button class="pet-touch-btn" style="background:#6F8F72;" onclick="triggerPetWalk()">🐾 呼喚走動巡邏</button>
+    <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸撫慰</button>
+    <button class="pet-touch-btn" style="background:#6F8F72;" onclick="triggerPetWalk()">🐾 走動巡邏</button>
+    <button class="pet-touch-btn" style="background:#C2995F;" onclick="triggerFeedingAnimation('milk', '溫暖熱牛奶')">🥛 餵牛奶</button>
+    <button class="pet-touch-btn" style="background:#A3634B;" onclick="triggerFeedingAnimation('jerky', '香脆肉乾')">🥩 餵肉乾</button>
+    <button class="pet-touch-btn" style="background:#8C6B53;" onclick="triggerFeedingAnimation('cookie', '心靈小餅乾')">🍪 餵餅乾</button>
 </div>
 <div class="hint-text">✨ 點擊地板可引導小薩走過去・具備四肢漫步動畫與高捲翹大尾巴・可 360° 拖曳旋轉小屋</div>
 </div>
@@ -1573,6 +1580,114 @@ setTimeout(() => {{
 }}, 1200);
 }}
 
+// ==========================================
+// 🍪 3D 零食模型與餵食進食動畫系統 (3D Snack & Munch Engine)
+// ==========================================
+let currentSnack = null;
+let eatingTimer = 0;
+
+function createSnackMesh(type) {{
+    const group = new THREE.Group();
+    if (type === 'milk') {{
+        const bowlGeo = new THREE.CylinderGeometry(0.32, 0.18, 0.2, 16);
+        const bowlMat = new THREE.MeshStandardMaterial({{ color: 0x5DADE2, roughness: 0.3 }});
+        const bowl = new THREE.Mesh(bowlGeo, bowlMat);
+        group.add(bowl);
+        const milkGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.04, 16);
+        const milkMat = new THREE.MeshStandardMaterial({{ color: 0xFFFFFF, roughness: 0.1 }});
+        const milk = new THREE.Mesh(milkGeo, milkMat);
+        milk.position.y = 0.08;
+        group.add(milk);
+    }} else if (type === 'jerky' || type === 'meat') {{
+        const meatGeo = new THREE.BoxGeometry(0.48, 0.12, 0.32);
+        const meatMat = new THREE.MeshStandardMaterial({{ color: 0x8B3A2B, roughness: 0.6 }});
+        const meat = new THREE.Mesh(meatGeo, meatMat);
+        group.add(meat);
+        const boneGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.58, 8);
+        const boneMat = new THREE.MeshStandardMaterial({{ color: 0xFDFEFE, roughness: 0.3 }});
+        const bone = new THREE.Mesh(boneGeo, boneMat);
+        bone.rotation.z = Math.PI / 2;
+        group.add(bone);
+    }} else if (type === 'honey') {{
+        const potGeo = new THREE.CylinderGeometry(0.24, 0.28, 0.38, 16);
+        const potMat = new THREE.MeshStandardMaterial({{ color: 0xD4AC0D, roughness: 0.3 }});
+        const pot = new THREE.Mesh(potGeo, potMat);
+        group.add(pot);
+        const capGeo = new THREE.SphereGeometry(0.2, 16, 16);
+        const capMat = new THREE.MeshStandardMaterial({{ color: 0xF39C12, roughness: 0.1 }});
+        const cap = new THREE.Mesh(capGeo, capMat);
+        cap.position.y = 0.19;
+        group.add(cap);
+    }} else if (type === 'berry') {{
+        for (let i = 0; i < 5; i++) {{
+            const bGeo = new THREE.SphereGeometry(0.1, 10, 10);
+            const bMat = new THREE.MeshStandardMaterial({{ color: 0xC0392B, roughness: 0.2 }});
+            const b = new THREE.Mesh(bGeo, bMat);
+            b.position.set((i%2 - 0.5)*0.16, 0.08, (Math.floor(i/2) - 0.5)*0.16);
+            group.add(b);
+        }}
+    }} else {{
+        const cGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.1, 16);
+        const cMat = new THREE.MeshStandardMaterial({{ color: 0xC68B59, roughness: 0.6 }});
+        const cookie = new THREE.Mesh(cGeo, cMat);
+        group.add(cookie);
+        for (let i = 0; i < 4; i++) {{
+            const chipGeo = new THREE.BoxGeometry(0.06, 0.03, 0.06);
+            const chipMat = new THREE.MeshStandardMaterial({{ color: 0x3E2723, roughness: 0.8 }});
+            const chip = new THREE.Mesh(chipGeo, chipMat);
+            chip.position.set((Math.random()-0.5)*0.3, 0.06, (Math.random()-0.5)*0.3);
+            group.add(chip);
+        }}
+    }}
+    return group;
+}}
+
+function playEatingSound() {{
+    try {{
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(450 + Math.random()*200, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.07);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.07);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+    }} catch(e) {{}}
+}}
+
+function triggerFeedingAnimation(snackType, snackName) {{
+    if (currentSnack) {{
+        scene.remove(currentSnack);
+        currentSnack = null;
+    }}
+    
+    // 在寵物前方 0.9 單位處生成零食並空投
+    const forwardX = Math.sin(petRoot.rotation.y) * 0.9;
+    const forwardZ = Math.cos(petRoot.rotation.y) * 0.9;
+    const targetX = petRoot.position.x + forwardX;
+    const targetZ = petRoot.position.z + forwardZ;
+    
+    currentSnack = createSnackMesh(snackType);
+    currentSnack.position.set(targetX, 3.2, targetZ);
+    currentSnack.userData = {{
+        targetY: 0.15,
+        vy: -0.14,
+        isLanded: false,
+        name: snackName || '美味點心'
+    }};
+    scene.add(currentSnack);
+    
+    petState = 'EATING';
+    eatingTimer = 3.2;
+    
+    document.getElementById('pet-speech').innerHTML = '「哇！是好香好香的 <strong>' + (snackName || '美味點心') + '</strong>！嗷嗚大口開動囉～💖」';
+}}
+
+
 // 觸控 / 滑鼠互動
 let mouseX = 0, mouseY = 0;
 let isDragging = false;
@@ -1708,6 +1823,56 @@ if (petState === 'WALKING') {{
 
     tailGroup.rotation.z = Math.sin(t * 6) * 0.35;
     tailGroup.rotation.y = Math.cos(t * 6) * 0.2;
+}} else if (petState === 'EATING') {{
+    eatingTimer -= dt;
+    
+    // 零食物理掉落與進食縮小
+    if (currentSnack) {{
+        if (!currentSnack.userData.isLanded) {{
+            currentSnack.position.y += currentSnack.userData.vy;
+            if (currentSnack.position.y <= currentSnack.userData.targetY) {{
+                currentSnack.position.y = currentSnack.userData.targetY;
+                currentSnack.userData.isLanded = true;
+                playChimeSound();
+                for (let i = 0; i < 5; i++) spawn3DParticle(true);
+            }}
+        }} else {{
+            const progress = Math.max(0.01, eatingTimer / 3.2);
+            currentSnack.scale.setScalar(progress);
+            currentSnack.rotation.y += 0.02;
+        }}
+    }}
+    
+    // 寵物低頭咀嚼開心動畫 (Chewing & Munching Animation)
+    const chewCycle = Math.sin(t * 18);
+    headGroup.position.y = 0.38 + chewCycle * 0.06;
+    headGroup.rotation.x = 0.35 + chewCycle * 0.12;
+    tailGroup.rotation.z = Math.sin(t * 24) * 0.85; // 狂搖尾巴
+    
+    if (Math.random() < 0.14) {{
+        spawn3DParticle(Math.random() > 0.5);
+    }}
+    if (Math.random() < 0.08) {{
+        playEatingSound();
+    }}
+    
+    if (eatingTimer <= 0) {{
+        if (currentSnack) {{
+            scene.remove(currentSnack);
+            currentSnack = null;
+        }}
+        petState = 'IDLE';
+        headGroup.position.y = 0.55;
+        headGroup.rotation.x = 0;
+        bounceScale.x = 1.35;
+        bounceScale.y = 0.65;
+        bounceScale.z = 1.35;
+        petRoot.position.y = 0.45;
+        
+        playChimeSound();
+        for (let i = 0; i < 10; i++) spawn3DParticle(i % 2 === 0);
+        document.getElementById('pet-speech').innerHTML = '「呼～吃得好飽好幸福！謝謝主人的愛心投餵✨💖 (+EXP)」';
+    }}
 }} else if (petState === 'PETTED') {{
     bounceScale.x = THREE.MathUtils.lerp(bounceScale.x, 1.0, 0.1);
     bounceScale.y = THREE.MathUtils.lerp(bounceScale.y, 1.0, 0.1);
@@ -1781,6 +1946,14 @@ renderer.render(scene, camera);
 
 animate();
 
+const autoFeed = {feeding_event_js};
+if (autoFeed && autoFeed.snack) {{
+    setTimeout(() => {{
+        triggerFeedingAnimation(autoFeed.snack, autoFeed.name);
+    }}, 400);
+}}
+
+
 window.addEventListener('resize', () => {{
 const newW = container.clientWidth || 640;
 camera.aspect = newW / height;
@@ -1834,7 +2007,7 @@ with tab_feed_quest:
                     ok, msg = db.feed_companion(CURRENT_USER_ID, active_comp["id"], sk_key)
                     if ok:
                         st.balloons()
-                        st.success(msg)
+                        st.session_state.feeding_event = {"snack": sk_key, "name": sk["name"]}
                         st.session_state.user_data = db.get_or_create_user(CURRENT_USER_ID)
                         st.rerun()
                     else:
