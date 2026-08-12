@@ -3,16 +3,15 @@ import random
 import time
 import os
 import base64
-import textwrap
 from openai import OpenAI
 
 # ==============================================================================
-# 🐾 動物心靈諮商室 — 專業心理學同理心與多維療癒樂園
+# 🐾 動物心靈諮商室 (Animal Therapy Sanctuary) — 商業級全方位心靈療癒平台
 # ==============================================================================
 
 # 1. 頁面全域設定
 st.set_page_config(
-    page_title="動物心靈諮商室 — 溫暖陪伴角落",
+    page_title="動物心靈諮商室 — 專屬心靈夥伴與療癒樂園",
     page_icon="🐾",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -40,7 +39,7 @@ RAW_COMPANIONS = {
         "theme_color": "#C2995F",
         "bg_color": "#F9F4EB",
         "bubble_color": "#EFE3D3",
-        "actions": ["(大力晃動蓬鬆雪白的大尾巴)", "(用暖呼呼的大腦袋蹭蹭你的膝蓋)", "(吐出舌頭露出燦爛無比的微笑)", "(用前爪輕輕搭在你手背上)"],
+        "actions": ["(輕輕在身邊安靜陪伴，眼神充滿溫暖)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#E2D5C3" stroke-width="3"/>
 <polygon points="20,40 12,18 38,26" fill="#F4EDE2"/>
@@ -72,7 +71,7 @@ RAW_COMPANIONS = {
         "theme_color": "#7C6A8D",
         "bg_color": "#F4F1F7",
         "bubble_color": "#E4DEEC",
-        "actions": ["(跳上沙發蜷縮在你的腿邊)", "(發出極其輕柔舒服的呼嚕嚕聲)", "(用軟綿綿的小肉墊輕碰你的指尖)", "(優雅地甩了甩尾巴尖端，靜靜望著你)"],
+        "actions": ["(安靜地蜷縮在手邊，發出極其輕柔舒服的呼嚕聲)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#E8E4EC" stroke="#C8C0D4" stroke-width="3"/>
 <polygon points="22,42 16,14 42,26" fill="#8F82A0"/>
@@ -105,7 +104,7 @@ RAW_COMPANIONS = {
         "theme_color": "#8B6547",
         "bg_color": "#F7F2EB",
         "bubble_color": "#EADECF",
-        "actions": ["(張開巨大且溫暖的毛茸茸手臂給你大熊抱)", "(默默遞上一杯熱氣騰騰的香濃熱可可)", "(沉穩溫厚地點點頭，眼神滿是寬慰)", "(輕輕拍拍你的後背，給你最安穩的力量)"],
+        "actions": ["(遞上一杯熱氣騰騰的香濃熱可可，沉穩溫和地注視著你)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#B38B6D" stroke="#8E6748" stroke-width="3"/>
 <circle cx="22" cy="24" r="14" fill="#B38B6D" stroke="#8E6748" stroke-width="2"/>
@@ -135,7 +134,7 @@ RAW_COMPANIONS = {
         "theme_color": "#C46537",
         "bg_color": "#FBF2EC",
         "bubble_color": "#F3DFD1",
-        "actions": ["(輕輕晃動蓬鬆火紅的漂亮大尾巴)", "(側著頭專注注視著你，眼神充滿靈氣)", "(眨了眨明亮的眼睛，嘴角揚起心領神會的微笑)", "(用蓬鬆的尾巴尖輕掃過你的手背)"],
+        "actions": ["(側著頭專注注視著你，眼神充滿靈氣與理解)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#F4F0EA" stroke="#E2DACF" stroke-width="3"/>
 <polygon points="20,40 14,12 40,24" fill="#C95F2B"/>
@@ -165,7 +164,7 @@ RAW_COMPANIONS = {
         "theme_color": "#B86B77",
         "bg_color": "#FAF1F3",
         "bubble_color": "#F2DDE1",
-        "actions": ["(動了動長長柔軟的垂耳，溫柔注視著你)", "(縮成一團軟綿綿的毛球輕輕依偎在你掌心)", "(用粉嫩的小鼻子輕碰你的手指以示心疼)", "(輕輕趴在你的懷裡，陪你一起安靜呼吸)"],
+        "actions": ["(輕輕動了動長長柔軟的垂耳，溫柔凝望著你)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#FBF8F9" stroke="#EADEE2" stroke-width="3"/>
 <path d="M 28,34 C 15,35 12,65 18,74 C 22,78 28,70 26,45 Z" fill="#E6D3D8"/>
@@ -197,7 +196,7 @@ RAW_COMPANIONS = {
         "theme_color": "#638367",
         "bg_color": "#F3F7F4",
         "bubble_color": "#DEE9DF",
-        "actions": ["(慢吞吞地眨了眨溫和的眼睛)", "(深深地吸進一口清新空氣，再緩緩吐出……)", "(用樹懶特有的慢動作輕輕拍拍你的肩膀)", "(遞上一片翠綠的嫩葉，示意你一起慢慢放鬆)"],
+        "actions": ["(慢吞吞地眨眨眼，陪你深深吸一口氣再緩緩吐出)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#D3C7B5" stroke="#B8AA94" stroke-width="3"/>
 <ellipse cx="50" cy="52" rx="34" ry="26" fill="#F0E8DC"/>
@@ -223,7 +222,7 @@ RAW_COMPANIONS = {
         "theme_color": "#3F718D",
         "bg_color": "#F0F5F8",
         "bubble_color": "#D8E6EE",
-        "actions": ["(邁著圓滾滾的小碎步噠噠噠湊到你面前)", "(用毛茸茸的小翅膀輕輕拍拍你的手背)", "(歪著圓圓的頭，用黑亮的大眼睛認真看著你)", "(緊緊挨著你的身邊，為你擋住外面的冷風)"],
+        "actions": ["(用毛茸茸的小翅膀輕輕碰碰你的手背)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#384955" stroke="#25323B" stroke-width="3"/>
 <ellipse cx="50" cy="56" rx="30" ry="32" fill="#FFFFFF"/>
@@ -250,7 +249,7 @@ RAW_COMPANIONS = {
         "theme_color": "#52627E",
         "bg_color": "#F1F4F9",
         "bubble_color": "#DAE2ED",
-        "actions": ["(推了推架在鼻樑上的精緻小圓眼鏡)", "(投以深邃且極具包容力的溫潤目光)", "(輕輕抖動羽毛，為你泡上一杯安神的薰衣草花茶)", "(優雅地展開一側翅膀，像傘一樣為你遮去煩憂)"],
+        "actions": ["(推了推精緻小眼鏡，投以深邃而包容的目光)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#8492A6" stroke="#68768A" stroke-width="3"/>
 <polygon points="26,30 18,12 36,22" fill="#68768A"/>
@@ -281,7 +280,7 @@ RAW_COMPANIONS = {
         "theme_color": "#2C8D8D",
         "bg_color": "#F0F8F8",
         "bubble_color": "#D3ECEC",
-        "actions": ["(輕盈地躍出水面帶起一陣晶瑩純淨的水花)", "(發出溫柔而悠揚的治癒海豚音撫平你的情緒)", "(用光滑溫暖的額頭輕輕頂頂你的手心)", "(圍繞在你身邊激起溫暖舒緩的微波浪撫慰你的疲倦)"],
+        "actions": ["(發出溫柔而悠揚的治癒海豚音，撫平心中的微瀾)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#48A9A6" stroke="#318784" stroke-width="3"/>
 <path d="M 22,60 C 20,40 50,30 78,45 C 86,50 88,58 76,56 C 58,54 40,68 22,60 Z" fill="#71C7C4"/>
@@ -306,7 +305,7 @@ RAW_COMPANIONS = {
         "theme_color": "#946E56",
         "bg_color": "#F7F3EF",
         "bubble_color": "#E9DFD6",
-        "actions": ["(慢慢收起背上每一根緊繃的小尖刺，露出最柔軟的小肚子)", "(小心翼翼地雙手捧上一顆珍藏的圓滾滾小橡果給你)", "(用粉嫩的小爪子輕輕拉拉你的衣角)", "(安安靜靜地縮成一小團，陪著你一起卸下防備)"],
+        "actions": ["(慢慢收起背上的小刺，安靜縮成一團陪著你)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <circle cx="50" cy="50" r="46" fill="#8C674F" stroke="#6D4D38" stroke-width="3"/>
 <polygon points="18,32 10,24 24,24" fill="#6D4D38"/>
@@ -326,7 +325,7 @@ RAW_COMPANIONS = {
     }
 }
 
-# 預先為所有動物生成乾淨、無解析錯誤的 Base64 Data URI
+# 預先為所有動物生成乾淨 Base64 Data URI
 ANIMAL_COMPANIONS = {}
 for cid, cdata in RAW_COMPANIONS.items():
     cdata_copy = dict(cdata)
@@ -339,7 +338,7 @@ if "messages" not in st.session_state:
 if "selected_companion" not in st.session_state:
     st.session_state.selected_companion = None
 if "active_tab" not in st.session_state:
-    st.session_state.active_tab = "companions" # companions, chat, mood_meter, inner_child, breath, shredder, fortune, grounding
+    st.session_state.active_tab = "companions"
 if "is_thinking" not in st.session_state:
     st.session_state.is_thinking = False
 if "error_msg" not in st.session_state:
@@ -357,7 +356,22 @@ if "current_mood_tag" not in st.session_state:
 if "inner_child_reflection" not in st.session_state:
     st.session_state.inner_child_reflection = None
 
-# 4. API Key 智慧獲取與多供應商相容機制 (支援 Groq 與 OpenAI)
+# 新增 4 大商業化進階模組 State
+if "zen_stones" not in st.session_state:
+    st.session_state.zen_stones = []
+if "gratitude_garden" not in st.session_state:
+    st.session_state.gratitude_garden = {
+        "sunshine": 30,
+        "logs": [
+            {"date": time.strftime("%Y-%m-%d"), "content": "今天給了自己安靜休息的空間，很棒。"}
+        ]
+    }
+if "time_capsules" not in st.session_state:
+    st.session_state.time_capsules = []
+if "tts_enabled" not in st.session_state:
+    st.session_state.tts_enabled = True
+
+# 4. API Key 智慧獲取與多供應商相容機制
 def get_api_config():
     key = None
     for k in ["GROQ_API_KEY", "OPENAI_API_KEY"]:
@@ -381,7 +395,7 @@ def get_api_config():
 
 api_key, api_base_url, api_model = get_api_config()
 
-# 5. 全域現代化奶油暖色系 CSS 樣式 (零 Markdown 縮排錯誤)
+# 5. 全域現代化奶油暖色系 CSS 樣式
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap');
@@ -681,6 +695,53 @@ section[data-testid="stSidebar"] { display: none; }
     color: #5C4A38;
 }
 
+/* 拍立得卡片樣式 */
+.polaroid-frame {
+    background: #FFFFFF;
+    padding: 1.2rem 1.2rem 2.2rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(83, 62, 45, 0.15);
+    max-width: 480px;
+    margin: 1.5rem auto;
+    border: 1px solid #EDE0CE;
+    text-align: center;
+    transform: rotate(-1deg);
+    transition: transform 0.3s ease;
+}
+.polaroid-frame:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+.polaroid-photo-box {
+    background: #FAF6F0;
+    border-radius: 6px;
+    padding: 1.5rem;
+    border: 1px solid #EADBCE;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.polaroid-caption {
+    font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+    font-size: 1rem;
+    color: #5A432D;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+/* 疊石頭動畫容器 */
+.zen-tower-container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    min-height: 260px;
+    padding: 1.5rem 0;
+    border-bottom: 4px solid #B5A290;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 .stButton > button {
     background-color: #EDE1D1 !important;
     color: #533E2D !important;
@@ -726,54 +787,35 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# 7. 頂部功能導航列 (8 大主題專區)
-col_nav1, col_nav2, col_nav3, col_nav4, col_nav5, col_nav6, col_nav7, col_nav8 = st.columns(8)
+# 7. 頂部功能導航列 (13 大專業心靈互動模組)
+nav_cols = st.columns(13)
 
-with col_nav1:
-    if st.button("🐾 心靈夥伴", key="nav_companions", use_container_width=True):
-        st.session_state.active_tab = "companions"
-        st.rerun()
+nav_items = [
+    ("🐾 夥伴大廳", "companions"),
+    ("💬 諮商室", "chat"),
+    ("🎵 音療館", "ambient"),
+    ("🪨 疊石頭", "zen_stones"),
+    ("🌱 感恩盆栽", "gratitude"),
+    ("💌 時空膠囊", "time_capsule"),
+    ("🖼️ 拍立得卡", "polaroid"),
+    ("🌡️ 情緒溫度計", "mood_meter"),
+    ("🧸 內在小孩", "inner_child"),
+    ("🌬️ 正念呼吸", "breath"),
+    ("🔨 煩惱粉碎機", "shredder"),
+    ("🥠 幸運籤", "fortune"),
+    ("🧭 著陸法", "grounding")
+]
 
-with col_nav2:
-    chat_label = "💬 諮商室"
-    if st.session_state.selected_companion:
-        comp = ANIMAL_COMPANIONS[st.session_state.selected_companion]
-        chat_label = f"{comp['emoji']} {comp['name'].split('・')[0]}"
-    if st.button(chat_label, key="nav_chat", use_container_width=True):
-        if not st.session_state.selected_companion:
-            st.session_state.selected_companion = "samoyed"
-        st.session_state.active_tab = "chat"
-        st.rerun()
-
-with col_nav3:
-    if st.button("🌡️ 情緒溫度計", key="nav_mood_meter", use_container_width=True):
-        st.session_state.active_tab = "mood_meter"
-        st.rerun()
-
-with col_nav4:
-    if st.button("🧸 內在小孩擁抱", key="nav_inner_child", use_container_width=True):
-        st.session_state.active_tab = "inner_child"
-        st.rerun()
-
-with col_nav5:
-    if st.button("🌬️ 正念呼吸", key="nav_breath", use_container_width=True):
-        st.session_state.active_tab = "breath"
-        st.rerun()
-
-with col_nav6:
-    if st.button("🔨 煩惱粉碎機", key="nav_shredder", use_container_width=True):
-        st.session_state.active_tab = "shredder"
-        st.rerun()
-
-with col_nav7:
-    if st.button("🥠 心靈幸運籤", key="nav_fortune", use_container_width=True):
-        st.session_state.active_tab = "fortune"
-        st.rerun()
-
-with col_nav8:
-    if st.button("🧭 54321著陸法", key="nav_grounding", use_container_width=True):
-        st.session_state.active_tab = "grounding"
-        st.rerun()
+for idx, (label, tab_key) in enumerate(nav_items):
+    with nav_cols[idx]:
+        if tab_key == "chat" and st.session_state.selected_companion:
+            comp = ANIMAL_COMPANIONS[st.session_state.selected_companion]
+            label = f"{comp['emoji']} 諮商"
+        if st.button(label, key=f"nav_{tab_key}", use_container_width=True):
+            if tab_key == "chat" and not st.session_state.selected_companion:
+                st.session_state.selected_companion = "samoyed"
+            st.session_state.active_tab = tab_key
+            st.rerun()
 
 # 8. API Key 檢查與友善提示 (支援 Groq 與 OpenAI Key)
 if not api_key:
@@ -793,7 +835,7 @@ if not api_key:
         """)
 
 # ==============================================================================
-# TAB 1: 🐾 動物心靈夥伴選擇大廳 (10 種動物卡片，3 欄優雅排版，Base64 頭像無雜訊)
+# TAB 1: 🐾 動物心靈夥伴選擇大廳 (10 種動物卡片)
 # ==============================================================================
 if st.session_state.active_tab == "companions":
     st.markdown("""
@@ -805,8 +847,7 @@ if st.session_state.active_tab == "companions":
 
     comp_list = list(ANIMAL_COMPANIONS.values())
     
-    # 採用 3 欄優雅網格佈局 (更寬敞舒適，文字與標籤不擠壓)
-    # Row 1: 3 隻
+    # 3 欄式優雅網格
     r1_cols = st.columns(3)
     for idx, comp in enumerate(comp_list[:3]):
         with r1_cols[idx]:
@@ -824,7 +865,6 @@ if st.session_state.active_tab == "companions":
 
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    # Row 2: 3 隻
     r2_cols = st.columns(3)
     for idx, comp in enumerate(comp_list[3:6]):
         with r2_cols[idx]:
@@ -842,7 +882,6 @@ if st.session_state.active_tab == "companions":
 
     st.markdown("<div style='height:1.2rem;'></div>", unsafe_allow_html=True)
 
-    # Row 3: 4 隻
     r3_cols = st.columns(4)
     for idx, comp in enumerate(comp_list[6:]):
         with r3_cols[idx]:
@@ -859,7 +898,7 @@ if st.session_state.active_tab == "companions":
                 st.rerun()
 
 # ==============================================================================
-# TAB 2: 💬 專屬動物心靈諮商室 (深度心理學同理心 + 禁絕醫療/法律/罐頭)
+# TAB 2: 💬 專屬動物心靈諮商室 (深度心理學同理心 + 自然微動作)
 # ==============================================================================
 elif st.session_state.active_tab == "chat":
     if not st.session_state.selected_companion:
@@ -872,7 +911,7 @@ elif st.session_state.active_tab == "chat":
     user_name = st.session_state.user_nickname
 
     # 頂部自訂稱呼與設定展開區
-    with st.expander("⚙️ 互動稱呼與心理學陪伴設定（點此自訂稱呼）", expanded=False):
+    with st.expander("⚙️ 互動稱呼與語音朗讀設定", expanded=False):
         c_set1, c_set2, c_set3 = st.columns([2, 2, 1])
         with c_set1:
             new_user_name = st.text_input("夥伴如何稱呼你：", value=user_name, placeholder="例如：你、小夥伴、小明、朋友...", key="set_user_nick")
@@ -885,7 +924,7 @@ elif st.session_state.active_tab == "chat":
         with c_set3:
             st.markdown("<div style='height:1.75rem;'></div>", unsafe_allow_html=True)
             if st.button("儲存設定", key="save_nick_btn", use_container_width=True):
-                st.success("稱呼已更新！")
+                st.success("設定已更新！")
                 st.rerun()
 
     # 頂部當前夥伴狀態橫幅
@@ -1031,7 +1070,266 @@ elif st.session_state.active_tab == "chat":
             st.rerun()
 
 # ==============================================================================
-# TAB 3: 🌡️ 情緒溫度計與即時覺察 (Affect Labeling & Mood Tracker)
+# TAB 3: 🎵 大自然白噪音心靈音療館 (Ambient Sound Sanctuary)
+# ==============================================================================
+elif st.session_state.active_tab == "ambient":
+    st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 1.5rem;">
+    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.4rem;">🎵 大自然心靈白噪音音療館</h2>
+    <p style="color:#8C735A; font-size:0.92rem; line-height:1.6;">
+        挑選一段讓你最感到安心的大自然聲音。心理學研究顯示，規律的自然白噪音能有效放鬆大腦交感神經，為心靈創造一個不被打擾的寧靜泡泡。
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+    ambient_tracks = [
+        {"name": "🌧️ 溫柔春雨 (Gentle Rain)", "desc": "淅淅瀝瀝的雨聲，洗淨思緒雜念", "audio_url": "https://actions.google.com/sounds/v1/weather/rain_heavy.ogg"},
+        {"name": "🔥 溫暖壁爐柴火 (Fireplace)", "desc": "劈啪作響的木柴，帶來深層安全感", "audio_url": "https://actions.google.com/sounds/v1/ambiences/fireplace.ogg"},
+        {"name": "🌲 晨曦森林鳥鳴 (Morning Forest)", "desc": "微風拂過樹梢，清脆鳥鳴喚醒平靜", "audio_url": "https://actions.google.com/sounds/v1/ambiences/daytime_forest_bonanza.ogg"},
+        {"name": "🌊 蔚藍海岸浪潮 (Ocean Waves)", "desc": "規律潮起潮落，帶走緊繃疲憊", "audio_url": "https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg"},
+        {"name": "🌙 夏夜微風與蟲鳴 (Night Crickets)", "desc": "夜幕降臨的靜謐，適合沉思與助眠", "audio_url": "https://actions.google.com/sounds/v1/ambiences/nighttime_crickets.ogg"},
+        {"name": "☕ 街角咖啡館 (Cozy Cafe)", "desc": "溫潤柔和的背景聲，專注陪伴不孤單", "audio_url": "https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg"}
+    ]
+
+    amb_cols = st.columns(3)
+    for idx, track in enumerate(ambient_tracks):
+        with amb_cols[idx % 3]:
+            st.markdown(f"""
+<div style="background:#FFFFFF; border:2px solid #EADECE; border-radius:18px; padding:1.2rem; margin-bottom:1.2rem; box-shadow:0 4px 12px rgba(83,62,45,0.06);">
+    <h4 style="color:#533E2D; margin:0 0 0.3rem;">{track['name']}</h4>
+    <p style="color:#8C735A; font-size:0.85rem; margin:0 0 0.8rem;">{track['desc']}</p>
+</div>
+""", unsafe_allow_html=True)
+            st.audio(track["audio_url"], format="audio/ogg")
+
+# ==============================================================================
+# TAB 4: 🪨 心靈疊石頭・禪意專注小遊戲 (Zen Stone Balancing)
+# ==============================================================================
+elif st.session_state.active_tab == "zen_stones":
+    st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 1.5rem;">
+    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.4rem;">🪨 心靈疊石頭・禪意專注練習</h2>
+    <p style="color:#8C735A; font-size:0.92rem; line-height:1.6;">
+        疊石頭是心理學中非常經典的<strong>「心流專注療法 (Mindful Flow)」</strong>。<br>
+        每一次堆疊，把注意力完全拉回當下。每疊上一塊石頭，就為自己收穫一句禪意哲思。
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+    stone_options = [
+        {"name": "🪨 安定大地基石", "color": "#7D6B58", "width": "190px", "height": "42px", "quote": "「立足於當下，大地會穩穩托住你的每一次疲憊。」"},
+        {"name": "💎 澄澈水晶靈石", "color": "#8C9EA8", "width": "160px", "height": "38px", "quote": "「如水般清澈，看清盲點，允許情緒自然流過。」"},
+        {"name": "🌊 圓融河畔卵石", "color": "#A38F7A", "width": "130px", "height": "34px", "quote": "「流水磨去了尖銳，也留下了最溫潤柔軟的自己。」"},
+        {"name": "🌸 慈悲粉櫻心石", "color": "#C49A9E", "width": "100px", "height": "30px", "quote": "「對自己溫柔一點，你值得世間最純粹的善待。」"},
+        {"name": "🌿 復原青苔石", "color": "#768B6E", "width": "75px", "height": "26px", "quote": "「即便在石縫之中，生命依然能開出堅韌的綠意。」"}
+    ]
+
+    c_z1, c_z2 = st.columns([1, 1])
+    with c_z1:
+        st.markdown("<h4 style='color:#533E2D;'>🪵 選擇你想堆疊的心靈之石：</h4>", unsafe_allow_html=True)
+        for s_idx, s in enumerate(stone_options):
+            if st.button(f"{s['name']}", key=f"btn_add_stone_{s_idx}", use_container_width=True):
+                st.session_state.zen_stones.append(s)
+                st.rerun()
+
+        if len(st.session_state.zen_stones) > 0:
+            if st.button("🧹 推倒重來・清空雜念", key="btn_clear_stones", use_container_width=True):
+                st.session_state.zen_stones = []
+                st.rerun()
+
+    with c_z2:
+        st.markdown(f"<div style='text-align:center; font-weight:700; color:#533E2D; margin-bottom:0.5rem;'>🌟 目前禪石高度：{len(st.session_state.zen_stones)} 層</div>", unsafe_allow_html=True)
+        
+        tower_html = '<div class="zen-tower-container">'
+        if len(st.session_state.zen_stones) == 0:
+            tower_html += '<div style="color:#A89481; font-style:italic; padding-top:4rem;">點擊左側石頭，開始堆疊你的心靈之塔...</div>'
+        else:
+            for st_item in st.session_state.zen_stones:
+                tower_html += f'<div style="background:{st_item["color"]}; width:{st_item["width"]}; height:{st_item["height"]}; border-radius:24px; margin:2px auto; box-shadow:0 3px 8px rgba(0,0,0,0.15); border:2px solid rgba(255,255,255,0.4); animation:msg-fade-in 0.3s ease;"></div>'
+        tower_html += '</div>'
+        st.markdown(tower_html, unsafe_allow_html=True)
+
+        if len(st.session_state.zen_stones) > 0:
+            latest_quote = st.session_state.zen_stones[-1]["quote"]
+            st.markdown(f"""
+<div style="background:#FFFFFF; border-radius:14px; padding:1rem; border:1px solid #EADECE; margin-top:1rem; text-align:center; color:#5C4A38; font-weight:600;">
+    ✨ {latest_quote}
+</div>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# TAB 5: 🌱 心靈情緒盆栽・每日感恩花園 (Gratitude Growth Garden)
+# ==============================================================================
+elif st.session_state.active_tab == "gratitude":
+    st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 1.5rem;">
+    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.4rem;">🌱 心靈情緒盆栽・感恩花園</h2>
+    <p style="color:#8C735A; font-size:0.92rem; line-height:1.6;">
+        正向心理學證實，<strong>「記錄微小的美好與自我肯定」</strong>能實質重塑大腦神經迴路。<br>
+        每一次灌溉，心靈植物都會茁壯生長，陪伴你見證自我的成長蛻變。
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+    sunshine = st.session_state.gratitude_garden["sunshine"]
+
+    # 計算植物成長階段
+    if sunshine < 50:
+        stage_name = "🌰 沉睡的心靈種子"
+        stage_desc = "在溫暖的泥土中積蓄力量，隨時準備破土而出。"
+        plant_emoji = "🌰"
+    elif sunshine < 100:
+        stage_name = "🌱 萌芽初綻的幼苗"
+        stage_desc = "探出了鮮綠的嫩葉，感受陽光與善待的滋養。"
+        plant_emoji = "🌱"
+    elif sunshine < 160:
+        stage_name = "🌿 繁茂舒展的翠綠小樹"
+        stage_desc = "枝葉繁茂，生機盎然，具備了抵禦風雨的力量。"
+        plant_emoji = "🌿"
+    else:
+        stage_name = "🌸 繁花盛開的心靈之樹"
+        stage_desc = "綻放出燦爛治癒的心靈花朵，散發滿滿的平靜與喜悅！"
+        plant_emoji = "🌸 🌳 🌸"
+
+    col_p1, col_p2 = st.columns([1, 1])
+    with col_p1:
+        st.markdown(f"""
+<div style="background:#FFFFFF; border:2px solid #EADECE; border-radius:20px; padding:1.5rem; text-align:center; box-shadow:0 6px 18px rgba(83,62,45,0.06);">
+    <div style="font-size:3.5rem; margin-bottom:0.5rem;">{plant_emoji}</div>
+    <h3 style="color:#533E2D; margin:0 0 0.3rem;">{stage_name}</h3>
+    <p style="color:#8C735A; font-size:0.88rem; margin:0 0 1rem;">{stage_desc}</p>
+    <div style="font-weight:700; color:#C2995F; margin-bottom:0.4rem;">☀️ 陽光成長值：{sunshine} / 200</div>
+</div>
+""", unsafe_allow_html=True)
+        st.progress(min(sunshine / 200.0, 1.0))
+
+    with col_p2:
+        st.markdown("<h4 style='color:#533E2D;'>💧 記錄微小心情，為盆栽澆水：</h4>", unsafe_allow_html=True)
+        grat_input = st.text_input("寫下一件今天值得感謝的事或肯定自己的小細節：", placeholder="例如：今天喝到一杯好喝的奶茶、今天準時完成了任務...", key="grat_input_box")
+        if st.button("🌱 灌溉心靈植物 (+25 陽光值)", key="btn_water_plant", use_container_width=True):
+            if grat_input.strip():
+                st.session_state.gratitude_garden["sunshine"] += 25
+                st.session_state.gratitude_garden["logs"].insert(0, {
+                    "date": time.strftime("%Y-%m-%d %H:%M"),
+                    "content": grat_input.strip()
+                })
+                st.balloons()
+                st.rerun()
+            else:
+                st.warning("請先寫下一件值得感恩或肯定自己的事喔！")
+
+        if st.session_state.gratitude_garden["logs"]:
+            st.markdown("<h5 style='color:#533E2D; margin-top:1rem;'>📜 最近的心靈成長足跡：</h5>", unsafe_allow_html=True)
+            for log in st.session_state.gratitude_garden["logs"][:4]:
+                st.markdown(f"""
+<div style="background:#FAF6F0; border-left:4px solid #C2995F; border-radius:10px; padding:0.5rem 0.8rem; margin-bottom:0.5rem; font-size:0.85rem; color:#5C4A38;">
+    <span style="color:#8C735A; font-size:0.75rem;">{log['date']}</span><br>
+    💌 {log['content']}
+</div>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# TAB 6: 💌 心靈樹洞與時空膠囊信箱 (Time Capsule Mailbox)
+# ==============================================================================
+elif st.session_state.active_tab == "time_capsule":
+    comp_id = st.session_state.selected_companion or "samoyed"
+    current_companion = ANIMAL_COMPANIONS[comp_id]
+
+    st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 1.5rem;">
+    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.4rem;">💌 心靈樹洞與時空膠囊信箱</h2>
+    <p style="color:#8C735A; font-size:0.92rem; line-height:1.6;">
+        把想對<strong>「未來的自己」</strong>、<strong>「內在小孩」</strong>說的心裡話，或是暫時無法對人言的秘密封存在時空膠囊中。<br>
+        由動物夥伴為你蓋上專屬心靈戳印，妥善封存。
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+    col_t1, col_t2 = st.columns([1, 1])
+    with col_t1:
+        st.markdown("<h4 style='color:#533E2D;'>📝 封存一封新信件：</h4>", unsafe_allow_html=True)
+        capsule_target = st.selectbox("這封信是寫給誰的：", ["寫給 1 個月後的自己", "寫給未來的自己", "寫給受委屈時的自己", "寫給童年的內在小孩", "秘密心靈樹洞（純宣洩）"])
+        capsule_content = st.text_area("信件內容：", placeholder="親愛的自己，當你讀到這封信的時候...", height=140)
+        
+        if st.button("🔒 封存進時空膠囊", key="btn_save_capsule", use_container_width=True):
+            if capsule_content.strip():
+                st.session_state.time_capsules.insert(0, {
+                    "to": capsule_target,
+                    "content": capsule_content.strip(),
+                    "date": time.strftime("%Y-%m-%d %H:%M"),
+                    "guardian": current_companion["name"],
+                    "avatar": current_companion["avatar_uri"]
+                })
+                st.balloons()
+                st.success("信件已由動物夥伴蓋章封存！")
+                st.rerun()
+            else:
+                st.warning("請先寫下你想封存的內容喔！")
+
+    with col_t2:
+        st.markdown("<h4 style='color:#533E2D;'>📮 已封存的時空膠囊藏寶箱：</h4>", unsafe_allow_html=True)
+        if not st.session_state.time_capsules:
+            st.markdown("<div style='color:#8C735A; font-style:italic; padding:2rem 0; text-align:center;'>樹洞信箱目前空空的，寫下你的第一封時空信吧！</div>", unsafe_allow_html=True)
+        else:
+            for c_idx, cap in enumerate(st.session_state.time_capsules):
+                with st.expander(f"💌 {cap['to']}（{cap['date']} 由 {cap['guardian']} 封存）"):
+                    st.markdown(f"""
+<div style="background:#FAF6F0; border-radius:12px; padding:1.2rem; border:1px solid #EADECE; color:#5C4A38; line-height:1.7;">
+    <div style="font-size:0.85rem; color:#8C735A; margin-bottom:0.6rem;">📅 封存時間：{cap['date']} ｜ 守護夥伴：{cap['guardian']}</div>
+    <div style="font-size:0.95rem; white-space:pre-wrap;">{cap['content']}</div>
+</div>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# TAB 7: 🖼️ 拍立得心靈日誌小卡生成器 (Polaroid Therapy Card)
+# ==============================================================================
+elif st.session_state.active_tab == "polaroid":
+    comp_id = st.session_state.selected_companion or "samoyed"
+    current_companion = ANIMAL_COMPANIONS[comp_id]
+
+    st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 1.5rem;">
+    <h2 style="color:#533E2D; font-size:1.5rem; font-weight:700; margin-bottom:0.4rem;">🖼️ 拍立得心靈日誌小卡</h2>
+    <p style="color:#8C735A; font-size:0.92rem; line-height:1.6;">
+        將今天最觸動心靈的溫暖對話與格言，排版成復古文青風的拍立得小卡，保存這份治癒力量。
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+    # 預設提取最後一則助手回覆或名言
+    default_quote = current_companion["motto"]
+    if st.session_state.messages:
+        for m in reversed(st.session_state.messages):
+            if m["role"] == "assistant":
+                default_quote = m["content"][:160] + "..." if len(m["content"]) > 160 else m["content"]
+                break
+
+    c_card1, c_card2 = st.columns([1, 1])
+    with c_card1:
+        card_text = st.text_area("編輯小卡上的金句文字：", value=default_quote, height=120)
+        card_user_note = st.text_input("寫下一句今日給自己的備註：", value="今天也辛苦了，謝謝一直努力的自己。")
+        
+    with c_card2:
+        today_str = time.strftime("%Y.%m.%d")
+        polaroid_html = f"""
+<div class="polaroid-frame">
+    <div class="polaroid-photo-box">
+        <img src="{current_companion['avatar_uri']}" style="width:70px; height:70px; border-radius:50%; margin-bottom:0.8rem;" />
+        <div style="font-size:0.95rem; color:#4A3B2C; line-height:1.7; font-weight:500;">
+            "{card_text}"
+        </div>
+        <div style="font-size:0.8rem; color:#8C735A; margin-top:0.6rem;">— {current_companion['name']} 陪伴守護</div>
+    </div>
+    <div class="polaroid-caption">
+        💌 {card_user_note}<br>
+        <span style="font-size:0.75rem; color:#A89481;">{today_str}・動物心靈諮商室</span>
+    </div>
+</div>
+"""
+        st.markdown(polaroid_html, unsafe_allow_html=True)
+
+# ==============================================================================
+# TAB 8: 🌡️ 情緒溫度計與即時覺察 (Affect Labeling & Mood Tracker)
 # ==============================================================================
 elif st.session_state.active_tab == "mood_meter":
     comp_id = st.session_state.selected_companion or "samoyed"
@@ -1072,7 +1370,7 @@ elif st.session_state.active_tab == "mood_meter":
         st.markdown(res_html, unsafe_allow_html=True)
 
 # ==============================================================================
-# TAB 4: 🧸 內在小孩擁抱室 (Inner Child Holding & Self-Compassion)
+# TAB 9: 🧸 內在小孩擁抱室 (Inner Child Holding & Self-Compassion)
 # ==============================================================================
 elif st.session_state.active_tab == "inner_child":
     comp_id = st.session_state.selected_companion or "samoyed"
@@ -1110,7 +1408,7 @@ elif st.session_state.active_tab == "inner_child":
         st.markdown(child_card, unsafe_allow_html=True)
 
 # ==============================================================================
-# TAB 5: 🌬️ 正念舒壓呼吸泡泡 (4-7-8 / 盒式呼吸法)
+# TAB 10: 🌬️ 正念舒壓呼吸泡泡 (Box Breathing: 4-4-4-4)
 # ==============================================================================
 elif st.session_state.active_tab == "breath":
     comp_id = st.session_state.selected_companion or "samoyed"
@@ -1142,12 +1440,11 @@ elif st.session_state.active_tab == "breath":
     st.markdown(f'''<div style="background:#FFFFFF; border-radius:18px; padding:1.2rem; border:1.5px solid #EADECE; max-width:600px; margin:1rem auto; text-align:center;"><p style="color:#533E2D; font-size:0.95rem; font-weight:600; margin:0 0 0.4rem;">{current_companion['emoji']} {current_companion['name']} 溫柔提醒你：</p><p style="color:#7D6B58; font-size:0.88rem; margin:0; line-height:1.6;">「把手放在腹部，感受吸氣時肚子的微微隆起，吐氣時帶走所有的緊繃……{comp_self} 陪著你慢慢放鬆喔。」</p></div>''', unsafe_allow_html=True)
 
 # ==============================================================================
-# TAB 6: 🔨 煩惱粉碎機 (Trouble Shredder & Positive Alchemy)
+# TAB 11: 🔨 煩惱粉碎機 (Trouble Shredder)
 # ==============================================================================
 elif st.session_state.active_tab == "shredder":
     comp_id = st.session_state.selected_companion or "samoyed"
     current_companion = ANIMAL_COMPANIONS[comp_id]
-    comp_self = st.session_state.companion_custom_self_ref.get(comp_id, current_companion["default_self_ref"])
 
     st.markdown("""
 <div style="text-align:center; max-width:650px; margin:0 auto 1.2rem;">
@@ -1209,7 +1506,7 @@ elif st.session_state.active_tab == "shredder":
             st.markdown(t_html, unsafe_allow_html=True)
 
 # ==============================================================================
-# TAB 7: 🥠 心靈幸運籤 (Wisdom Fortune Cookie)
+# TAB 12: 🥠 心靈幸運籤 (Wisdom Fortune Cookie)
 # ==============================================================================
 elif st.session_state.active_tab == "fortune":
     comp_id = st.session_state.selected_companion or "samoyed"
@@ -1228,34 +1525,13 @@ elif st.session_state.active_tab == "fortune":
     with col_f_btn:
         if st.button("🥠 敲開幸運餅乾，領取今日指引", key="btn_draw_fortune", use_container_width=True):
             FORTUNE_DATABASE = [
-                {
-                    "quote": "「允許自己偶爾是一座荒蕪的花園，雨季過後，花朵自然會重新綻放。」",
-                    "task": "🌱 今日微任務：給自己泡一杯溫暖的熱水或花草茶，安靜喝完它。"
-                },
-                {
-                    "quote": "「你不需要向世界證明你有多堅強，你的存在本身就充滿價值。」",
-                    "task": "💖 今日微任務：對著鏡子裡的自己微笑一下，輕聲說一聲：『你辛苦了』。"
-                },
-                {
-                    "quote": "「焦慮常常是在為尚未發生的事情提前預支痛苦。回到此時此刻，你很安全。」",
-                    "task": "🌿 今日微任務：深呼吸 3 次，感受雙腳踏在地面上的穩穩力量。"
-                },
-                {
-                    "quote": "「設立界線不是自私，而是愛護自己心靈能量的成熟表現。」",
-                    "task": "🛡️ 今日微任務：溫柔地對一件讓你不舒服的請求說『我需要先考慮一下』。"
-                },
-                {
-                    "quote": "「今天就算只完成了一件微小的事，那也是前進了一步，值得被好好肯定。」",
-                    "task": "⭐ 今日微任務：在心裡表揚自己今天做得很棒的一個微小細節。"
-                },
-                {
-                    "quote": "「眼淚是心靈在排毒，想哭的時候就盡情哭吧，沒什麼好難為情的。」",
-                    "task": "🌸 今日微任務：洗一個舒服的熱水澡，把身體的緊繃徹底洗去。"
-                },
-                {
-                    "quote": "「不要拿別人的高光時刻，來懲罰自己的平凡日常。你的步調剛剛好。」",
-                    "task": "☕ 今日微任務：少滑 10 分鐘社群軟體，去窗邊看看外面的天空。"
-                }
+                {"quote": "「允許自己偶爾是一座荒蕪的花園，雨季過後，花朵自然會重新綻放。」", "task": "🌱 今日微任務：給自己泡一杯溫暖的熱水或花草茶，安靜喝完它。"},
+                {"quote": "「你不需要向世界證明你有多堅強，你的存在本身就充滿價值。」", "task": "💖 今日微任務：對著鏡子裡的自己微笑一下，輕聲說一聲：『你辛苦了』。"},
+                {"quote": "「焦慮常常是在為尚未發生的事情提前預支痛苦。回到此時此刻，你很安全。」", "task": "🌿 今日微任務：深呼吸 3 次，感受雙腳踏在地面上的穩穩力量。"},
+                {"quote": "「設立界線不是自私，而是愛護自己心靈能量的成熟表現。」", "task": "🛡️ 今日微任務：溫柔地對一件讓你不舒服的請求說『我需要先考慮一下』。"},
+                {"quote": "「今天就算只完成了一件微小的事，那也是前進了一步，值得被好好肯定。」", "task": "⭐ 今日微任務：在心裡表揚自己今天做得很棒的一個微小細節。"},
+                {"quote": "「眼淚是心靈在排毒，想哭的時候就盡情哭吧，沒什麼好難為情的。」", "task": "🌸 今日微任務：洗一個舒服的熱水澡，把身體的緊繃徹底洗去。"},
+                {"quote": "「不要拿別人的高光時刻，來懲罰自己的平凡日常。你的步調剛剛好。」", "task": "☕ 今日微任務：少滑 10 分鐘社群軟體，去窗邊看看外面的天空。"}
             ]
             st.session_state.fortune_result = random.choice(FORTUNE_DATABASE)
 
@@ -1265,7 +1541,7 @@ elif st.session_state.active_tab == "fortune":
         st.markdown(f_html, unsafe_allow_html=True)
 
 # ==============================================================================
-# TAB 8: 🧭 5-4-3-2-1 焦慮著陸法 (Grounding Technique)
+# TAB 13: 🧭 5-4-3-2-1 焦慮著陸法 (Grounding Technique)
 # ==============================================================================
 elif st.session_state.active_tab == "grounding":
     comp_id = st.session_state.selected_companion or "samoyed"
