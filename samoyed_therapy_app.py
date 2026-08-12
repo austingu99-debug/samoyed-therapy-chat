@@ -448,6 +448,7 @@ st.markdown("""
 <meta name="application-name" content="動物心靈小屋">
 <meta name="theme-color" content="#F8F4ED">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="manifest" href='data:application/manifest+json,{"name":"動物心靈小屋","short_name":"心靈小屋","start_url":".","display":"standalone","background_color":"#F8F4ED","theme_color":"#F8F4ED"}'>
 """, unsafe_allow_html=True)
 
 if st.session_state.mobile_preview_mode:
