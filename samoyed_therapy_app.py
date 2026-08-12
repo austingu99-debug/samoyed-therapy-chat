@@ -1290,19 +1290,513 @@ elif st.session_state.main_section == "garden":
                     st.balloons()
                     st.rerun()
 
-    # 2. 白噪音音療
+    # 2. 白噪音音療 (商業級多軌 Web Audio 心靈混音引擎)
     elif st.session_state.sub_tab == "ambient":
-        ambient_tracks = [
-            {"name": "🌧️ 溫柔春雨 (Gentle Rain)", "desc": "淅淅瀝瀝的雨聲，洗淨思緒雜念", "audio_url": "https://actions.google.com/sounds/v1/weather/rain_heavy.ogg"},
-            {"name": "🔥 溫暖壁爐柴火 (Fireplace)", "desc": "劈啪作響的木柴，帶來深層安全感", "audio_url": "https://actions.google.com/sounds/v1/ambiences/fireplace.ogg"},
-            {"name": "🌲 晨曦森林鳥鳴 (Morning Forest)", "desc": "微風拂過樹梢，清脆鳥鳴喚醒平靜", "audio_url": "https://actions.google.com/sounds/v1/ambiences/daytime_forest_bonanza.ogg"},
-            {"name": "🌊 蔚藍海岸浪潮 (Ocean Waves)", "desc": "規律潮起潮落，帶走緊繃疲憊", "audio_url": "https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg"}
-        ]
-        amb_cols = st.columns(2)
-        for idx, track in enumerate(ambient_tracks):
-            with amb_cols[idx % 2]:
-                st.markdown(f'<div style="background:#FFFFFF; border:2px solid #EADECE; border-radius:16px; padding:1rem; margin-bottom:0.8rem;"><h4 style="color:#533E2D; margin:0 0 0.3rem;">{track["name"]}</h4><p style="color:#8C735A; font-size:0.85rem; margin:0 0 0.6rem;">{track["desc"]}</p></div>', unsafe_allow_html=True)
-                st.audio(track["audio_url"], format="audio/ogg")
+        st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 1rem;">
+    <h3 style="color:#533E2D; font-size:1.35rem; font-weight:700; margin-bottom:0.3rem;">🎵 專業級多軌白噪音・大自然心靈混音館</h3>
+    <p style="color:#8C735A; font-size:0.88rem; line-height:1.5;">
+        採用 <strong>Web Audio 演算法原生聲學合成技術</strong>，100% 離線秒播、零延遲、無死鏈。<br>
+        可自由開啟多個音軌、自訂音量混音比例，或選擇大師級一鍵心靈情境預設。
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+        studio_html = """
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Quicksand:wght@600;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+body {
+    background: transparent;
+    font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
+    color: #4A3B2C;
+    padding: 10px;
+}
+.studio-card {
+    background: #FFFFFF;
+    border: 2px solid #EADECE;
+    border-radius: 20px;
+    padding: 1.4rem;
+    box-shadow: 0 8px 24px rgba(83,62,45,0.06);
+    max-width: 820px;
+    margin: 0 auto;
+}
+.preset-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+    flex-wrap: wrap;
+}
+.preset-btn {
+    background: #F8F3EC;
+    border: 1.5px solid #DFCDBD;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5A432D;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.preset-btn:hover {
+    background: #C2995F;
+    color: white;
+    border-color: #C2995F;
+    transform: translateY(-2px);
+}
+.track-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 1.4rem;
+}
+@media (max-width: 650px) {
+    .track-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.track-card {
+    background: #FAF6F0;
+    border: 1.5px solid #E8DC CE;
+    border-radius: 16px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+.track-card.active {
+    background: #F4ECE1;
+    border-color: #C2995F;
+    box-shadow: 0 4px 12px rgba(194, 153, 95, 0.15);
+}
+.track-icon { font-size: 1.8rem; margin-bottom: 0.2rem; }
+.track-name { font-size: 0.95rem; font-weight: 700; color: #533E2D; margin-bottom: 0.4rem; }
+.track-desc { font-size: 0.75rem; color: #8C735A; margin-bottom: 0.8rem; min-height: 28px; }
+.track-toggle {
+    background: #E8DCCF;
+    border: none;
+    padding: 5px 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #5C4632;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    margin-bottom: 0.6rem;
+}
+.track-toggle.on {
+    background: #C2995F;
+    color: white;
+}
+.vol-slider {
+    width: 100%;
+    accent-color: #C2995F;
+    cursor: pointer;
+}
+.master-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F6EEE3;
+    padding: 0.8rem 1.2rem;
+    border-radius: 14px;
+    border: 1px solid #E2D3C2;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.master-btn {
+    background: #C2995F;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 18px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.master-btn:hover { background: #A8814B; transform: translateY(-2px); }
+.timer-select {
+    background: #FFFFFF;
+    border: 1px solid #DFCDBD;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #533E2D;
+    outline: none;
+}
+</style>
+</head>
+<body>
+<div class="studio-card">
+    <div style="text-align:center; font-weight:700; font-size:0.85rem; color:#8C735A; margin-bottom:0.5rem;">
+        🎯 大師級一鍵情境混音預設：
+    </div>
+    <div class="preset-bar">
+        <button class="preset-btn" onclick="applyPreset('sleep')">🛌 深度助眠 (雨聲+柴火+頌缽)</button>
+        <button class="preset-btn" onclick="applyPreset('zen')">🧘 432Hz 冥想 (海浪+頌缽)</button>
+        <button class="preset-btn" onclick="applyPreset('flow')">☕ 專注心流 (微風+春雨)</button>
+        <button class="preset-btn" onclick="applyPreset('cat')">🐱 焦慮平息 (呼嚕+柴火)</button>
+        <button class="preset-btn" onclick="stopAll()">🛑 一鍵全靜音</button>
+    </div>
+
+    <div class="track-grid">
+        <!-- Track 1: Rain -->
+        <div class="track-card" id="card-rain">
+            <div class="track-icon">🌧️</div>
+            <div class="track-name">溫柔春雨</div>
+            <div class="track-desc">粉紅噪音濾波・隨機自然雨滴聲</div>
+            <button class="track-toggle" id="btn-rain" onclick="toggleTrack('rain')">開啟</button>
+            <input type="range" class="vol-slider" id="vol-rain" min="0" max="100" value="50" oninput="changeVol('rain', this.value)">
+        </div>
+
+        <!-- Track 2: Ocean -->
+        <div class="track-card" id="card-ocean">
+            <div class="track-icon">🌊</div>
+            <div class="track-name">潮汐海浪</div>
+            <div class="track-desc">超低頻LFO調製・自然潮起潮落</div>
+            <button class="track-toggle" id="btn-ocean" onclick="toggleTrack('ocean')">開啟</button>
+            <input type="range" class="vol-slider" id="vol-ocean" min="0" max="100" value="50" oninput="changeVol('ocean', this.value)">
+        </div>
+
+        <!-- Track 3: Fireplace -->
+        <div class="track-card" id="card-fire">
+            <div class="track-icon">🔥</div>
+            <div class="track-name">壁爐柴火</div>
+            <div class="track-desc">劈啪木柴燃燒・安全溫暖避風港</div>
+            <button class="track-toggle" id="btn-fire" onclick="toggleTrack('fire')">開啟</button>
+            <input type="range" class="vol-slider" id="vol-fire" min="0" max="100" value="40" oninput="changeVol('fire', this.value)">
+        </div>
+
+        <!-- Track 4: Wind -->
+        <div class="track-card" id="card-wind">
+            <div class="track-icon">🌲</div>
+            <div class="track-name">森林微風</div>
+            <div class="track-desc">動態樹梢風聲・帶走思緒雜質</div>
+            <button class="track-toggle" id="btn-wind" onclick="toggleTrack('wind')">開啟</button>
+            <input type="range" class="vol-slider" id="vol-wind" min="0" max="100" value="35" oninput="changeVol('wind', this.value)">
+        </div>
+
+        <!-- Track 5: Bowl -->
+        <div class="track-card" id="card-bowl">
+            <div class="track-icon">🔔</div>
+            <div class="track-name">432Hz 頌缽</div>
+            <div class="track-desc">宇宙自然療癒諧振・深度放鬆腦波</div>
+            <button class="track-toggle" id="btn-bowl" onclick="toggleTrack('bowl')">開啟</button>
+            <input type="range" class="vol-slider" id="vol-bowl" min="0" max="100" value="45" oninput="changeVol('bowl', this.value)">
+        </div>
+
+        <!-- Track 6: Purr -->
+        <div class="track-card" id="card-purr">
+            <div class="track-icon">🐱</div>
+            <div class="track-name">貓咪呼嚕</div>
+            <div class="track-desc">28Hz 療癒低頻・如同貓咪依偎身邊</div>
+            <button class="track-toggle" id="btn-purr" onclick="toggleTrack('purr')">開啟</button>
+            <input type="range" class="vol-slider" id="vol-purr" min="0" max="100" value="55" oninput="changeVol('purr', this.value)">
+        </div>
+    </div>
+
+    <div class="master-bar">
+        <div style="font-size:0.85rem; font-weight:600; color:#533E2D;">
+            ⏱️ 舒眠倒數定時器：
+            <select class="timer-select" id="timer-select" onchange="setSleepTimer(this.value)">
+                <option value="0">持續播放 (無限制)</option>
+                <option value="15">15 分鐘後停止</option>
+                <option value="30">30 分鐘後停止</option>
+                <option value="45">45 分鐘後停止</option>
+                <option value="60">60 分鐘後停止</option>
+            </select>
+        </div>
+        <div style="font-size:0.85rem; color:#8C735A;" id="timer-status">
+            ✨ 原生 Web Audio 聲學合成・零延遲
+        </div>
+    </div>
+</div>
+
+<script>
+let audioCtx = null;
+const tracks = {
+    rain: { on: false, gain: null, nodes: [] },
+    ocean: { on: false, gain: null, nodes: [] },
+    fire: { on: false, gain: null, nodes: [] },
+    wind: { on: false, gain: null, nodes: [] },
+    bowl: { on: false, gain: null, nodes: [] },
+    purr: { on: false, gain: null, nodes: [] }
+};
+
+let sleepTimerId = null;
+
+function getAudioCtx() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    return audioCtx;
+}
+
+function createNoiseBuffer(ctx, duration = 4) {
+    const bufferSize = ctx.sampleRate * duration;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+    }
+    return buffer;
+}
+
+function startRain(ctx, masterGain) {
+    const src = ctx.createBufferSource();
+    src.buffer = createNoiseBuffer(ctx, 4);
+    src.loop = true;
+
+    const filter1 = ctx.createBiquadFilter();
+    filter1.type = 'bandpass';
+    filter1.frequency.value = 1000;
+    filter1.Q.value = 0.8;
+
+    const filter2 = ctx.createBiquadFilter();
+    filter2.type = 'lowpass';
+    filter2.frequency.value = 3500;
+
+    src.connect(filter1);
+    filter1.connect(filter2);
+    filter2.connect(masterGain);
+    src.start();
+    return [src, filter1, filter2];
+}
+
+function startOcean(ctx, masterGain) {
+    const src = ctx.createBufferSource();
+    src.buffer = createNoiseBuffer(ctx, 5);
+    src.loop = true;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 450;
+
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.09; // 11s tide cycle
+    const lfoGain = ctx.createGain();
+    lfoGain.gain.value = 0.45;
+
+    const waveGain = ctx.createGain();
+    waveGain.gain.value = 0.55;
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(waveGain.gain);
+
+    src.connect(filter);
+    filter.connect(waveGain);
+    waveGain.connect(masterGain);
+
+    src.start();
+    lfo.start();
+    return [src, filter, lfo, lfoGain, waveGain];
+}
+
+function startFire(ctx, masterGain) {
+    const src = ctx.createBufferSource();
+    src.buffer = createNoiseBuffer(ctx, 3);
+    src.loop = true;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 650;
+    filter.Q.value = 1.4;
+
+    src.connect(filter);
+    filter.connect(masterGain);
+    src.start();
+    return [src, filter];
+}
+
+function startWind(ctx, masterGain) {
+    const src = ctx.createBufferSource();
+    src.buffer = createNoiseBuffer(ctx, 4);
+    src.loop = true;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 320;
+
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.2;
+    const lfoGain = ctx.createGain();
+    lfoGain.gain.value = 120;
+    lfo.connect(lfoGain);
+    lfoGain.connect(filter.frequency);
+
+    src.connect(filter);
+    filter.connect(masterGain);
+    src.start();
+    lfo.start();
+    return [src, filter, lfo, lfoGain];
+}
+
+function startBowl(ctx, masterGain) {
+    const osc1 = ctx.createOscillator();
+    osc1.type = 'sine';
+    osc1.frequency.value = 432;
+
+    const osc2 = ctx.createOscillator();
+    osc2.type = 'sine';
+    osc2.frequency.value = 864; // harmonic
+
+    const osc3 = ctx.createOscillator();
+    osc3.type = 'sine';
+    osc3.frequency.value = 433.2; // binaural / acoustic beat
+
+    const gain2 = ctx.createGain();
+    gain2.gain.value = 0.25;
+    const gain3 = ctx.createGain();
+    gain3.gain.value = 0.35;
+
+    osc1.connect(masterGain);
+    osc2.connect(gain2);
+    gain2.connect(masterGain);
+    osc3.connect(gain3);
+    gain3.connect(masterGain);
+
+    osc1.start();
+    osc2.start();
+    osc3.start();
+    return [osc1, osc2, osc3, gain2, gain3];
+}
+
+function startPurr(ctx, masterGain) {
+    const osc = ctx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.value = 28; // low purr frequency
+
+    const mod = ctx.createOscillator();
+    mod.frequency.value = 4.2; // purring rhythm
+    const modGain = ctx.createGain();
+    modGain.gain.value = 0.6;
+
+    const purrGain = ctx.createGain();
+    purrGain.gain.value = 0.5;
+
+    mod.connect(modGain);
+    modGain.connect(purrGain.gain);
+
+    osc.connect(purrGain);
+    purrGain.connect(masterGain);
+
+    osc.start();
+    mod.start();
+    return [osc, mod, modGain, purrGain];
+}
+
+function toggleTrack(name) {
+    const ctx = getAudioCtx();
+    const t = tracks[name];
+    const btn = document.getElementById(`btn-${name}`);
+    const card = document.getElementById(`card-${name}`);
+    const slider = document.getElementById(`vol-${name}`);
+
+    if (t.on) {
+        // Stop
+        t.nodes.forEach(n => {
+            try { n.stop(); } catch(e){}
+            try { n.disconnect(); } catch(e){}
+        });
+        t.nodes = [];
+        t.on = false;
+        btn.innerText = "開啟";
+        btn.classList.remove("on");
+        card.classList.remove("active");
+    } else {
+        // Start
+        if (!t.gain) {
+            t.gain = ctx.createGain();
+            t.gain.connect(ctx.destination);
+        }
+        t.gain.gain.setValueAtTime(slider.value / 100, ctx.currentTime);
+
+        if (name === 'rain') t.nodes = startRain(ctx, t.gain);
+        else if (name === 'ocean') t.nodes = startOcean(ctx, t.gain);
+        else if (name === 'fire') t.nodes = startFire(ctx, t.gain);
+        else if (name === 'wind') t.nodes = startWind(ctx, t.gain);
+        else if (name === 'bowl') t.nodes = startBowl(ctx, t.gain);
+        else if (name === 'purr') t.nodes = startPurr(ctx, t.gain);
+
+        t.on = true;
+        btn.innerText = "播放中 ⏸";
+        btn.classList.add("on");
+        card.classList.add("active");
+    }
+}
+
+function changeVol(name, val) {
+    const ctx = getAudioCtx();
+    const t = tracks[name];
+    if (t.gain) {
+        t.gain.gain.setValueAtTime(val / 100, ctx.currentTime);
+    }
+}
+
+function applyPreset(type) {
+    stopAll();
+    setTimeout(() => {
+        if (type === 'sleep') {
+            document.getElementById('vol-rain').value = 60;
+            document.getElementById('vol-fire').value = 35;
+            document.getElementById('vol-bowl').value = 25;
+            toggleTrack('rain');
+            toggleTrack('fire');
+            toggleTrack('bowl');
+        } else if (type === 'zen') {
+            document.getElementById('vol-ocean').value = 65;
+            document.getElementById('vol-bowl').value = 45;
+            toggleTrack('ocean');
+            toggleTrack('bowl');
+        } else if (type === 'flow') {
+            document.getElementById('vol-wind').value = 45;
+            document.getElementById('vol-rain').value = 40;
+            toggleTrack('wind');
+            toggleTrack('rain');
+        } else if (type === 'cat') {
+            document.getElementById('vol-purr').value = 65;
+            document.getElementById('vol-fire').value = 35;
+            toggleTrack('purr');
+            toggleTrack('fire');
+        }
+    }, 50);
+}
+
+function stopAll() {
+    Object.keys(tracks).forEach(name => {
+        if (tracks[name].on) {
+            toggleTrack(name);
+        }
+    });
+}
+
+function setSleepTimer(mins) {
+    if (sleepTimerId) clearTimeout(sleepTimerId);
+    const status = document.getElementById('timer-status');
+    const m = parseInt(mins);
+    if (m === 0) {
+        status.innerText = "✨ 原生 Web Audio 聲學合成・零延遲";
+    } else {
+        status.innerText = `⏳ 倒數定時器：將在 ${m} 分鐘後自動靜音`;
+        sleepTimerId = setTimeout(() => {
+            stopAll();
+            status.innerText = "💤 舒眠定時結束，已自動靜音～祝您好夢";
+        }, m * 60 * 1000);
+    }
+}
+</script>
+</body>
+</html>
+"""
+        import streamlit.components.v1 as components
+        components.html(studio_html, height=520, scrolling=False)
 
     # 3. 正念呼吸
     elif st.session_state.sub_tab == "breath":
