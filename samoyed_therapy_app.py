@@ -1223,27 +1223,248 @@ elif st.session_state.main_section == "arcade":
             if len(st.session_state.zen_stones) > 0:
                 st.markdown(f'<div style="background:#FFFFFF; border-radius:14px; padding:1rem; border:1px solid #EADECE; margin-top:1rem; text-align:center; color:#5C4A38; font-weight:600;">✨ {st.session_state.zen_stones[-1]["quote"]}</div>', unsafe_allow_html=True)
 
-    # 2. 解壓泡泡紙
+    # 2. 解壓泡泡紙 (ASMR 3D 晶瑩水晶泡泡 + 原生爆破聲效引擎)
     elif st.session_state.sub_tab == "bubbles":
-        st.markdown("<div style='text-align:center; max-width:500px; margin:0 auto;'><h4 style='color:#533E2D;'>🫧 心理學減壓泡泡紙・點擊按破焦慮</h4><p style='color:#8C735A; font-size:0.85rem;'>點擊每一顆泡泡，感受微小解壓的破裂快感！</p></div>", unsafe_allow_html=True)
-        
-        b_cols = st.columns(4)
-        for b_idx in range(16):
-            with b_cols[b_idx % 4]:
-                is_popped = st.session_state.popped_bubbles[b_idx]
-                label = "💨" if is_popped else "🫧"
-                if st.button(label, key=f"bubble_{b_idx}", use_container_width=True):
-                    st.session_state.popped_bubbles[b_idx] = not is_popped
-                    st.rerun()
-        
-        popped_count = sum(st.session_state.popped_bubbles)
-        st.markdown(f"<div style='text-align:center; margin-top:1rem; font-weight:600; color:#533E2D;'>已捏破 {popped_count} / 16 顆焦慮泡泡</div>", unsafe_allow_html=True)
-        if popped_count == 16:
-            st.balloons()
-            st.success("🎉 太舒暢了！所有焦慮泡泡都已被徹底捏碎！")
-            if st.button("🔄 重新鋪滿泡泡紙", key="btn_reset_bubbles"):
-                st.session_state.popped_bubbles = [False] * 16
-                st.rerun()
+        st.markdown("""
+<div style="text-align:center; max-width:680px; margin:0 auto 0.8rem;">
+    <h3 style="color:#533E2D; font-size:1.35rem; font-weight:700; margin-bottom:0.2rem;">🫧 ASMR 心理學減壓泡泡紙・捏爆焦慮</h3>
+    <p style="color:#8C735A; font-size:0.88rem; line-height:1.5;">
+        擬真 3D 水晶氣泡質感與 <strong>Web Audio 原生清脆爆破音效</strong>。<br>
+        隨心所欲快速點擊捏破，即時釋放掌心與大腦的緊繃壓力！
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+        bubble_html = """
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;600;700&family=Quicksand:wght@600;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+body {
+    background: transparent;
+    font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
+    color: #4A3B2C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.bubble-sheet-container {
+    background: #FFFFFF;
+    border: 2px solid #EADECE;
+    border-radius: 24px;
+    padding: 1.5rem 1.8rem;
+    box-shadow: 0 10px 30px rgba(83,62,45,0.06);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+}
+.bubble-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 1.2rem auto;
+    max-width: 360px;
+    justify-items: center;
+}
+.bubble-item {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #FFFFFF 0%, #E6F3EB 45%, #C2E2D0 80%, #9BC4AD 100%);
+    box-shadow: 
+        inset 0 -4px 8px rgba(0,0,0,0.12),
+        inset 0 3px 6px rgba(255,255,255,0.9),
+        0 6px 14px rgba(135,178,154,0.3);
+    border: 1.5px solid rgba(255,255,255,0.8);
+    transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bubble-item:hover {
+    transform: scale(1.08);
+}
+.bubble-item:active {
+    transform: scale(0.92);
+}
+.bubble-item::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    width: 18px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    transform: rotate(-35deg);
+}
+.bubble-item.popped {
+    background: #EDE8E1;
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.14);
+    border-color: #D9CFC4;
+    transform: scale(0.88);
+    cursor: default;
+}
+.bubble-item.popped::after {
+    display: none;
+}
+.bubble-item.popped::before {
+    content: '💨';
+    font-size: 1.2rem;
+    opacity: 0.45;
+}
+.counter-bar {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #533E2D;
+    margin-top: 0.8rem;
+}
+.reset-btn {
+    background: #C2995F;
+    color: white;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 18px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(194, 153, 95, 0.25);
+    transition: all 0.2s ease;
+}
+.reset-btn:hover {
+    background: #AA8249;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+<body>
+<div class="bubble-sheet-container">
+    <div class="counter-bar" id="status-text">
+        ✨ 點擊泡泡・已捏破 <span id="popped-count" style="color:#C2995F; font-size:1.25rem;">0</span> / 16 顆
+    </div>
+    <div class="bubble-grid" id="grid"></div>
+    <button class="reset-btn" onclick="resetBubbles()">🔄 重新鋪滿全新泡泡紙</button>
+</div>
+
+<script>
+let audioCtx = null;
+function getAudioCtx() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    return audioCtx;
+}
+
+// Web Audio ASMR Pop 聲效合成器 (隨機音高營造真實清脆感)
+function playPopSound() {
+    const ctx = getAudioCtx();
+    const now = ctx.currentTime;
+
+    // 主爆破頻率 (600Hz ~ 950Hz 隨機跳動)
+    const baseFreq = 650 + Math.random() * 300;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(baseFreq, now);
+    osc.frequency.exponentialRampToValueAtTime(120, now + 0.08);
+
+    gain.gain.setValueAtTime(0.7, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.08);
+
+    // 伴隨極微弱的清脆喀噠高頻
+    const clickOsc = ctx.createOscillator();
+    const clickGain = ctx.createGain();
+    clickOsc.type = 'triangle';
+    clickOsc.frequency.setValueAtTime(1400, now);
+    clickGain.gain.setValueAtTime(0.3, now);
+    clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+
+    clickOsc.connect(clickGain);
+    clickGain.connect(ctx.destination);
+
+    clickOsc.start(now);
+    clickOsc.stop(now + 0.02);
+}
+
+function playCelebrationSound() {
+    const ctx = getAudioCtx();
+    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+    notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const now = ctx.currentTime + idx * 0.12;
+
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.5);
+    });
+}
+
+let poppedCount = 0;
+const total = 16;
+
+function renderGrid() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    poppedCount = 0;
+    document.getElementById('popped-count').innerText = '0';
+    document.getElementById('status-text').innerHTML = '✨ 點擊泡泡・已捏破 <span id="popped-count" style="color:#C2995F; font-size:1.25rem;">0</span> / 16 顆';
+
+    for (let i = 0; i < total; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble-item';
+        bubble.onclick = function() {
+            if (!bubble.classList.contains('popped')) {
+                playPopSound();
+                bubble.classList.add('popped');
+                poppedCount++;
+                document.getElementById('popped-count').innerText = poppedCount;
+                if (poppedCount === total) {
+                    playCelebrationSound();
+                    document.getElementById('status-text').innerHTML = '🎉 <strong style="color:#C2995F; font-size:1.2rem;">太棒了！焦慮已全部歸零！</strong>';
+                }
+            }
+        };
+        grid.appendChild(bubble);
+    }
+}
+
+function resetBubbles() {
+    renderGrid();
+}
+
+renderGrid();
+</script>
+</body>
+</html>
+"""
+        import streamlit.components.v1 as components
+        components.html(bubble_html, height=450, scrolling=False)
 
     # 3. 煩惱粉碎機
     elif st.session_state.sub_tab == "shredder":
@@ -1389,7 +1610,7 @@ elif st.session_state.main_section == "garden":
 </div>
 """, unsafe_allow_html=True)
 
-    # 2. 白噪音音療 (Web Audio 混音館)
+    # 2. 白噪音音療 (Web Audio 混音館 - 奢華緊湊排版)
     elif st.session_state.sub_tab == "ambient":
         studio_html = """
 <!DOCTYPE html>
@@ -1399,34 +1620,135 @@ elif st.session_state.main_section == "garden":
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Quicksand:wght@600;700&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-body { background: transparent; font-family: 'Noto Sans TC', 'Quicksand', sans-serif; color: #4A3B2C; padding: 10px; }
-.studio-card { background: #FFFFFF; border: 2px solid #EADECE; border-radius: 20px; padding: 1.4rem; box-shadow: 0 8px 24px rgba(83,62,45,0.06); max-width: 820px; margin: 0 auto; }
-.preset-bar { display: flex; gap: 8px; justify-content: center; margin-bottom: 1.4rem; flex-wrap: wrap; }
-.preset-btn { background: #F8F3EC; border: 1.5px solid #DFCDBD; padding: 6px 14px; border-radius: 16px; font-size: 0.85rem; font-weight: 600; color: #5A432D; cursor: pointer; transition: all 0.2s ease; }
-.preset-btn:hover { background: #C2995F; color: white; border-color: #C2995F; transform: translateY(-2px); }
-.track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 1.4rem; }
-@media (max-width: 650px) { .track-grid { grid-template-columns: repeat(2, 1fr); } }
-.track-card { background: #FAF6F0; border: 1.5px solid #E8DCCE; border-radius: 16px; padding: 1rem; text-align: center; transition: all 0.2s ease; }
-.track-card.active { background: #F4ECE1; border-color: #C2995F; box-shadow: 0 4px 12px rgba(194, 153, 95, 0.15); }
-.track-icon { font-size: 1.8rem; margin-bottom: 0.2rem; }
-.track-name { font-size: 0.95rem; font-weight: 700; color: #533E2D; margin-bottom: 0.4rem; }
-.track-desc { font-size: 0.75rem; color: #8C735A; margin-bottom: 0.8rem; min-height: 28px; }
-.track-toggle { background: #E8DCCF; border: none; padding: 5px 14px; border-radius: 12px; font-weight: 600; font-size: 0.8rem; color: #5C4632; cursor: pointer; transition: all 0.2s ease; width: 100%; margin-bottom: 0.6rem; }
-.track-toggle.on { background: #C2995F; color: white; }
-.vol-slider { width: 100%; accent-color: #C2995F; cursor: pointer; }
-.master-bar { display: flex; justify-content: space-between; align-items: center; background: #F6EEE3; padding: 0.8rem 1.2rem; border-radius: 14px; border: 1px solid #E2D3C2; flex-wrap: wrap; gap: 10px; }
-.timer-select { background: #FFFFFF; border: 1px solid #DFCDBD; padding: 6px 12px; border-radius: 12px; font-size: 0.85rem; color: #533E2D; outline: none; }
+body {
+    background: transparent;
+    font-family: 'Noto Sans TC', 'Quicksand', sans-serif;
+    color: #4A3B2C;
+    padding: 10px;
+}
+.studio-card {
+    background: #FFFFFF;
+    border: 2px solid #EADECE;
+    border-radius: 22px;
+    padding: 1.5rem 1.6rem;
+    box-shadow: 0 8px 24px rgba(83,62,45,0.06);
+    max-width: 820px;
+    margin: 0 auto;
+}
+.preset-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1.3rem;
+    flex-wrap: wrap;
+}
+.preset-btn {
+    background: #F8F3EC;
+    border: 1.5px solid #DFCDBD;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #5A432D;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.preset-btn:hover {
+    background: #C2995F;
+    color: white;
+    border-color: #C2995F;
+    transform: translateY(-2px);
+}
+.preset-btn.stop {
+    background: #FCEEEC;
+    border-color: #E8B4B4;
+    color: #A84242;
+}
+.preset-btn.stop:hover {
+    background: #E05252;
+    color: white;
+    border-color: #E05252;
+}
+.track-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 1.3rem;
+}
+@media (max-width: 650px) {
+    .track-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.track-card {
+    background: #FAF6F0;
+    border: 1.5px solid #E8DCCE;
+    border-radius: 16px;
+    padding: 1rem 0.9rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+.track-card.active {
+    background: #F5EDE2;
+    border-color: #C2995F;
+    box-shadow: 0 4px 14px rgba(194, 153, 95, 0.18);
+}
+.track-icon { font-size: 1.9rem; margin-bottom: 0.2rem; }
+.track-name { font-size: 0.95rem; font-weight: 700; color: #533E2D; margin-bottom: 0.2rem; }
+.track-desc { font-size: 0.74rem; color: #8C735A; margin-bottom: 0.7rem; min-height: 24px; }
+.track-toggle {
+    background: #E8DCCF;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: #5C4632;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    margin-bottom: 0.6rem;
+}
+.track-toggle.on {
+    background: #C2995F;
+    color: white;
+}
+.vol-slider {
+    width: 100%;
+    accent-color: #C2995F;
+    cursor: pointer;
+}
+.master-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F6EEE3;
+    padding: 0.9rem 1.4rem;
+    border-radius: 14px;
+    border: 1px solid #E2D3C2;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.timer-select {
+    background: #FFFFFF;
+    border: 1px solid #DFCDBD;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #533E2D;
+    outline: none;
+}
 </style>
 </head>
 <body>
 <div class="studio-card">
-    <div style="text-align:center; font-weight:700; font-size:0.85rem; color:#8C735A; margin-bottom:0.5rem;">🎯 大師級一鍵情境混音預設：</div>
+    <div style="text-align:center; font-weight:700; font-size:0.85rem; color:#8C735A; margin-bottom:0.6rem;">
+        🎯 大師級一鍵情境混音預設：
+    </div>
     <div class="preset-bar">
         <button class="preset-btn" onclick="applyPreset('sleep')">🛌 深度助眠 (雨聲+柴火+頌缽)</button>
         <button class="preset-btn" onclick="applyPreset('zen')">🧘 432Hz 冥想 (海浪+頌缽)</button>
         <button class="preset-btn" onclick="applyPreset('flow')">☕ 專注心流 (微風+春雨)</button>
         <button class="preset-btn" onclick="applyPreset('cat')">🐱 焦慮平息 (呼嚕+柴火)</button>
-        <button class="preset-btn" onclick="stopAll()">🛑 一鍵全靜音</button>
+        <button class="preset-btn stop" onclick="stopAll()">🛑 一鍵全靜音</button>
     </div>
     <div class="track-grid">
         <div class="track-card" id="card-rain">
@@ -1473,7 +1795,7 @@ body { background: transparent; font-family: 'Noto Sans TC', 'Quicksand', sans-s
         </div>
     </div>
     <div class="master-bar">
-        <div style="font-size:0.85rem; font-weight:600; color:#533E2D;">
+        <div style="font-size:0.88rem; font-weight:600; color:#533E2D;">
             ⏱️ 舒眠倒數定時器：
             <select class="timer-select" id="timer-select" onchange="setSleepTimer(this.value)">
                 <option value="0">持續播放 (無限制)</option>
@@ -1508,7 +1830,7 @@ function setSleepTimer(mins) { if (sleepTimerId) clearTimeout(sleepTimerId); con
 </html>
 """
         import streamlit.components.v1 as components
-        components.html(studio_html, height=520, scrolling=False)
+        components.html(studio_html, height=660, scrolling=False)
 
     # 3. 正念呼吸
     elif st.session_state.sub_tab == "breath":
