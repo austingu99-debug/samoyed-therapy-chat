@@ -195,9 +195,10 @@ def get_or_create_user(user_id="default_user"):
     row = cursor.fetchone()
     
     if not row:
+        # 開發測試模式：預設啟用 VIP 全功能解鎖與足量星光幣
         cursor.execute("""
         INSERT INTO users (id, nickname, streak_days, last_active_date, soul_energy, star_coins, is_vip, daily_chat_count, last_chat_date, created_at)
-        VALUES (?, '小夥伴', 1, ?, 85, 150, 0, 0, ?, ?)
+        VALUES (?, '小夥伴', 1, ?, 95, 888, 1, 0, ?, ?)
         """, (user_id, today_str, today_str, now_str))
         
         cursor.execute("INSERT OR REPLACE INTO sanctuary_decor (user_id, item_id, is_equipped) VALUES (?, 'decor_fireplace', 1)", (user_id,))
@@ -207,6 +208,13 @@ def get_or_create_user(user_id="default_user"):
         cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
         row = cursor.fetchone()
     else:
+        # 確保現有測試用戶也自動獲得 VIP 全解鎖
+        if not row["is_vip"] or row["star_coins"] < 200:
+            cursor.execute("UPDATE users SET is_vip = 1, star_coins = MAX(star_coins, 888) WHERE id = ?", (user_id,))
+            conn.commit()
+            cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+            row = cursor.fetchone()
+            
         # 檢查連續登入天數與每日對話次數重置
         last_date = row["last_active_date"]
         if last_date != today_str:
