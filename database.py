@@ -190,6 +190,12 @@ def init_database():
             cursor.execute("ALTER TABLE users ADD COLUMN is_vip INTEGER DEFAULT 1")
         if "star_coins" not in user_cols:
             cursor.execute("ALTER TABLE users ADD COLUMN star_coins INTEGER DEFAULT 888")
+            
+        aff_cols = [r[1] for r in cursor.execute("PRAGMA table_info(companion_affinity)").fetchall()]
+        if "happiness" not in aff_cols:
+            cursor.execute("ALTER TABLE companion_affinity ADD COLUMN happiness INTEGER DEFAULT 85")
+        if "pet_count" not in aff_cols:
+            cursor.execute("ALTER TABLE companion_affinity ADD COLUMN pet_count INTEGER DEFAULT 0")
     except Exception:
         pass
 
