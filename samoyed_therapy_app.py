@@ -678,7 +678,7 @@ section[data-testid="stSidebar"] { display: none; }
 active_comp = ANIMAL_COMPANIONS[st.session_state.selected_companion]
 affinity_info = db.get_companion_affinity(CURRENT_USER_ID, active_comp["id"])
 current_user = db.get_or_create_user(CURRENT_USER_ID)
-free_quota_left = max(0, 10 - current_user["daily_chat_count"])
+free_quota_left = max(0, 10 - current_user.get("daily_chat_count", 0))
 
 st.markdown(f"""
 <div class="brand-header">
@@ -686,11 +686,11 @@ st.markdown(f"""
         🐾 動物心靈諮商室 <span style="font-size:0.75rem; background:#EFE3D3; color:#7D6348; padding:2px 8px; border-radius:12px; font-weight:600;">LIVE 2D 養成版</span>
     </div>
     <div class="brand-status-pills">
-        <div class="status-pill">🌟 星光幣 <strong>{current_user['star_coins']}</strong></div>
-        <div class="status-pill">🔥 連續守護 <strong>{current_user['streak_days']}</strong> 天</div>
-        <div class="status-pill">💖 {active_comp['emoji']} 親密度 <strong>Lv.{affinity_info['level']}</strong> ({affinity_info['exp']}/{affinity_info['next_level_exp']})</div>
-        <div class="status-pill">💬 今日對話：<strong>{'無限制' if current_user['is_vip'] else f'{free_quota_left}/10次'}</strong></div>
-        <div class="status-pill">👑 {'VIP會員' if current_user['is_vip'] else '免費版'}</div>
+        <div class="status-pill">🌟 星光幣 <strong>{current_user.get('star_coins', 888)}</strong></div>
+        <div class="status-pill">🔥 連續守護 <strong>{current_user.get('streak_days', 1)}</strong> 天</div>
+        <div class="status-pill">💖 {active_comp['emoji']} 親密度 <strong>Lv.{affinity_info.get('level', 1)}</strong> ({affinity_info.get('exp', 0)}/{affinity_info.get('next_level_exp', 100)})</div>
+        <div class="status-pill">💬 今日對話：<strong>{'無限制 👑' if current_user.get('is_vip', 1) else f'{free_quota_left}/10次'}</strong></div>
+        <div class="status-pill">👑 {'VIP會員 (開發解鎖)' if current_user.get('is_vip', 1) else '免費版'}</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -872,7 +872,7 @@ body {{
 <body>
 <div class="stage-card">
     <div style="font-size:0.8rem; color:#8C735A; font-weight:600; margin-bottom:0.6rem;">
-        🏡 {current_user['nickname']} 與 {active_comp['name']} 的心靈小屋
+        🏡 {current_user.get('nickname', '小夥伴')} 與 {active_comp['name']} 的心靈小屋
     </div>
     <div class="speech-bubble" id="pet-speech">
         「{active_comp['motto']}」
@@ -953,7 +953,7 @@ function handlePet() {{
 
     # 餵食小點心專區 (Snack Feeding)
     with col_q1:
-        st.markdown(f"<h4 style='color:#533E2D;'>🍪 餵食心靈零食（持有：{current_user['star_coins']} 🌟）：</h4>", unsafe_allow_html=True)
+        st.markdown(f"<h4 style='color:#533E2D;'>🍪 餵食心靈零食（持有：{current_user.get('star_coins', 888)} 🌟）：</h4>", unsafe_allow_html=True)
         
         for sk_key, sk in db.SNACK_ITEMS.items():
             is_fav = (sk["favorite"] == active_comp["id"])
@@ -1055,7 +1055,7 @@ elif st.session_state.main_section == "hall":
             card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
             st.markdown(card_html, unsafe_allow_html=True)
             
-            if comp["is_free"] or current_user["is_vip"]:
+            if comp["is_free"] or current_user.get("is_vip", 1):
                 if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]} 傾訴", key=f"select_{comp['id']}", use_container_width=True):
                     st.session_state.selected_companion = comp["id"]
                     st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
@@ -1079,7 +1079,7 @@ elif st.session_state.main_section == "hall":
             card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
             st.markdown(card_html, unsafe_allow_html=True)
             
-            if current_user["is_vip"]:
+            if current_user.get("is_vip", 1):
                 if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]} 傾訴", key=f"select_{comp['id']}", use_container_width=True):
                     st.session_state.selected_companion = comp["id"]
                     st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
@@ -1102,7 +1102,7 @@ elif st.session_state.main_section == "hall":
             card_html = f'''<div class="companion-card" style="{border_style}">{selected_tag}<div><div class="companion-avatar-wrap"><img src="{comp['avatar_uri']}" class="companion-avatar-img" alt="{comp['name']}" /></div><div class="companion-name">{comp['name']}</div><div class="companion-badge">{comp['badge']}</div><div class="companion-motto">"{comp['motto']}"</div><div class="companion-desc"><strong>特長：</strong>{comp['summary']}<br><span style="color:#8C735A; font-size:0.75rem;"><strong>心理流派：</strong>{comp['psychology']}</span></div></div></div>'''
             st.markdown(card_html, unsafe_allow_html=True)
             
-            if current_user["is_vip"]:
+            if current_user.get("is_vip", 1):
                 if st.button(f"選擇 {comp['emoji']} {comp['name'].split('・')[0]}", key=f"select_{comp['id']}", use_container_width=True):
                     st.session_state.selected_companion = comp["id"]
                     st.session_state.messages = db.load_chat_history(CURRENT_USER_ID, comp["id"])
@@ -1121,7 +1121,7 @@ elif st.session_state.main_section == "chat":
     comp_id = current_companion["id"]
 
     companion_self_name = st.session_state.companion_custom_self_ref.get(comp_id, current_companion["default_self_ref"])
-    user_name = current_user["nickname"]
+    user_name = current_user.get("nickname", "小夥伴")
 
     # 頂部自訂稱呼
     with st.expander("⚙️ 互動稱呼與諮商設定", expanded=False):
@@ -1146,7 +1146,7 @@ elif st.session_state.main_section == "chat":
     # 頂部橫幅
     col_banner, col_actions = st.columns([3, 1])
     with col_banner:
-        quota_str = "無限暢聊 👑" if current_user["is_vip"] else f"今日免費額度剩餘 {free_quota_left}/10 次"
+        quota_str = "無限暢聊 👑" if current_user.get("is_vip", 1) else f"今日免費額度剩餘 {free_quota_left}/10 次"
         banner_html = f'''<div class="companion-banner" style="border-left: 5px solid {current_companion['theme_color']};"><div class="banner-avatar"><img src="{current_companion['avatar_uri']}" class="banner-avatar-img" alt="{current_companion['name']}" /></div><div class="banner-info"><h3 class="banner-title">{current_companion['emoji']} {current_companion['name']} 專屬心靈諮商室</h3><p class="banner-status">🌱 {current_companion['badge']}（{quota_str}）</p><p style="font-size:0.8rem; color:#7D6B58; margin:0.2rem 0 0;">✨ 自稱：<strong>{companion_self_name}</strong> / 稱呼你：<strong>{user_name}</strong></p></div></div>'''
         st.markdown(banner_html, unsafe_allow_html=True)
     
@@ -1804,7 +1804,7 @@ elif st.session_state.main_section == "vip":
     </div>
 </div>
 """, unsafe_allow_html=True)
-        if not current_user["is_vip"]:
+        if not current_user.get("is_vip", 1):
             st.button("當前方案 (免費中)", disabled=True, use_container_width=True)
 
     with col_p2:
@@ -1822,7 +1822,7 @@ elif st.session_state.main_section == "vip":
     </div>
 </div>
 """, unsafe_allow_html=True)
-        if not current_user["is_vip"]:
+        if not current_user.get("is_vip", 1):
             if st.button("🌟 升級 VIP 守護會員 (NT$149/月)", key="btn_upgrade_vip_month", use_container_width=True):
                 conn = db.get_db_connection()
                 conn.cursor().execute("UPDATE users SET is_vip = 1, star_coins = star_coins + 300 WHERE id = ?", (CURRENT_USER_ID,))
@@ -1847,7 +1847,7 @@ elif st.session_state.main_section == "vip":
     </div>
 </div>
 """, unsafe_allow_html=True)
-        if not current_user["is_vip"]:
+        if not current_user.get("is_vip", 1):
             if st.button("💎 升級 VIP 年度方案 (NT$990/年)", key="btn_upgrade_vip_year", use_container_width=True):
                 conn = db.get_db_connection()
                 conn.cursor().execute("UPDATE users SET is_vip = 1, star_coins = star_coins + 1000 WHERE id = ?", (CURRENT_USER_ID,))

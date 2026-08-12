@@ -179,6 +179,20 @@ def init_database():
     )
     """)
 
+    # 8. 自動安全升級舊版資料表欄位 (Auto Schema Migration for Existing DB)
+    try:
+        user_cols = [r[1] for r in cursor.execute("PRAGMA table_info(users)").fetchall()]
+        if "daily_chat_count" not in user_cols:
+            cursor.execute("ALTER TABLE users ADD COLUMN daily_chat_count INTEGER DEFAULT 0")
+        if "last_chat_date" not in user_cols:
+            cursor.execute("ALTER TABLE users ADD COLUMN last_chat_date TEXT")
+        if "is_vip" not in user_cols:
+            cursor.execute("ALTER TABLE users ADD COLUMN is_vip INTEGER DEFAULT 1")
+        if "star_coins" not in user_cols:
+            cursor.execute("ALTER TABLE users ADD COLUMN star_coins INTEGER DEFAULT 888")
+    except Exception:
+        pass
+
     conn.commit()
     conn.close()
 
@@ -209,16 +223,19 @@ def get_or_create_user(user_id="default_user"):
         row = cursor.fetchone()
     else:
         # 確保現有測試用戶也自動獲得 VIP 全解鎖
-        if not row["is_vip"] or row["star_coins"] < 200:
+        is_vip_val = row["is_vip"] if "is_vip" in row.keys() else 0
+        star_coins_val = row["star_coins"] if "star_coins" in row.keys() else 0
+        
+        if not is_vip_val or star_coins_val < 200:
             cursor.execute("UPDATE users SET is_vip = 1, star_coins = MAX(star_coins, 888) WHERE id = ?", (user_id,))
             conn.commit()
             cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
             row = cursor.fetchone()
             
         # 檢查連續登入天數與每日對話次數重置
-        last_date = row["last_active_date"]
+        last_date = row["last_active_date"] if "last_active_date" in row.keys() else ""
         if last_date != today_str:
-            streak = row["streak_days"] + 1
+            streak = (row["streak_days"] if "streak_days" in row.keys() else 1) + 1
             cursor.execute("""
             UPDATE users SET streak_days = ?, last_active_date = ?, soul_energy = MIN(100, soul_energy + 10), daily_chat_count = 0, last_chat_date = ?
             WHERE id = ?
@@ -227,7 +244,23 @@ def get_or_create_user(user_id="default_user"):
             cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
             row = cursor.fetchone()
             
-    user_dict = dict(row)
+    # 安全 dictionary 構建，防止任何 KeyError
+    user_dict = {
+        "id": user_id,
+        "nickname": "小夥伴",
+        "streak_days": 1,
+        "last_active_date": today_str,
+        "soul_energy": 95,
+        "star_coins": 888,
+        "is_vip": 1,
+        "daily_chat_count": 0,
+        "last_chat_date": today_str,
+        "created_at": now_str
+    }
+    if row:
+        for k in row.keys():
+            user_dict[k] = row[k]
+            
     conn.close()
     return user_dict
 
