@@ -31,12 +31,12 @@ RAW_COMPANIONS = {
         "name": "薩摩耶・小薩",
         "species": "薩摩耶犬",
         "emoji": "🐶",
-        "title": "暖陽陪伴師",
-        "badge": "☀️ 人本主義・無條件正向關懷 (UPR)",
-        "is_free": True, # 免費領養旗艦伴侶
-        "motto": "只要你轉過身，小薩隨時都在這裡溫柔等你喔！",
-        "summary": "元氣熱情、無條件接納、永遠的忠誠後盾。擅長用溫暖打氣化解孤單與自我懷疑。",
-        "psychology": "【卡爾・羅傑斯人本主義】透過無條件正向關懷（Unconditional Positive Regard）與真誠一致，給予全然的肯定與愛，消除自我價值感低落。",
+        "title": "暖陽陪伴犬",
+        "badge": "☀️ 無條件接納・人本同理",
+        "is_free": True,
+        "motto": "累了就抱抱小薩，今天你已經很棒了！",
+        "summary": "天生微笑天使、熱情溫暖、無條件接納。擅長用融化人心的擁抱驅散孤獨與自我懷疑。",
+        "psychology": "【羅傑斯人本主義心理學】核心提供無條件正向關懷（Unconditional Positive Regard），完全接納你的所有情緒，不評判、不說教，永遠為你張開溫暖雙臂。",
         "default_self_ref": "小薩",
         "favorite_snack": "bone",
         "pet_quotes": [
@@ -49,20 +49,50 @@ RAW_COMPANIONS = {
         "bubble_color": "#EFE3D3",
         "actions": ["(安靜地靠近你身邊，投以溫暖信任的目光)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#E2D5C3" stroke-width="3"/>
-<polygon points="20,40 12,18 38,26" fill="#F4EDE2"/>
-<polygon points="80,40 88,18 62,26" fill="#F4EDE2"/>
-<polygon points="23,38 16,22 36,28" fill="#F9D2D2"/>
-<polygon points="77,38 84,22 64,28" fill="#F9D2D2"/>
-<ellipse cx="36" cy="46" rx="5" ry="6" fill="#423124"/>
-<ellipse cx="64" cy="46" rx="5" ry="6" fill="#423124"/>
-<circle cx="38" cy="44" r="2" fill="#FFFFFF"/>
-<circle cx="66" cy="44" r="2" fill="#FFFFFF"/>
-<ellipse cx="50" cy="56" rx="6" ry="4" fill="#3D2B1F"/>
-<path d="M 44,60 Q 50,68 56,60" fill="none" stroke="#3D2B1F" stroke-width="2.5" stroke-linecap="round"/>
-<path d="M 47,63 Q 50,71 53,63" fill="#F99F9F"/>
-<circle cx="28" cy="55" r="5" fill="#FCD5D5" opacity="0.6"/>
-<circle cx="72" cy="55" r="5" fill="#FCD5D5" opacity="0.6"/>
+  <defs>
+    <radialGradient id="samBGFur" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="85%" stop-color="#FFF8F0"/>
+      <stop offset="100%" stop-color="#F2E6D5"/>
+    </radialGradient>
+    <radialGradient id="pinkCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFA8B8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFA8B8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#8C6B4E" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Ears -->
+  <polygon points="22,44 12,14 42,24" fill="#FFFFFF" stroke="#E6D7C3" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="78,44 88,14 58,24" fill="#FFFFFF" stroke="#E6D7C3" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="24,40 17,20 38,27" fill="#FBC7D4"/>
+  <polygon points="76,40 83,20 62,27" fill="#FBC7D4"/>
+  <!-- Head -->
+  <circle cx="50" cy="52" r="44" fill="url(#samBGFur)" filter="url(#softGlow)" stroke="#E8DAC8" stroke-width="2"/>
+  <!-- Fluffy Cheeks -->
+  <path d="M 10,54 Q 6,62 14,66 Q 8,72 18,74" fill="#FFFFFF" stroke="#E8DAC8" stroke-width="1.5"/>
+  <path d="M 90,54 Q 94,62 86,66 Q 92,72 82,74" fill="#FFFFFF" stroke="#E8DAC8" stroke-width="1.5"/>
+  <!-- Rosy Blushing Cheeks -->
+  <circle cx="27" cy="59" r="9" fill="url(#pinkCheek)"/>
+  <circle cx="73" cy="59" r="9" fill="url(#pinkCheek)"/>
+  <!-- Big Sparkling Anime Eyes -->
+  <ellipse cx="34" cy="48" rx="6.5" ry="7.5" fill="#2B1D14"/>
+  <ellipse cx="66" cy="48" rx="6.5" ry="7.5" fill="#2B1D14"/>
+  <circle cx="36.5" cy="45.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="68.5" cy="45.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="32.5" cy="51" r="1.3" fill="#FFFFFF"/>
+  <circle cx="64.5" cy="51" r="1.3" fill="#FFFFFF"/>
+  <!-- Muzzle & Smile -->
+  <ellipse cx="50" cy="62" rx="14" ry="10" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="57" rx="5.5" ry="3.8" fill="#1F1610"/>
+  <circle cx="51.5" cy="56" r="1.2" fill="#FFFFFF" opacity="0.8"/>
+  <path d="M 43,62 Q 50,71 57,62" fill="none" stroke="#2B1D14" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Cute Pink Tongue -->
+  <path d="M 46,65 Q 50,75 54,65 Z" fill="#FF5E85"/>
+  <!-- Collar & Golden Bell -->
+  <path d="M 28,88 Q 50,96 72,88" fill="none" stroke="#E53935" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="50" cy="92" r="5" fill="#FFD700" stroke="#D4AC0D" stroke-width="1"/>
 </svg>"""
     },
     "cat": {
@@ -72,7 +102,7 @@ RAW_COMPANIONS = {
         "emoji": "🐱",
         "title": "靜謐守護者",
         "badge": "🌙 邊界陪伴・客體關係與存在主義",
-        "is_free": False, # VIP 解鎖
+        "is_free": False,
         "motto": "不用勉強擠出笑容，想安靜待著時，芝麻就在旁邊陪你。",
         "summary": "安靜細膩、不給壓力、尊重個人邊界。用輕柔的呼嚕聲與默契陪伴化解緊繃與社交疲勞。",
         "psychology": "【客體關係與存在主義陪伴】提供足夠的安全心理邊界（Holding Environment），不強迫正向思考，安靜陪你面對孤獨與真實感受。",
@@ -88,21 +118,40 @@ RAW_COMPANIONS = {
         "bubble_color": "#E4DEEC",
         "actions": ["(安靜地蜷縮在手邊，發出極其輕柔舒服的呼嚕聲)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#E8E4EC" stroke="#C8C0D4" stroke-width="3"/>
-<polygon points="22,42 16,14 42,26" fill="#8F82A0"/>
-<polygon points="78,42 84,14 58,26" fill="#8F82A0"/>
-<polygon points="24,38 19,19 39,28" fill="#E4AFBD"/>
-<polygon points="76,38 81,19 61,28" fill="#E4AFBD"/>
-<ellipse cx="36" cy="46" rx="6" ry="7" fill="#F3A63B"/>
-<ellipse cx="64" cy="46" rx="6" ry="7" fill="#F3A63B"/>
-<ellipse cx="36" cy="46" rx="2.5" ry="6" fill="#2E2438"/>
-<ellipse cx="64" cy="46" rx="2.5" ry="6" fill="#2E2438"/>
-<polygon points="50,54 46,51 54,51" fill="#E4AFBD"/>
-<path d="M 46,55 Q 50,59 54,55" fill="none" stroke="#5A4E68" stroke-width="2" stroke-linecap="round"/>
-<line x1="22" y1="52" x2="10" y2="49" stroke="#9A8FA8" stroke-width="1.5"/>
-<line x1="22" y1="56" x2="10" y2="58" stroke="#9A8FA8" stroke-width="1.5"/>
-<line x1="78" y1="52" x2="90" y2="49" stroke="#9A8FA8" stroke-width="1.5"/>
-<line x1="78" y1="56" x2="90" y2="58" stroke="#9A8FA8" stroke-width="1.5"/>
+  <defs>
+    <radialGradient id="catFur" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#B8B0C8"/>
+      <stop offset="85%" stop-color="#9A8FA8"/>
+      <stop offset="100%" stop-color="#827692"/>
+    </radialGradient>
+    <radialGradient id="amberEye" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFD54F"/>
+      <stop offset="70%" stop-color="#FFB300"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </radialGradient>
+  </defs>
+  <!-- Pointy Ears -->
+  <polygon points="22,42 14,14 42,26" fill="#827692" stroke="#685D76" stroke-width="2"/>
+  <polygon points="78,42 86,14 58,26" fill="#827692" stroke="#685D76" stroke-width="2"/>
+  <polygon points="24,38 18,20 38,28" fill="#F48FB1"/>
+  <polygon points="76,38 82,20 62,28" fill="#F48FB1"/>
+  <!-- Head -->
+  <circle cx="50" cy="52" r="44" fill="url(#catFur)" stroke="#746784" stroke-width="2"/>
+  <!-- Amber Eyes -->
+  <ellipse cx="33" cy="48" rx="8" ry="9" fill="url(#amberEye)"/>
+  <ellipse cx="67" cy="48" rx="8" ry="9" fill="url(#amberEye)"/>
+  <!-- Slit Pupils with Sparkle -->
+  <ellipse cx="33" cy="48" rx="3.2" ry="7.5" fill="#1A1222"/>
+  <ellipse cx="67" cy="48" rx="3.2" ry="7.5" fill="#1A1222"/>
+  <circle cx="36" cy="44" r="2.5" fill="#FFFFFF"/>
+  <circle cx="70" cy="44" r="2.5" fill="#FFFFFF"/>
+  <!-- Pink Nose & Whiskers -->
+  <polygon points="50,58 46,54 54,54" fill="#F48FB1"/>
+  <path d="M 46,59 Q 50,64 54,59" fill="none" stroke="#2B1E34" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="56" x2="6" y2="54" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="20" y1="60" x2="6" y2="62" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="80" y1="56" x2="94" y2="54" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="80" y1="60" x2="94" y2="62" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
 </svg>"""
     },
     "bear": {
@@ -128,18 +177,32 @@ RAW_COMPANIONS = {
         "bubble_color": "#EADECF",
         "actions": ["(遞上一杯熱氣騰騰的香濃熱可可，沉穩溫和地注視著你)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#B38B6D" stroke="#8E6748" stroke-width="3"/>
-<circle cx="22" cy="24" r="14" fill="#B38B6D" stroke="#8E6748" stroke-width="2"/>
-<circle cx="78" cy="24" r="14" fill="#B38B6D" stroke="#8E6748" stroke-width="2"/>
-<circle cx="22" cy="24" r="8" fill="#E2C4A6"/>
-<circle cx="78" cy="24" r="8" fill="#E2C4A6"/>
-<ellipse cx="50" cy="60" rx="20" ry="15" fill="#E2C4A6"/>
-<ellipse cx="36" cy="42" rx="4" ry="5" fill="#382516"/>
-<ellipse cx="64" cy="42" rx="4" ry="5" fill="#382516"/>
-<circle cx="38" cy="40" r="1.5" fill="#FFFFFF"/>
-<circle cx="66" cy="40" r="1.5" fill="#FFFFFF"/>
-<ellipse cx="50" cy="54" rx="7" ry="5" fill="#382516"/>
-<path d="M 45,61 Q 50,65 55,61" fill="none" stroke="#382516" stroke-width="2.5" stroke-linecap="round"/>
+  <defs>
+    <radialGradient id="bearFur" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#A5754E"/>
+      <stop offset="85%" stop-color="#8B5A33"/>
+      <stop offset="100%" stop-color="#6F421E"/>
+    </radialGradient>
+  </defs>
+  <!-- Round Ears -->
+  <circle cx="20" cy="24" r="14" fill="#8B5A33" stroke="#6F421E" stroke-width="2"/>
+  <circle cx="80" cy="24" r="14" fill="#8B5A33" stroke="#6F421E" stroke-width="2"/>
+  <circle cx="20" cy="24" r="8" fill="#E8C9A7"/>
+  <circle cx="80" cy="24" r="8" fill="#E8C9A7"/>
+  <!-- Head -->
+  <circle cx="50" cy="54" r="42" fill="url(#bearFur)" stroke="#6F421E" stroke-width="2"/>
+  <!-- Muzzle -->
+  <ellipse cx="50" cy="64" rx="20" ry="15" fill="#E8C9A7"/>
+  <ellipse cx="50" cy="57" rx="6.5" ry="4.5" fill="#2A1608"/>
+  <circle cx="52" cy="55.5" r="1.4" fill="#FFFFFF"/>
+  <path d="M 44,65 Q 50,71 56,65" fill="none" stroke="#2A1608" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Gentle Eyes -->
+  <ellipse cx="34" cy="46" rx="5" ry="6" fill="#2A1608"/>
+  <ellipse cx="66" cy="46" rx="5" ry="6" fill="#2A1608"/>
+  <circle cx="36" cy="44" r="2" fill="#FFFFFF"/>
+  <circle cx="68" cy="44" r="2" fill="#FFFFFF"/>
+  <circle cx="24" cy="58" r="6" fill="#F48FB1" opacity="0.5"/>
+  <circle cx="76" cy="58" r="6" fill="#F48FB1" opacity="0.5"/>
 </svg>"""
     },
     "fox": {
@@ -165,18 +228,31 @@ RAW_COMPANIONS = {
         "bubble_color": "#F3DFD1",
         "actions": ["(側著頭專注注視著你，眼神充滿靈氣與理解)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#F4F0EA" stroke="#E2DACF" stroke-width="3"/>
-<polygon points="20,40 14,12 40,24" fill="#C95F2B"/>
-<polygon points="80,40 86,12 60,24" fill="#C95F2B"/>
-<polygon points="22,36 17,17 37,26" fill="#422518"/>
-<polygon points="78,36 83,17 63,26" fill="#422518"/>
-<path d="M 20,44 Q 50,78 50,78 Q 50,78 80,44 Z" fill="#D96E37"/>
-<path d="M 22,46 Q 50,82 50,82 Q 50,82 78,46 Q 50,62 22,46 Z" fill="#FFFFFF"/>
-<ellipse cx="36" cy="46" rx="4" ry="5" fill="#301A10"/>
-<ellipse cx="64" cy="46" rx="4" ry="5" fill="#301A10"/>
-<circle cx="37" cy="44" r="1.5" fill="#FFFFFF"/>
-<circle cx="65" cy="44" r="1.5" fill="#FFFFFF"/>
-<polygon points="50,68 46,64 54,64" fill="#301A10"/>
+  <defs>
+    <radialGradient id="foxFur" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FF7043"/>
+      <stop offset="85%" stop-color="#E64A19"/>
+      <stop offset="100%" stop-color="#BF360C"/>
+    </radialGradient>
+  </defs>
+  <!-- Big Pointy Ears with Black Tips -->
+  <polygon points="22,44 14,10 44,24" fill="#E64A19" stroke="#BF360C" stroke-width="2"/>
+  <polygon points="78,44 86,10 56,24" fill="#E64A19" stroke="#BF360C" stroke-width="2"/>
+  <polygon points="20,38 15,16 34,26" fill="#212121"/>
+  <polygon points="80,38 85,16 66,26" fill="#212121"/>
+  <!-- Head -->
+  <circle cx="50" cy="52" r="42" fill="url(#foxFur)" stroke="#BF360C" stroke-width="2"/>
+  <!-- White Cheeks Mask -->
+  <path d="M 12,54 Q 30,76 50,76 Q 70,76 88,54 Q 50,66 12,54 Z" fill="#FFFFFF"/>
+  <!-- Cute Fox Eyes -->
+  <ellipse cx="33" cy="48" rx="6" ry="6.5" fill="#261208"/>
+  <ellipse cx="67" cy="48" rx="6" ry="6.5" fill="#261208"/>
+  <circle cx="35" cy="46" r="2.2" fill="#FFFFFF"/>
+  <circle cx="69" cy="46" r="2.2" fill="#FFFFFF"/>
+  <!-- Nose & Smile -->
+  <polygon points="50,72 45,67 55,67" fill="#261208"/>
+  <circle cx="25" cy="58" r="5.5" fill="#FF8A80" opacity="0.6"/>
+  <circle cx="75" cy="58" r="5.5" fill="#FF8A80" opacity="0.6"/>
 </svg>"""
     },
     "rabbit": {
@@ -202,20 +278,30 @@ RAW_COMPANIONS = {
         "bubble_color": "#F2DDE1",
         "actions": ["(輕輕動了動長長柔軟的垂耳，溫柔凝望著你)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#FBF8F9" stroke="#EADEE2" stroke-width="3"/>
-<path d="M 28,34 C 15,35 12,65 18,74 C 22,78 28,70 26,45 Z" fill="#E6D3D8"/>
-<path d="M 72,34 C 85,35 88,65 82,74 C 78,78 72,70 74,45 Z" fill="#E6D3D8"/>
-<path d="M 26,38 C 18,40 16,62 20,70 C 23,73 26,67 25,48 Z" fill="#F4CAD3"/>
-<path d="M 74,38 C 82,40 84,62 80,70 C 77,73 74,67 75,48 Z" fill="#F4CAD3"/>
-<circle cx="50" cy="52" r="28" fill="#FBF8F9"/>
-<ellipse cx="40" cy="50" rx="4" ry="5" fill="#583B43"/>
-<ellipse cx="60" cy="50" rx="4" ry="5" fill="#583B43"/>
-<circle cx="41" cy="48" r="1.5" fill="#FFFFFF"/>
-<circle cx="61" cy="48" r="1.5" fill="#FFFFFF"/>
-<polygon points="50,58 47,55 53,55" fill="#E68B9E"/>
-<path d="M 47,60 Q 50,63 53,60" fill="none" stroke="#583B43" stroke-width="1.5" stroke-linecap="round"/>
-<circle cx="34" cy="56" r="4" fill="#F8B6C4" opacity="0.6"/>
-<circle cx="66" cy="56" r="4" fill="#F8B6C4" opacity="0.6"/>
+  <defs>
+    <radialGradient id="bunFur" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="85%" stop-color="#FFF0F5"/>
+      <stop offset="100%" stop-color="#F8D7DA"/>
+    </radialGradient>
+  </defs>
+  <!-- Long Floppy Ears -->
+  <path d="M 28,36 C 10,38 8,74 16,84 C 22,90 28,80 26,50 Z" fill="#FFF0F5" stroke="#E8B4B8" stroke-width="2"/>
+  <path d="M 72,36 C 90,38 92,74 84,84 C 78,90 72,80 74,50 Z" fill="#FFF0F5" stroke="#E8B4B8" stroke-width="2"/>
+  <path d="M 25,42 C 16,45 14,70 19,78 C 23,82 26,74 25,52 Z" fill="#F8BBD0"/>
+  <path d="M 75,42 C 84,45 86,70 81,78 C 77,82 74,74 75,52 Z" fill="#F8BBD0"/>
+  <!-- Head -->
+  <circle cx="50" cy="54" r="38" fill="url(#bunFur)" stroke="#E8B4B8" stroke-width="2"/>
+  <!-- Big Eyes -->
+  <ellipse cx="36" cy="50" rx="5.5" ry="6.5" fill="#4A1525"/>
+  <ellipse cx="64" cy="50" rx="5.5" ry="6.5" fill="#4A1525"/>
+  <circle cx="38" cy="48" r="2.2" fill="#FFFFFF"/>
+  <circle cx="66" cy="48" r="2.2" fill="#FFFFFF"/>
+  <!-- Nose & Mouth -->
+  <polygon points="50,60 46,57 54,57" fill="#E91E63"/>
+  <path d="M 46,62 Q 50,66 54,62" fill="none" stroke="#4A1525" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="28" cy="58" r="6.5" fill="#FF80AB" opacity="0.6"/>
+  <circle cx="72" cy="58" r="6.5" fill="#FF80AB" opacity="0.6"/>
 </svg>"""
     },
     "sloth": {
@@ -657,8 +743,8 @@ section[data-testid="stSidebar"] { display: none !important; }
 }
 
 .msg-avatar {
-    width: 46px;
-    height: 46px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     margin: 0 0.6rem;
     flex-shrink: 0;
@@ -670,8 +756,8 @@ section[data-testid="stSidebar"] { display: none !important; }
     box-shadow: 0 3px 10px rgba(83, 62, 45, 0.08);
 }
 .msg-avatar-img {
-    width: 40px;
-    height: 40px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
 }
 .msg-row.user .msg-avatar { order: 1; background: #FFF9F2; border-color: #E8D8C8; }
@@ -2174,40 +2260,161 @@ with tab_chat:
 
     # 顯示歷史訊息
     chat_html = '<div class="chat-stream-box">'
-    user_svg_data = svg_to_data_uri("""<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4.5" fill="#8C735A"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#8C735A" stroke-width="2.5" stroke-linecap="round" fill="#8C735A"/></svg>""")
+    user_svg_data = svg_to_data_uri("""<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="userSkin" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF3E0"/>
+      <stop offset="100%" stop-color="#FFE0B2"/>
+    </radialGradient>
+    <linearGradient id="beanieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA726"/>
+      <stop offset="100%" stop-color="#FB8C00"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Badge -->
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#E2D5C3" stroke-width="2.5"/>
+  <!-- Cozy Knit Beanie -->
+  <path d="M 22,46 C 22,22 78,22 78,46 Z" fill="url(#beanieGrad)"/>
+  <circle cx="50" cy="18" r="7" fill="#FFE082"/>
+  <rect x="20" y="42" width="60" height="9" rx="4.5" fill="#FFE082"/>
+  <!-- Face -->
+  <path d="M 26,48 Q 50,86 74,48 Z" fill="url(#userSkin)"/>
+  <!-- Sparkling Eyes -->
+  <ellipse cx="38" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <circle cx="40" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
+  <!-- Rosy Cheeks & Smile -->
+  <circle cx="32" cy="62" r="5" fill="#FF8A80" opacity="0.6"/>
+  <circle cx="68" cy="62" r="5" fill="#FF8A80" opacity="0.6"/>
+  <path d="M 44,64 Q 50,70 56,64" fill="none" stroke="#3E2723" stroke-width="2" stroke-linecap="round"/>
+</svg>""")
     
-    for msg in st.session_state.messages:
+    for idx, msg in enumerate(st.session_state.messages):
         content = msg["content"].replace("<", "&lt;").replace(">", "&gt;").replace("\n", "<br>")
         if msg["role"] == "assistant":
-            chat_html += f'<div class="msg-row bot"><div class="msg-avatar"><img src="{current_companion["avatar_uri"]}" class="msg-avatar-img" alt="{current_companion["name"]}" /></div><div class="msg-bubble">{content}</div></div>'
+            # 乾淨朗讀文本 (去除動作括號與 markdown 符號)
+            clean_speech = re.sub(r'[\(（].*?[\)）]', '', msg["content"]).replace('*', '').replace('#', '').replace('\n', ' ')
+            clean_speech_js = clean_speech.replace('"', '\\"').replace("'", "\\'").strip()
+            
+            voice_btn_html = f'''<div style="margin-top:0.45rem; text-align:right; border-top:1px dashed #E0D3C1; padding-top:0.35rem;">
+                <button class="voice-play-pill" onclick="playBubbleVoice(this, \'{clean_speech_js}\')">🔊 溫柔語音</button>
+            </div>'''
+            chat_html += f'<div class="msg-row bot"><div class="msg-avatar"><img src="{current_companion["avatar_uri"]}" class="msg-avatar-img" alt="{current_companion["name"]}" /></div><div class="msg-bubble">{content}{voice_btn_html}</div></div>'
         else:
             chat_html += f'<div class="msg-row user"><div class="msg-avatar"><img src="{user_svg_data}" class="msg-avatar-img" alt="User" /></div><div class="msg-bubble">{content}</div></div>'
     
-    chat_html += '</div>'
+    chat_html += '''</div>
+    <style>
+    .voice-play-pill {
+        background: #FAF5EE;
+        border: 1px solid #C9B29B;
+        color: #6E5642;
+        border-radius: 14px;
+        padding: 3px 10px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+    }
+    .voice-play-pill:hover {
+        background: #C2995F;
+        color: white;
+        transform: scale(1.04);
+    }
+    .voice-play-pill.playing {
+        background: #5F8A6B;
+        color: white;
+        border-color: #5F8A6B;
+        animation: pulse-voice 1s infinite alternate;
+    }
+    @keyframes pulse-voice {
+        from { transform: scale(1); }
+        to { transform: scale(1.05); }
+    }
+    </style>
+    <script>
+    let activeUtterance = null;
+    let fallbackAudioContext = null;
+
+    function playBubbleVoice(btn, text) {
+        if (window.speechSynthesis && window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+            document.querySelectorAll('.voice-play-pill').forEach(b => {
+                b.innerHTML = '🔊 溫柔語音';
+                b.classList.remove('playing');
+            });
+            if (btn.getAttribute('data-speaking') === 'true') {
+                btn.removeAttribute('data-speaking');
+                return;
+            }
+        }
+
+        btn.innerHTML = '🎵 朗讀中... (點擊停止)';
+        btn.classList.add('playing');
+        btn.setAttribute('data-speaking', 'true');
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'zh-TW';
+            utter.rate = 0.92;
+            utter.pitch = 1.06;
+            
+            utter.onend = () => {
+                btn.innerHTML = '🔊 溫柔語音';
+                btn.classList.remove('playing');
+                btn.removeAttribute('data-speaking');
+            };
+            utter.onerror = () => {
+                playFallbackChimes(btn);
+            };
+            
+            window.speechSynthesis.speak(utter);
+        } else {
+            playFallbackChimes(btn);
+        }
+    }
+
+    function playFallbackChimes(btn) {
+        try {
+            if (!fallbackAudioContext) {
+                fallbackAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (fallbackAudioContext.state === 'suspended') {
+                fallbackAudioContext.resume();
+            }
+            const now = fallbackAudioContext.currentTime;
+            [392, 523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+                const osc = fallbackAudioContext.createOscillator();
+                const gain = fallbackAudioContext.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + i * 0.22);
+                gain.gain.setValueAtTime(0.25, now + i * 0.22);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.22 + 0.6);
+                osc.connect(gain);
+                gain.connect(fallbackAudioContext.destination);
+                osc.start(now + i * 0.22);
+                osc.stop(now + i * 0.22 + 0.6);
+            });
+            setTimeout(() => {
+                btn.innerHTML = '🔊 溫柔語音';
+                btn.classList.remove('playing');
+                btn.removeAttribute('data-speaking');
+            }, 1500);
+        } catch(e) {
+            btn.innerHTML = '🔊 溫柔語音';
+            btn.classList.remove('playing');
+            btn.removeAttribute('data-speaking');
+        }
+    }
+    </script>'''
     st.markdown(chat_html, unsafe_allow_html=True)
 
-    if len(st.session_state.messages) > 0 and st.session_state.messages[-1]["role"] == "assistant":
-        last_bot_reply = st.session_state.messages[-1]["content"].replace('"', '\\"').replace("'", "\\'").replace('\n', ' ')
-        tts_html = f'''
-        <div style="text-align:right; margin:0.3rem 0 0.6rem;">
-            <button onclick="speakText('{last_bot_reply[:180]}')" style="background:#FAF6EE; border:1.5px solid #C2995F; color:#6E5642; border-radius:18px; padding:4px 14px; font-size:0.78rem; font-weight:700; cursor:pointer; box-shadow:0 2px 6px rgba(194,153,95,0.15);">🔊 聆聽 {current_companion['name']} 溫柔語音</button>
-        </div>
-        <script>
-        function speakText(txt) {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
-                const utter = new SpeechSynthesisUtterance(txt);
-                utter.lang = 'zh-TW';
-                utter.rate = 0.92;
-                utter.pitch = 1.05;
-                window.speechSynthesis.speak(utter);
-            }} else {{
-                alert('您的瀏覽器尚未支援原生語音朗讀功能喔！');
-            }}
-        }}
-        </script>
-        '''
-        st.markdown(tts_html, unsafe_allow_html=True)
+    
 
     if st.session_state.is_thinking:
         st.markdown(f'<div style="text-align:center; padding:1rem; color:{current_companion["theme_color"]}; font-weight:600;"><span style="font-size:1.3rem;">{current_companion["emoji"]}</span> {current_companion["name"]} 正在全神貫注感受你的心情……</div>', unsafe_allow_html=True)
