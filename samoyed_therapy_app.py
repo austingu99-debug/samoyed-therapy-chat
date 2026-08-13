@@ -2181,6 +2181,29 @@ with tab_chat:
     chat_html += '</div>'
     st.markdown(chat_html, unsafe_allow_html=True)
 
+    if len(st.session_state.messages) > 0 and st.session_state.messages[-1]["role"] == "assistant":
+        last_bot_reply = st.session_state.messages[-1]["content"].replace('"', '\\"').replace("'", "\\'").replace('\n', ' ')
+        tts_html = f'''
+        <div style="text-align:right; margin:0.3rem 0 0.6rem;">
+            <button onclick="speakText('{last_bot_reply[:180]}')" style="background:#FAF6EE; border:1.5px solid #C2995F; color:#6E5642; border-radius:18px; padding:4px 14px; font-size:0.78rem; font-weight:700; cursor:pointer; box-shadow:0 2px 6px rgba(194,153,95,0.15);">🔊 聆聽 {current_companion['name']} 溫柔語音</button>
+        </div>
+        <script>
+        function speakText(txt) {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(txt);
+                utter.lang = 'zh-TW';
+                utter.rate = 0.92;
+                utter.pitch = 1.05;
+                window.speechSynthesis.speak(utter);
+            }} else {{
+                alert('您的瀏覽器尚未支援原生語音朗讀功能喔！');
+            }}
+        }}
+        </script>
+        '''
+        st.markdown(tts_html, unsafe_allow_html=True)
+
     if st.session_state.is_thinking:
         st.markdown(f'<div style="text-align:center; padding:1rem; color:{current_companion["theme_color"]}; font-weight:600;"><span style="font-size:1.3rem;">{current_companion["emoji"]}</span> {current_companion["name"]} 正在全神貫注感受你的心情……</div>', unsafe_allow_html=True)
 
@@ -2189,6 +2212,29 @@ with tab_chat:
         if st.button("重試連線", key="btn_clear_err"):
             st.session_state.error_msg = None
             st.rerun()
+
+    # 快捷心靈破冰話題 (Quick 1-Click Therapy Prompt Starters)
+    st.markdown("<p style='font-size:0.8rem; color:#8C735A; margin:0.6rem 0 0.3rem;'>💡 <strong>點擊一鍵開啟心靈話題：</strong></p>", unsafe_allow_html=True)
+    c_p1, c_p2, c_p3, c_p4, c_p5 = st.columns(5)
+    starters = [
+        ("💼 工作好累", "今天工作/生活覺得好累好耗竭，想跟你在這裡放空休息一下..."),
+        ("🥺 總覺得不夠好", "最近總是陷入自我懷疑，覺得自己做什麼都不夠好，好焦慮..."),
+        ("💔 人際好心累", "今天跟身邊的人相處感覺好內耗，心裡悶悶的好難受..."),
+        ("✨ 想要一句肯定", "今天過得好不容易，可以請你給我一句溫暖的抱抱和肯定嗎？"),
+        ("🌙 睡前求助眠", "現在躺在床上腦袋一直轉不停、睡不著，可以陪我說說話放鬆嗎？")
+    ]
+    cols = [c_p1, c_p2, c_p3, c_p4, c_p5]
+    for idx, (label, text) in enumerate(starters):
+        with cols[idx]:
+            if st.button(label, key=f"btn_starter_{idx}", use_container_width=True):
+                has_quota, _ = db.check_and_increment_chat_quota(CURRENT_USER_ID)
+                if has_quota:
+                    st.session_state.messages.append({"role": "user", "content": text})
+                    db.save_chat_message(CURRENT_USER_ID, comp_id, "user", text)
+                    st.session_state.is_thinking = True
+                    st.rerun()
+                else:
+                    st.warning("今日免費額度已滿囉！")
 
     # 聊天輸入框與額度檢查
     if prompt := st.chat_input(f"跟 {current_companion['name']} 說說心事吧...", key="chat_user_input"):
