@@ -4,6 +4,7 @@ import time
 import os
 import json
 import base64
+import re
 from openai import OpenAI
 import database as db
 
@@ -2294,11 +2295,11 @@ with tab_chat:
         content = msg["content"].replace("<", "&lt;").replace(">", "&gt;").replace("\n", "<br>")
         if msg["role"] == "assistant":
             # 乾淨朗讀文本 (去除動作括號與 markdown 符號)
-            clean_speech = re.sub(r'[\(（].*?[\)）]', '', msg["content"]).replace('*', '').replace('#', '').replace('\n', ' ')
-            clean_speech_js = clean_speech.replace('"', '\\"').replace("'", "\\'").strip()
+            clean_speech = re.sub(r'[\(（].*?[\)）]', '', msg["content"]).replace('*', '').replace('#', '').replace('\n', ' ').strip()
+            b64_speech = base64.b64encode(clean_speech.encode('utf-8')).decode('utf-8')
             
             voice_btn_html = f'''<div style="margin-top:0.45rem; text-align:right; border-top:1px dashed #E0D3C1; padding-top:0.35rem;">
-                <button class="voice-play-pill" onclick="playBubbleVoice(this, \'{clean_speech_js}\')">🔊 溫柔語音</button>
+                <button class="voice-play-pill" onclick="playBubbleVoiceB64(this, '{b64_speech}')">🔊 溫柔語音</button>
             </div>'''
             chat_html += f'<div class="msg-row bot"><div class="msg-avatar"><img src="{current_companion["avatar_uri"]}" class="msg-avatar-img" alt="{current_companion["name"]}" /></div><div class="msg-bubble">{content}{voice_btn_html}</div></div>'
         else:
@@ -2339,6 +2340,15 @@ with tab_chat:
     <script>
     let activeUtterance = null;
     let fallbackAudioContext = null;
+
+    function playBubbleVoiceB64(btn, b64) {
+        try {
+            const text = decodeURIComponent(escape(window.atob(b64)));
+            playBubbleVoice(btn, text);
+        } catch(e) {
+            playFallbackChimes(btn);
+        }
+    }
 
     function playBubbleVoice(btn, text) {
         if (window.speechSynthesis && window.speechSynthesis.speaking) {
