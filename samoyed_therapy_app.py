@@ -931,9 +931,11 @@ body {{
 </div>
 <div id="three-canvas-container"></div>
 <div class="interaction-bar">
-    <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸撫慰</button>
+    <button class="pet-touch-btn" onclick="handlePetDirect()">💖 摸摸撫慰 (瞇眼撒嬌)</button>
     <button class="pet-touch-btn" style="background:#5F8A6B;" onclick="triggerPetWalk()">🐾 走動巡邏</button>
-    <button class="pet-touch-btn" style="background:#8D7358;" onclick="triggerPetSit()">🧘 原地坐下</button>
+    <button class="pet-touch-btn" style="background:#82659B;" onclick="triggerPetStretch()">🐕 伸懶腰</button>
+    <button class="pet-touch-btn" style="background:#4A8B82;" onclick="triggerPetShake()">🌀 甩毛抖擻</button>
+    <button class="pet-touch-btn" style="background:#8D7358;" onclick="triggerPetSit()">🧘 乖巧坐下</button>
     <button class="pet-touch-btn" style="background:#C2995F;" onclick="triggerFeedingAnimation('milk', '溫暖熱牛奶')">🥛 餵牛奶</button>
     <button class="pet-touch-btn" style="background:#A35843;" onclick="triggerFeedingAnimation('jerky', '香脆肉乾')">🥩 餵肉乾</button>
     <button class="pet-touch-btn" style="background:#8C6B53;" onclick="triggerFeedingAnimation('cookie', '心靈小餅乾')">🍪 餵餅乾</button>
@@ -1674,7 +1676,10 @@ function triggerFeedingAnimation(snackType, snackName) {{
 // ==========================================
 // 🐾 7. 生動多狀態寵物 AI 行為系統 (Living Multi-Behavior Engine)
 // ==========================================
-let petState = 'IDLE'; // IDLE, WALKING, PETTED, EATING, SITTING
+let petState = 'IDLE'; // IDLE, WALKING, PETTED, EATING, SITTING, STRETCHING, SHAKING, SNIFFING
+let stretchTimer = 0;
+let shakeTimer = 0;
+let sniffTimer = 0;
 let petTargetPos = new THREE.Vector3(0, 0, 0.2);
 let walkSpeed = 0.042;
 let walkPhase = 0;
