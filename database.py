@@ -190,6 +190,8 @@ def init_database():
             cursor.execute("ALTER TABLE users ADD COLUMN is_vip INTEGER DEFAULT 1")
         if "star_coins" not in user_cols:
             cursor.execute("ALTER TABLE users ADD COLUMN star_coins INTEGER DEFAULT 888")
+        if "avatar_key" not in user_cols:
+            cursor.execute("ALTER TABLE users ADD COLUMN avatar_key TEXT DEFAULT 'beanie_traveler'")
             
         aff_cols = [r[1] for r in cursor.execute("PRAGMA table_info(companion_affinity)").fetchall()]
         if "happiness" not in aff_cols:
@@ -540,3 +542,13 @@ def load_time_capsules(user_id):
     rows = cursor.fetchall()
     conn.close()
     return [{"to": r["target_person"], "content": r["content"], "guardian": r["guardian_companion"], "date": r["created_at"]} for r in rows]
+
+
+def update_user_avatar(user_id, avatar_key):
+    init_database()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE users SET avatar_key = ? WHERE id = ?", (avatar_key, user_id))
+    conn.commit()
+    conn.close()
+    return True

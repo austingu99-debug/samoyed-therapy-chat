@@ -25,6 +25,172 @@ def svg_to_data_uri(svg_str):
     b64 = base64.b64encode(clean_svg.encode("utf-8")).decode("utf-8")
     return f"data:image/svg+xml;base64,{b64}"
 
+
+# 3. 使用者可選專屬心靈頭像矩陣 (User Avatar Presets Gallery)
+USER_AVATAR_PRESETS = {
+    "beanie_traveler": {
+        "name": "🧶 焦糖毛帽旅人",
+        "desc": "溫暖針織毛帽與陽光笑容",
+        "svg": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="uSkin1" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF5E6"/><stop offset="100%" stop-color="#FFE4C7"/>
+    </radialGradient>
+    <linearGradient id="beanieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFA726"/><stop offset="100%" stop-color="#FB8C00"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#E2D5C3" stroke-width="2.5"/>
+  <path d="M 22,46 C 22,20 78,20 78,46 Z" fill="url(#beanieGrad)"/>
+  <circle cx="50" cy="16" r="7.5" fill="#FFE082"/>
+  <rect x="20" y="42" width="60" height="9" rx="4.5" fill="#FFE082"/>
+  <path d="M 26,48 Q 50,86 74,48 Z" fill="url(#uSkin1)"/>
+  <ellipse cx="38" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <circle cx="40" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="31" cy="63" r="5.5" fill="#FF8A80" opacity="0.6"/>
+  <circle cx="69" cy="63" r="5.5" fill="#FF8A80" opacity="0.6"/>
+  <path d="M 44,65 Q 50,71 56,65" fill="none" stroke="#3E2723" stroke-width="2.2" stroke-linecap="round"/>
+</svg>"""
+    },
+    "sakura_girl": {
+        "name": "🌸 粉櫻花草少女",
+        "desc": "粉櫻花瓣髮夾與元氣雙眸",
+        "svg": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="uSkin2" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF0F5"/><stop offset="100%" stop-color="#FCE4EC"/>
+    </radialGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#795548"/><stop offset="100%" stop-color="#4E342E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#F8BBD0" stroke-width="2.5"/>
+  <path d="M 20,50 C 20,24 80,24 80,50 Q 80,68 76,78 Q 66,54 50,54 Q 34,54 24,78 Z" fill="url(#hairGrad)"/>
+  <path d="M 28,48 Q 50,86 72,48 Z" fill="url(#uSkin2)"/>
+  <!-- Bangs -->
+  <path d="M 26,44 Q 38,54 50,44 Q 62,54 74,44 Q 50,30 26,44 Z" fill="url(#hairGrad)"/>
+  <!-- Sakura Hairclip -->
+  <circle cx="70" cy="36" r="6" fill="#FF4081"/>
+  <circle cx="70" cy="36" r="2.5" fill="#FFF59D"/>
+  <ellipse cx="38" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <circle cx="40" cy="52" r="1.8" fill="#FFFFFF"/><circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="31" cy="63" r="6" fill="#FF4081" opacity="0.45"/>
+  <circle cx="69" cy="63" r="6" fill="#FF4081" opacity="0.45"/>
+  <path d="M 44,65 Q 50,71 56,65" fill="none" stroke="#3E2723" stroke-width="2.2" stroke-linecap="round"/>
+</svg>"""
+    },
+    "starry_boy": {
+        "name": "⭐ 星空夜空守護者",
+        "desc": "午夜藍星空兜帽與星星微光",
+        "svg": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="uSkin3" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF8E7"/><stop offset="100%" stop-color="#FFE0B2"/>
+    </radialGradient>
+    <linearGradient id="nightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#303F9F"/><stop offset="100%" stop-color="#1A237E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#C5CAE9" stroke-width="2.5"/>
+  <path d="M 20,48 C 20,18 80,18 80,48 Q 84,76 76,84 Q 50,92 24,84 Z" fill="url(#nightGrad)"/>
+  <path d="M 28,48 Q 50,86 72,48 Z" fill="url(#uSkin3)"/>
+  <!-- Star Badge -->
+  <polygon points="50,16 52,22 58,22 53,26 55,32 50,28 45,32 47,26 42,22 48,22" fill="#FFD54F"/>
+  <ellipse cx="38" cy="54" rx="4.5" ry="5.5" fill="#1A237E"/>
+  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#1A237E"/>
+  <circle cx="40" cy="52" r="1.8" fill="#FFFFFF"/><circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="31" cy="63" r="5" fill="#FFAB91" opacity="0.6"/>
+  <circle cx="69" cy="63" r="5" fill="#FFAB91" opacity="0.6"/>
+  <path d="M 44,65 Q 50,71 56,65" fill="none" stroke="#1A237E" stroke-width="2.2" stroke-linecap="round"/>
+</svg>"""
+    },
+    "forest_elf": {
+        "name": "🌱 森林活力小精靈",
+        "desc": "薄荷綠畫家帽與嫩綠幼苗",
+        "svg": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="uSkin4" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FAFAFA"/><stop offset="100%" stop-color="#E8F5E9"/>
+    </radialGradient>
+    <linearGradient id="beretGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#81C784"/><stop offset="100%" stop-color="#4CAF50"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#C8E6C9" stroke-width="2.5"/>
+  <!-- Beret -->
+  <ellipse cx="50" cy="36" rx="34" ry="18" fill="url(#beretGrad)"/>
+  <circle cx="50" cy="18" r="4" fill="#2E7D32"/>
+  <!-- Little Sprout -->
+  <path d="M 50,18 Q 44,10 38,12 Q 44,18 50,18" fill="#81C784"/>
+  <path d="M 50,18 Q 56,10 62,12 Q 56,18 50,18" fill="#81C784"/>
+  <path d="M 28,48 Q 50,86 72,48 Z" fill="url(#uSkin4)"/>
+  <ellipse cx="38" cy="54" rx="4.5" ry="5.5" fill="#2E7D32"/>
+  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#2E7D32"/>
+  <circle cx="40" cy="52" r="1.8" fill="#FFFFFF"/><circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="31" cy="63" r="5" fill="#A5D6A7" opacity="0.6"/>
+  <circle cx="69" cy="63" r="5" fill="#A5D6A7" opacity="0.6"/>
+  <path d="M 44,65 Q 50,71 56,65" fill="none" stroke="#2E7D32" stroke-width="2.2" stroke-linecap="round"/>
+</svg>"""
+    },
+    "cat_hoodie": {
+        "name": "🐱 軟萌貓耳小旅人",
+        "desc": "立體貓耳兜帽與俏皮眨眼",
+        "svg": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="uSkin5" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF3E0"/><stop offset="100%" stop-color="#FFE0B2"/>
+    </radialGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#FFE0B2" stroke-width="2.5"/>
+  <!-- Cat Ears -->
+  <polygon points="24,36 16,12 40,24" fill="#FFE082" stroke="#FFCA28" stroke-width="2"/>
+  <polygon points="76,36 84,12 60,24" fill="#FFE082" stroke="#FFCA28" stroke-width="2"/>
+  <polygon points="25,32 20,18 36,25" fill="#FF80AB"/>
+  <polygon points="75,32 80,18 64,25" fill="#FF80AB"/>
+  <!-- Hoodie Face Opening -->
+  <circle cx="50" cy="50" r="34" fill="#FFE082"/>
+  <path d="M 28,48 Q 50,86 72,48 Z" fill="url(#uSkin5)"/>
+  <!-- Wink Eye -->
+  <path d="M 34,54 Q 38,50 42,54" fill="none" stroke="#3E2723" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
+  <circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
+  <circle cx="31" cy="63" r="5" fill="#FF8A80" opacity="0.6"/>
+  <circle cx="69" cy="63" r="5" fill="#FF8A80" opacity="0.6"/>
+  <path d="M 44,65 Q 50,71 56,65" fill="none" stroke="#3E2723" stroke-width="2.2" stroke-linecap="round"/>
+</svg>"""
+    },
+    "coffee_cozy": {
+        "name": "☕ 暖心可可知性夥伴",
+        "desc": "文青圓框眼鏡與溫暖酒紅圍巾",
+        "svg": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="uSkin6" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFF8E7"/><stop offset="100%" stop-color="#FFE0B2"/>
+    </radialGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#D7CCC8" stroke-width="2.5"/>
+  <!-- Hair -->
+  <path d="M 22,48 C 22,20 78,20 78,48 Z" fill="#5D4037"/>
+  <path d="M 28,48 Q 50,86 72,48 Z" fill="url(#uSkin6)"/>
+  <!-- Scarf -->
+  <path d="M 20,78 Q 50,96 80,78 Q 50,70 20,78 Z" fill="#C2185B"/>
+  <!-- Round Glasses -->
+  <circle cx="38" cy="54" r="7" fill="none" stroke="#5D4037" stroke-width="2"/>
+  <circle cx="62" cy="54" r="7" fill="none" stroke="#5D4037" stroke-width="2"/>
+  <line x1="45" y1="54" x2="55" y2="54" stroke="#5D4037" stroke-width="2"/>
+  <ellipse cx="38" cy="54" rx="3.5" ry="4.5" fill="#3E2723"/>
+  <ellipse cx="62" cy="54" rx="3.5" ry="4.5" fill="#3E2723"/>
+  <circle cx="39.5" cy="52.5" r="1.5" fill="#FFFFFF"/><circle cx="63.5" cy="52.5" r="1.5" fill="#FFFFFF"/>
+  <circle cx="30" cy="64" r="4.5" fill="#FF8A80" opacity="0.6"/>
+  <circle cx="70" cy="64" r="4.5" fill="#FF8A80" opacity="0.6"/>
+  <path d="M 45,66 Q 50,70 55,66" fill="none" stroke="#3E2723" stroke-width="2" stroke-linecap="round"/>
+</svg>"""
+    }
+}
+
 # 2. 定義 10 款特色動物心靈夥伴矩陣 (包含神獸專屬台詞與喜愛食物)
 RAW_COMPANIONS = {
     "samoyed": {
@@ -2221,9 +2387,9 @@ with tab_chat:
     companion_self_name = st.session_state.companion_custom_self_ref.get(comp_id, current_companion["default_self_ref"])
     user_name = current_user.get("nickname", "小夥伴")
 
-    # 頂部自訂稱呼
-    with st.expander("⚙️ 互動稱呼與諮商設定", expanded=False):
-        c_set1, c_set2, c_set3 = st.columns([2, 2, 1])
+    # 頂部自訂稱呼與專屬頭像設定
+    with st.expander("⚙️ 互動稱呼與專屬頭像設定", expanded=False):
+        c_set1, c_set2 = st.columns([1, 1])
         with c_set1:
             new_user_name = st.text_input("夥伴如何稱呼你：", value=user_name, placeholder="例如：小夥伴、小明...", key="set_user_nick")
             if new_user_name.strip() and new_user_name != user_name:
@@ -2235,11 +2401,26 @@ with tab_chat:
             new_comp_self = st.text_input(f"{current_companion['name']} 如何稱呼自己：", value=companion_self_name, key="set_comp_nick")
             if new_comp_self.strip() and new_comp_self != companion_self_name:
                 st.session_state.companion_custom_self_ref[comp_id] = new_comp_self.strip()
-        with c_set3:
-            st.markdown("<div style='height:1.75rem;'></div>", unsafe_allow_html=True)
-            if st.button("儲存設定", key="save_nick_btn", use_container_width=True):
-                st.success("設定已更新！")
-                st.rerun()
+
+        st.markdown("<p style='font-size:0.85rem; font-weight:700; color:#533E2D; margin:0.8rem 0 0.4rem;'>🎨 挑選你的專屬治癒旅人頭像：</p>", unsafe_allow_html=True)
+        cur_u_avatar = current_user.get("avatar_key", "beanie_traveler")
+        
+        av_cols = st.columns(6)
+        for av_idx, (av_key, av_info) in enumerate(USER_AVATAR_PRESETS.items()):
+            with av_cols[av_idx]:
+                av_uri = svg_to_data_uri(av_info["svg"])
+                is_selected = (av_key == cur_u_avatar)
+                border_style = "3px solid #C2995F; box-shadow:0 0 12px rgba(194,153,95,0.4);" if is_selected else "1.5px solid #E2D5C3;"
+                st.markdown(f'''
+<div style="background:#FAF6F0; border-radius:16px; padding:0.6rem 0.4rem; text-align:center; border:{border_style}; margin-bottom:0.4rem;">
+    <img src="{av_uri}" style="width:52px; height:52px; border-radius:50%; margin-bottom:0.3rem;" />
+    <div style="font-size:0.75rem; font-weight:700; color:#4A3B2C;">{av_info['name']}</div>
+</div>''', unsafe_allow_html=True)
+                btn_label = "✅ 使用中" if is_selected else "選用"
+                if st.button(btn_label, key=f"set_av_{av_key}", use_container_width=True, disabled=is_selected):
+                    db.update_user_avatar(CURRENT_USER_ID, av_key)
+                    st.session_state.user_data = db.get_or_create_user(CURRENT_USER_ID)
+                    st.rerun()
 
     # 頂部橫幅
     col_banner, col_actions = st.columns([3, 1])
@@ -2261,35 +2442,9 @@ with tab_chat:
 
     # 顯示歷史訊息
     chat_html = '<div class="chat-stream-box">'
-    user_svg_data = svg_to_data_uri("""<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="userSkin" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#FFF3E0"/>
-      <stop offset="100%" stop-color="#FFE0B2"/>
-    </radialGradient>
-    <linearGradient id="beanieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFA726"/>
-      <stop offset="100%" stop-color="#FB8C00"/>
-    </linearGradient>
-  </defs>
-  <!-- Background Badge -->
-  <circle cx="50" cy="50" r="46" fill="#FDFBF7" stroke="#E2D5C3" stroke-width="2.5"/>
-  <!-- Cozy Knit Beanie -->
-  <path d="M 22,46 C 22,22 78,22 78,46 Z" fill="url(#beanieGrad)"/>
-  <circle cx="50" cy="18" r="7" fill="#FFE082"/>
-  <rect x="20" y="42" width="60" height="9" rx="4.5" fill="#FFE082"/>
-  <!-- Face -->
-  <path d="M 26,48 Q 50,86 74,48 Z" fill="url(#userSkin)"/>
-  <!-- Sparkling Eyes -->
-  <ellipse cx="38" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
-  <ellipse cx="62" cy="54" rx="4.5" ry="5.5" fill="#3E2723"/>
-  <circle cx="40" cy="52" r="1.8" fill="#FFFFFF"/>
-  <circle cx="64" cy="52" r="1.8" fill="#FFFFFF"/>
-  <!-- Rosy Cheeks & Smile -->
-  <circle cx="32" cy="62" r="5" fill="#FF8A80" opacity="0.6"/>
-  <circle cx="68" cy="62" r="5" fill="#FF8A80" opacity="0.6"/>
-  <path d="M 44,64 Q 50,70 56,64" fill="none" stroke="#3E2723" stroke-width="2" stroke-linecap="round"/>
-</svg>""")
+    cur_u_av_key = current_user.get("avatar_key", "beanie_traveler")
+    user_svg_raw = USER_AVATAR_PRESETS.get(cur_u_av_key, USER_AVATAR_PRESETS["beanie_traveler"])["svg"]
+    user_svg_data = svg_to_data_uri(user_svg_raw)
     
     for idx, msg in enumerate(st.session_state.messages):
         content = msg["content"].replace("<", "&lt;").replace(">", "&gt;").replace("\n", "<br>")
