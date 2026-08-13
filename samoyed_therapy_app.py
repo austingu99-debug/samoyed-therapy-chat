@@ -287,38 +287,50 @@ RAW_COMPANIONS = {
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="catFur" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#B8B0C8"/>
-      <stop offset="85%" stop-color="#9A8FA8"/>
-      <stop offset="100%" stop-color="#827692"/>
+      <stop offset="0%" stop-color="#C5BED3"/>
+      <stop offset="70%" stop-color="#A498B8"/>
+      <stop offset="100%" stop-color="#887B9E"/>
     </radialGradient>
-    <radialGradient id="amberEye" cx="40%" cy="35%" r="60%">
-      <stop offset="0%" stop-color="#FFD54F"/>
-      <stop offset="70%" stop-color="#FFB300"/>
-      <stop offset="100%" stop-color="#FF8F00"/>
+    <radialGradient id="catEye" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#80DEEA"/>
+      <stop offset="60%" stop-color="#26C6DA"/>
+      <stop offset="100%" stop-color="#00838F"/>
+    </radialGradient>
+    <radialGradient id="pinkCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFA8B8" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#FFA8B8" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <!-- Pointy Ears -->
-  <polygon points="22,42 14,14 42,26" fill="#827692" stroke="#685D76" stroke-width="2"/>
-  <polygon points="78,42 86,14 58,26" fill="#827692" stroke="#685D76" stroke-width="2"/>
-  <polygon points="24,38 18,20 38,28" fill="#F48FB1"/>
-  <polygon points="76,38 82,20 62,28" fill="#F48FB1"/>
+  <polygon points="20,44 12,12 42,24" fill="#887B9E" stroke="#716388" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="80,44 88,12 58,24" fill="#887B9E" stroke="#716388" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="22,40 16,18 38,26" fill="#F8BBD0"/>
+  <polygon points="78,40 84,18 62,26" fill="#F8BBD0"/>
   <!-- Head -->
-  <circle cx="50" cy="52" r="44" fill="url(#catFur)" stroke="#746784" stroke-width="2"/>
-  <!-- Amber Eyes -->
-  <ellipse cx="33" cy="48" rx="8" ry="9" fill="url(#amberEye)"/>
-  <ellipse cx="67" cy="48" rx="8" ry="9" fill="url(#amberEye)"/>
-  <!-- Slit Pupils with Sparkle -->
-  <ellipse cx="33" cy="48" rx="3.2" ry="7.5" fill="#1A1222"/>
-  <ellipse cx="67" cy="48" rx="3.2" ry="7.5" fill="#1A1222"/>
-  <circle cx="36" cy="44" r="2.5" fill="#FFFFFF"/>
-  <circle cx="70" cy="44" r="2.5" fill="#FFFFFF"/>
-  <!-- Pink Nose & Whiskers -->
-  <polygon points="50,58 46,54 54,54" fill="#F48FB1"/>
-  <path d="M 46,59 Q 50,64 54,59" fill="none" stroke="#2B1E34" stroke-width="2" stroke-linecap="round"/>
-  <line x1="20" y1="56" x2="6" y2="54" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="20" y1="60" x2="6" y2="62" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="80" y1="56" x2="94" y2="54" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="80" y1="60" x2="94" y2="62" stroke="#D1C4E9" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="50" cy="52" r="44" fill="url(#catFur)" stroke="#716388" stroke-width="2"/>
+  <!-- Cheek Fluff -->
+  <circle cx="28" cy="62" r="8" fill="url(#pinkCheek)"/>
+  <circle cx="72" cy="62" r="8" fill="url(#pinkCheek)"/>
+  <!-- Big Aquatic-Emerald Eyes -->
+  <ellipse cx="33" cy="46" rx="7.5" ry="8.5" fill="url(#catEye)"/>
+  <ellipse cx="67" cy="46" rx="7.5" ry="8.5" fill="url(#catEye)"/>
+  <ellipse cx="33" cy="46" rx="3.5" ry="7.5" fill="#1A1222"/>
+  <ellipse cx="67" cy="46" rx="3.5" ry="7.5" fill="#1A1222"/>
+  <circle cx="36" cy="42.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="70" cy="42.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="31" cy="49" r="1.3" fill="#FFFFFF"/>
+  <circle cx="65" cy="49" r="1.3" fill="#FFFFFF"/>
+  <!-- Muzzle, Pink Nose & Whiskers -->
+  <ellipse cx="50" cy="60" rx="12" ry="8" fill="#ECE8F2"/>
+  <polygon points="50,56 46,52 54,52" fill="#F48FB1"/>
+  <path d="M 45,58 Q 50,64 55,58" fill="none" stroke="#3E2B4A" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="18" y1="58" x2="4" y2="56" stroke="#D1C4E9" stroke-width="2" stroke-linecap="round"/>
+  <line x1="18" y1="63" x2="4" y2="65" stroke="#D1C4E9" stroke-width="2" stroke-linecap="round"/>
+  <line x1="82" y1="58" x2="96" y2="56" stroke="#D1C4E9" stroke-width="2" stroke-linecap="round"/>
+  <line x1="82" y1="63" x2="96" y2="65" stroke="#D1C4E9" stroke-width="2" stroke-linecap="round"/>
+  <!-- Bell Collar -->
+  <path d="M 28,88 Q 50,96 72,88" fill="none" stroke="#7E57C2" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="50" cy="92" r="4.5" fill="#FFD54F" stroke="#F57F17" stroke-width="1"/>
 </svg>"""
     },
     "bear": {
@@ -396,30 +408,50 @@ RAW_COMPANIONS = {
         "actions": ["(側著頭專注注視著你，眼神充滿靈氣與理解)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="foxFur" cx="50%" cy="40%" r="55%">
-      <stop offset="0%" stop-color="#FF7043"/>
-      <stop offset="85%" stop-color="#E64A19"/>
-      <stop offset="100%" stop-color="#BF360C"/>
+    <radialGradient id="foxFur" cx="50%" cy="42%" r="58%">
+      <stop offset="0%" stop-color="#FF8A65"/>
+      <stop offset="70%" stop-color="#F4511E"/>
+      <stop offset="100%" stop-color="#D84315"/>
+    </radialGradient>
+    <radialGradient id="foxCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF5252" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FF5252" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="foxEye" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFA726"/>
+      <stop offset="70%" stop-color="#FB8C00"/>
+      <stop offset="100%" stop-color="#E65100"/>
     </radialGradient>
   </defs>
-  <!-- Big Pointy Ears with Black Tips -->
-  <polygon points="22,44 14,10 44,24" fill="#E64A19" stroke="#BF360C" stroke-width="2"/>
-  <polygon points="78,44 86,10 56,24" fill="#E64A19" stroke="#BF360C" stroke-width="2"/>
-  <polygon points="20,38 15,16 34,26" fill="#212121"/>
-  <polygon points="80,38 85,16 66,26" fill="#212121"/>
+  <!-- Ears -->
+  <polygon points="22,46 10,12 42,26" fill="#F4511E" stroke="#D84315" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="78,46 90,12 58,26" fill="#F4511E" stroke="#D84315" stroke-width="2.5" stroke-linejoin="round"/>
+  <polygon points="20,40 12,15 32,24" fill="#2E1810"/>
+  <polygon points="80,40 88,15 68,24" fill="#2E1810"/>
+  <polygon points="24,42 18,24 38,30" fill="#FFCCBC"/>
+  <polygon points="76,42 82,24 62,30" fill="#FFCCBC"/>
   <!-- Head -->
-  <circle cx="50" cy="52" r="42" fill="url(#foxFur)" stroke="#BF360C" stroke-width="2"/>
-  <!-- White Cheeks Mask -->
-  <path d="M 12,54 Q 30,76 50,76 Q 70,76 88,54 Q 50,66 12,54 Z" fill="#FFFFFF"/>
-  <!-- Cute Fox Eyes -->
-  <ellipse cx="33" cy="48" rx="6" ry="6.5" fill="#261208"/>
-  <ellipse cx="67" cy="48" rx="6" ry="6.5" fill="#261208"/>
-  <circle cx="35" cy="46" r="2.2" fill="#FFFFFF"/>
-  <circle cx="69" cy="46" r="2.2" fill="#FFFFFF"/>
-  <!-- Nose & Smile -->
-  <polygon points="50,72 45,67 55,67" fill="#261208"/>
-  <circle cx="25" cy="58" r="5.5" fill="#FF8A80" opacity="0.6"/>
-  <circle cx="75" cy="58" r="5.5" fill="#FF8A80" opacity="0.6"/>
+  <circle cx="50" cy="52" r="44" fill="url(#foxFur)" stroke="#D84315" stroke-width="2"/>
+  <!-- Fluffy White Muzzle & Cheeks -->
+  <path d="M 8,56 Q 28,78 50,78 Q 72,78 92,56 Q 74,48 50,54 Q 26,48 8,56 Z" fill="#FFFFFF"/>
+  <path d="M 8,56 Q 4,64 12,68" fill="none" stroke="#D84315" stroke-width="2"/>
+  <path d="M 92,56 Q 96,64 88,68" fill="none" stroke="#D84315" stroke-width="2"/>
+  <!-- Blushing Cheeks -->
+  <circle cx="26" cy="62" r="8" fill="url(#foxCheek)"/>
+  <circle cx="74" cy="62" r="8" fill="url(#foxCheek)"/>
+  <!-- Big Sparkling Amber Eyes -->
+  <ellipse cx="33" cy="46" rx="6.5" ry="7.5" fill="url(#foxEye)"/>
+  <ellipse cx="67" cy="46" rx="6.5" ry="7.5" fill="url(#foxEye)"/>
+  <ellipse cx="33" cy="46" rx="4.5" ry="6.5" fill="#261208"/>
+  <ellipse cx="67" cy="46" rx="4.5" ry="6.5" fill="#261208"/>
+  <circle cx="35.5" cy="43.5" r="2.6" fill="#FFFFFF"/>
+  <circle cx="69.5" cy="43.5" r="2.6" fill="#FFFFFF"/>
+  <circle cx="31.5" cy="49" r="1.2" fill="#FFFFFF"/>
+  <circle cx="65.5" cy="49" r="1.2" fill="#FFFFFF"/>
+  <!-- Cute Fox Nose & Smile -->
+  <polygon points="50,68 45,63 55,63" fill="#261208"/>
+  <circle cx="51.5" cy="62.5" r="1" fill="#FFFFFF" opacity="0.8"/>
+  <path d="M 44,69 Q 50,75 56,69" fill="none" stroke="#261208" stroke-width="2" stroke-linecap="round"/>
 </svg>"""
     },
     "rabbit": {
@@ -448,27 +480,47 @@ RAW_COMPANIONS = {
   <defs>
     <radialGradient id="bunFur" cx="50%" cy="45%" r="55%">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="85%" stop-color="#FFF0F5"/>
-      <stop offset="100%" stop-color="#F8D7DA"/>
+      <stop offset="75%" stop-color="#FFF0F5"/>
+      <stop offset="100%" stop-color="#FCE4EC"/>
+    </radialGradient>
+    <radialGradient id="bunEye" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#F48FB1"/>
+      <stop offset="70%" stop-color="#E91E63"/>
+      <stop offset="100%" stop-color="#880E4F"/>
+    </radialGradient>
+    <radialGradient id="bunCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4081" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF4081" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <!-- Long Floppy Ears -->
-  <path d="M 28,36 C 10,38 8,74 16,84 C 22,90 28,80 26,50 Z" fill="#FFF0F5" stroke="#E8B4B8" stroke-width="2"/>
-  <path d="M 72,36 C 90,38 92,74 84,84 C 78,90 72,80 74,50 Z" fill="#FFF0F5" stroke="#E8B4B8" stroke-width="2"/>
-  <path d="M 25,42 C 16,45 14,70 19,78 C 23,82 26,74 25,52 Z" fill="#F8BBD0"/>
-  <path d="M 75,42 C 84,45 86,70 81,78 C 77,82 74,74 75,52 Z" fill="#F8BBD0"/>
+  <!-- Floppy Ears with Shadow -->
+  <path d="M 26,38 C 8,40 6,76 16,86 C 22,92 28,82 26,52 Z" fill="#FFF0F5" stroke="#F8BBD0" stroke-width="2.5"/>
+  <path d="M 74,38 C 92,40 94,76 84,86 C 78,92 72,82 74,52 Z" fill="#FFF0F5" stroke="#F8BBD0" stroke-width="2.5"/>
+  <path d="M 24,44 C 14,48 12,72 18,80 C 22,84 26,76 24,54 Z" fill="#F8BBD0"/>
+  <path d="M 76,44 C 86,48 88,72 82,80 C 78,84 74,76 76,54 Z" fill="#F8BBD0"/>
   <!-- Head -->
-  <circle cx="50" cy="54" r="38" fill="url(#bunFur)" stroke="#E8B4B8" stroke-width="2"/>
-  <!-- Big Eyes -->
-  <ellipse cx="36" cy="50" rx="5.5" ry="6.5" fill="#4A1525"/>
-  <ellipse cx="64" cy="50" rx="5.5" ry="6.5" fill="#4A1525"/>
-  <circle cx="38" cy="48" r="2.2" fill="#FFFFFF"/>
-  <circle cx="66" cy="48" r="2.2" fill="#FFFFFF"/>
-  <!-- Nose & Mouth -->
-  <polygon points="50,60 46,57 54,57" fill="#E91E63"/>
+  <circle cx="50" cy="54" r="40" fill="url(#bunFur)" stroke="#F8BBD0" stroke-width="2"/>
+  <!-- Four Leaf Clover Hairclip -->
+  <circle cx="28" cy="24" r="4.5" fill="#81C784"/>
+  <circle cx="35" cy="24" r="4.5" fill="#81C784"/>
+  <circle cx="28" cy="31" r="4.5" fill="#81C784"/>
+  <circle cx="35" cy="31" r="4.5" fill="#81C784"/>
+  <circle cx="31.5" cy="27.5" r="2.5" fill="#FFF59D"/>
+  <!-- Rosy Cheeks -->
+  <circle cx="28" cy="62" r="8" fill="url(#bunCheek)"/>
+  <circle cx="72" cy="62" r="8" fill="url(#bunCheek)"/>
+  <!-- Big Sparkling Ruby Eyes -->
+  <ellipse cx="35" cy="48" rx="6" ry="7" fill="url(#bunEye)"/>
+  <ellipse cx="65" cy="48" rx="6" ry="7" fill="url(#bunEye)"/>
+  <ellipse cx="35" cy="48" rx="4" ry="5.5" fill="#4A1525"/>
+  <ellipse cx="65" cy="48" rx="4" ry="5.5" fill="#4A1525"/>
+  <circle cx="37.5" cy="45.5" r="2.5" fill="#FFFFFF"/>
+  <circle cx="67.5" cy="45.5" r="2.5" fill="#FFFFFF"/>
+  <circle cx="33" cy="51" r="1.2" fill="#FFFFFF"/>
+  <circle cx="63" cy="51" r="1.2" fill="#FFFFFF"/>
+  <!-- Pink Nose & Cute 3-petal Smile -->
+  <polygon points="50,59 46,55 54,55" fill="#EC407A"/>
   <path d="M 46,62 Q 50,66 54,62" fill="none" stroke="#4A1525" stroke-width="2" stroke-linecap="round"/>
-  <circle cx="28" cy="58" r="6.5" fill="#FF80AB" opacity="0.6"/>
-  <circle cx="72" cy="58" r="6.5" fill="#FF80AB" opacity="0.6"/>
 </svg>"""
     },
     "sloth": {
@@ -519,15 +571,43 @@ RAW_COMPANIONS = {
         "bubble_color": "#D8E6EE",
         "actions": ["(用毛茸茸的小翅膀輕輕碰碰你的手背)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#384955" stroke="#25323B" stroke-width="3"/>
-<ellipse cx="50" cy="56" rx="30" ry="32" fill="#FFFFFF"/>
-<ellipse cx="38" cy="44" rx="4" ry="5" fill="#25323B"/>
-<ellipse cx="62" cy="44" rx="4" ry="5" fill="#25323B"/>
-<circle cx="39" cy="42" r="1.5" fill="#FFFFFF"/>
-<circle cx="63" cy="42" r="1.5" fill="#FFFFFF"/>
-<polygon points="50,54 44,48 56,48" fill="#F39C12"/>
-<circle cx="30" cy="50" r="4" fill="#FAD7A0" opacity="0.6"/>
-<circle cx="70" cy="50" r="4" fill="#FAD7A0" opacity="0.6"/>
+  <defs>
+    <radialGradient id="penHead" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#455A64"/>
+      <stop offset="75%" stop-color="#263238"/>
+      <stop offset="100%" stop-color="#1A2327"/>
+    </radialGradient>
+    <radialGradient id="penBelly" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#ECEFF1"/>
+    </radialGradient>
+    <radialGradient id="sunCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFA726" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFA726" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Body/Head -->
+  <circle cx="50" cy="52" r="44" fill="url(#penHead)" stroke="#1A2327" stroke-width="2.5"/>
+  <!-- White Face Mask -->
+  <ellipse cx="50" cy="58" rx="34" ry="32" fill="url(#penBelly)"/>
+  <!-- Cute Yellow Emperor Penguin Cheek Patches -->
+  <circle cx="24" cy="52" r="8" fill="url(#sunCheek)"/>
+  <circle cx="76" cy="52" r="8" fill="url(#sunCheek)"/>
+  <!-- Big Anime Sparkle Eyes -->
+  <ellipse cx="35" cy="46" rx="6.5" ry="7.5" fill="#1A2327"/>
+  <ellipse cx="65" cy="46" rx="6.5" ry="7.5" fill="#1A2327"/>
+  <circle cx="37.5" cy="43.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="67.5" cy="43.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="33" cy="49" r="1.3" fill="#FFFFFF"/>
+  <circle cx="63" cy="49" r="1.3" fill="#FFFFFF"/>
+  <!-- Orange Beak with Smile -->
+  <polygon points="50,60 42,52 58,52" fill="#FF9800"/>
+  <polygon points="50,60 44,54 56,54" fill="#F57C00"/>
+  <circle cx="51" cy="53" r="1" fill="#FFFFFF" opacity="0.8"/>
+  <!-- Cozy Turquoise Winter Scarf -->
+  <path d="M 20,80 Q 50,94 80,80 Q 84,88 78,94 Q 50,102 22,94 Z" fill="#00ACC1"/>
+  <rect x="62" y="84" width="12" height="15" rx="3" fill="#00838F"/>
+  <circle cx="68" cy="99" r="3" fill="#E0F7FA"/>
 </svg>"""
     },
     "owl": {
@@ -549,19 +629,43 @@ RAW_COMPANIONS = {
         "bubble_color": "#DAE2ED",
         "actions": ["(推了推精緻小眼鏡，投以深邃而包容的目光)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#8492A6" stroke="#68768A" stroke-width="3"/>
-<polygon points="26,30 18,12 36,22" fill="#68768A"/>
-<polygon points="74,30 82,12 64,22" fill="#68768A"/>
-<circle cx="36" cy="46" r="14" fill="#FBFDFF" stroke="#D3DCE6" stroke-width="2"/>
-<circle cx="64" cy="46" r="14" fill="#FBFDFF" stroke="#D3DCE6" stroke-width="2"/>
-<circle cx="36" cy="46" r="7" fill="#E6A23C"/>
-<circle cx="64" cy="46" r="7" fill="#E6A23C"/>
-<circle cx="36" cy="46" r="3.5" fill="#2C3A4B"/>
-<circle cx="64" cy="46" r="3.5" fill="#2C3A4B"/>
-<circle cx="38" cy="44" r="1.5" fill="#FFFFFF"/>
-<circle cx="66" cy="44" r="1.5" fill="#FFFFFF"/>
-<polygon points="50,56 46,50 54,50" fill="#E6A23C"/>
-<path d="M 38,68 Q 50,75 62,68" fill="none" stroke="#68768A" stroke-width="2.5" stroke-linecap="round"/>
+  <defs>
+    <radialGradient id="owlFur" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#90A4AE"/>
+      <stop offset="70%" stop-color="#607D8B"/>
+      <stop offset="100%" stop-color="#455A64"/>
+    </radialGradient>
+    <radialGradient id="owlEye" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="60%" stop-color="#FFB300"/>
+      <stop offset="100%" stop-color="#FF6F00"/>
+    </radialGradient>
+  </defs>
+  <!-- Feather Tuft Ears -->
+  <polygon points="26,34 16,10 40,24" fill="#607D8B" stroke="#455A64" stroke-width="2.5"/>
+  <polygon points="74,34 84,10 60,24" fill="#607D8B" stroke="#455A64" stroke-width="2.5"/>
+  <polygon points="28,30 22,16 38,24" fill="#CFD8DC"/>
+  <polygon points="72,30 78,16 62,24" fill="#CFD8DC"/>
+  <!-- Head -->
+  <circle cx="50" cy="54" r="42" fill="url(#owlFur)" stroke="#455A64" stroke-width="2"/>
+  <!-- Big Feather Face Discs -->
+  <circle cx="34" cy="48" r="16" fill="#ECEFF1" stroke="#CFD8DC" stroke-width="2"/>
+  <circle cx="66" cy="48" r="16" fill="#ECEFF1" stroke="#CFD8DC" stroke-width="2"/>
+  <!-- Golden Amber Saucer Eyes -->
+  <circle cx="34" cy="48" r="10" fill="url(#owlEye)"/>
+  <circle cx="66" cy="48" r="10" fill="url(#owlEye)"/>
+  <circle cx="34" cy="48" r="5.5" fill="#263238"/>
+  <circle cx="66" cy="48" r="5.5" fill="#263238"/>
+  <circle cx="37" cy="45" r="2.5" fill="#FFFFFF"/>
+  <circle cx="69" cy="45" r="2.5" fill="#FFFFFF"/>
+  <!-- Glasses -->
+  <circle cx="34" cy="48" r="12" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <circle cx="66" cy="48" r="12" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="46" y1="48" x2="54" y2="48" stroke="#D4AF37" stroke-width="2.5"/>
+  <!-- Curved Beak -->
+  <polygon points="50,63 46,53 54,53" fill="#FFA000"/>
+  <!-- Chest Feathers -->
+  <path d="M 38,76 Q 50,86 62,76" fill="none" stroke="#ECEFF1" stroke-width="3" stroke-linecap="round"/>
 </svg>"""
     },
     "dolphin": {
@@ -583,13 +687,42 @@ RAW_COMPANIONS = {
         "bubble_color": "#D3ECEC",
         "actions": ["(發出溫柔而悠揚的治癒海豚音，撫平心中的微瀾)"],
         "svg_avatar": """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="46" fill="#48A9A6" stroke="#318784" stroke-width="3"/>
-<path d="M 22,60 C 20,40 50,30 78,45 C 86,50 88,58 76,56 C 58,54 40,68 22,60 Z" fill="#71C7C4"/>
-<path d="M 30,62 C 45,60 65,65 72,57 C 60,70 40,70 30,62 Z" fill="#E8F8F7"/>
-<ellipse cx="64" cy="46" rx="3.5" ry="4" fill="#1A4A49"/>
-<circle cx="65" cy="45" r="1.5" fill="#FFFFFF"/>
-<path d="M 68,54 Q 74,56 78,52" fill="none" stroke="#1A4A49" stroke-width="1.5" stroke-linecap="round"/>
-<circle cx="58" cy="52" r="3.5" fill="#A8E4E2" opacity="0.6"/>
+  <defs>
+    <radialGradient id="dolSkin" cx="45%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#4DD0E1"/>
+      <stop offset="70%" stop-color="#00BCD4"/>
+      <stop offset="100%" stop-color="#00838F"/>
+    </radialGradient>
+    <radialGradient id="dolEye" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#80D8FF"/>
+      <stop offset="70%" stop-color="#0091EA"/>
+      <stop offset="100%" stop-color="#01579B"/>
+    </radialGradient>
+    <radialGradient id="pinkCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4081" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FF4081" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background Badge -->
+  <circle cx="50" cy="50" r="46" fill="#E0F7FA" stroke="#B2EBF2" stroke-width="2.5"/>
+  <!-- Dolphin Head / Body Silhouette -->
+  <path d="M 16,68 C 14,36 50,22 82,42 C 92,48 94,60 80,64 C 62,68 36,78 16,68 Z" fill="url(#dolSkin)"/>
+  <!-- White Pearl Belly -->
+  <path d="M 28,68 C 45,62 70,68 78,58 C 65,74 40,78 28,68 Z" fill="#FFFFFF"/>
+  <!-- Dorsal Fin -->
+  <path d="M 38,28 C 42,16 54,16 52,28 Z" fill="#00838F"/>
+  <!-- Big Sparkling Sapphire Eyes -->
+  <ellipse cx="64" cy="46" rx="6.5" ry="7.5" fill="url(#dolEye)"/>
+  <ellipse cx="64" cy="46" rx="4.5" ry="6" fill="#01579B"/>
+  <circle cx="66.5" cy="43.5" r="2.8" fill="#FFFFFF"/>
+  <circle cx="62" cy="49" r="1.3" fill="#FFFFFF"/>
+  <!-- Rosy Blushing Cheek -->
+  <circle cx="54" cy="55" r="7" fill="url(#pinkCheek)"/>
+  <!-- Playful Snout Smile -->
+  <path d="M 76,54 Q 84,58 88,52" fill="none" stroke="#006064" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Water Droplet & Star Sparkles -->
+  <path d="M 36,18 Q 33,26 36,29 Q 39,26 36,18 Z" fill="#E0F7FA"/>
+  <polygon points="76,22 78,26 82,26 79,29 80,33 76,30 72,33 73,29 70,26 74,26" fill="#FFD54F"/>
 </svg>"""
     },
     "hedgehog": {
