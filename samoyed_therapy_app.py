@@ -20,6 +20,23 @@ st.set_page_config(
 )
 
 # 輔助函式：將 SVG 代碼轉為標準 Base64 Data URI
+
+# 輔助函式：載入本地圖片並轉為 Base64 Data URI
+def get_image_data_uri(img_rel_path, fallback_svg=""):
+    full_path = os.path.join(os.path.dirname(__file__), img_rel_path)
+    if os.path.exists(full_path):
+        try:
+            with open(full_path, "rb") as f:
+                b64 = base64.b64encode(f.read()).decode("utf-8")
+                ext = img_rel_path.split(".")[-1].lower()
+                mime = f"image/{ext}" if ext in ["png", "jpg", "jpeg", "webp"] else "image/png"
+                return f"data:{mime};base64,{b64}"
+        except Exception:
+            pass
+    if fallback_svg:
+        return svg_to_data_uri(fallback_svg)
+    return ""
+
 def svg_to_data_uri(svg_str):
     clean_svg = "".join(line.strip() for line in svg_str.strip().splitlines())
     b64 = base64.b64encode(clean_svg.encode("utf-8")).decode("utf-8")
